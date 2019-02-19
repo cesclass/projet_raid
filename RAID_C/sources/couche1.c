@@ -1,11 +1,4 @@
-#include "../headers/layer1.h"
-/**
- * @brief 
- * 
- * @param filename 
- * @author dena
- * @return int 
- */
+#include "../headers/couche1.h"
 
 
 virtual_disk_t init_disk_raid5(DIR *directory){
@@ -25,16 +18,28 @@ virtual_disk_t init_disk_raid5(DIR *directory){
       }
     }    
   }
+}
 
 
+void switch_off_raid(DIR *directory, virtual_disk_t *r5Disk){
 
+  for(int i = 0; i < r5Disk->ndisk; ++i){
+    if(fclose(r5Disk->storage[i])!=0){
+      fprintf(stderr,"Error close disk %d",i);
+    }
+  }
+  closedir(directory);
+  exit(SUCCES_OFF);
 }
 
 
 
-int compute_nblock(int size){
 
-   return int nb_block = ((size%BLOCK_SIZE)==0)? size/BLOCK_SIZE : size/BLOCK_SIZE + 1;
+
+
+int compute_nblock(int size){
+  int nb_block;
+  return nb_block = ((size%BLOCK_SIZE)==0)? size/BLOCK_SIZE : size/BLOCK_SIZE + 1;
 }
 
 
