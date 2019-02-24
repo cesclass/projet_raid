@@ -25,4 +25,15 @@ int compute_nstripe(int nb_block, int nb_disk);
  */
 void compute_parity(int nb_block, block_t *block_tab, block_t *parity_block);
 
+/**
+ * @brief 
+ * Calcule le numéro du disque sur lequel doit être stoqué 
+ * le bloc de parité
+ * 
+ * @param num_bande Numéro du stripe (/!\ démmare à 1 !)
+ * @param nb_disk Nombre de disque du système RAID
+ * @return int Numéro du disque (/!\ démmare à 0 !)
+ */
+int parity_index(int num_bande, int nb_disk);
+
 #endif

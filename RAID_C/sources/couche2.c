@@ -11,3 +11,7 @@ void compute_parity(int nb_block, block_t *block_tab, block_t *parity_block) {
         for(int j = 0; j < nb_block; parity_block->data[i] ^= block_tab[j++].data[i]);
     }
 }
+
+int parity_index(int num_bande, int nb_disk) {
+    return (- (num_bande % nb_disk) + nb_disk) % nb_disk;
+}
