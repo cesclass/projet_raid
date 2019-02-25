@@ -1,4 +1,4 @@
-#include "../headers/couche1.h"
+//#include "../headers/couche1.h"
 #include "../headers/couche2.h"
 #include "../headers/raid_defines.h"
 
@@ -17,12 +17,19 @@ int parity_index(int num_bande, int nb_disk) {
     return (- (num_bande % nb_disk) + nb_disk) % nb_disk;
 }
 
-void write_stripe(int pos, const stripe_t *bande) {
+void write_stripe(int pos, const stripe_t *bande, int parity_index) {
     /**
      * @TODO
      * Tester cette fonction avec write_block dès qu'elle sera codé
      * Ne pas oublier de vérifier les arguments 
      */
-    for (int i = 0; i < bande->nblocks; write_block(pos + i, bande->stripe[i++]));
+    for (int i = 0; i < bande->nblocks; i++) {
+        if (i < parity_index)
+            write_block(pos + i, bande->stripe[i]);
+        else if (i > parity_index)
+            write_block(pos + i, bande->stripe[i - 1]);
+        else
+            write_block(pos + i, bande->stripe[bande->nblocks - 1]);
+    }
 }
 

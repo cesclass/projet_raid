@@ -43,6 +43,6 @@ int parity_index(int num_bande, int nb_disk);
  * @param pos Position
  * @param bande Bande à écrire
  */
-void write_stripe(int pos, const stripe_t *bande);
+void write_stripe(int pos, const stripe_t *bande, int parity_index);
 
 #endif
