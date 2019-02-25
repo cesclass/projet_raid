@@ -36,4 +36,13 @@ void compute_parity(int nb_block, block_t *block_tab, block_t *parity_block);
  */
 int parity_index(int num_bande, int nb_disk);
 
+/**
+ * @brief 
+ * Écrit une bande à une position donné sur le système RAID 5
+ * 
+ * @param pos Position
+ * @param bande Bande à écrire
+ */
+void write_stripe(int pos, const stripe_t *bande);
+
 #endif
