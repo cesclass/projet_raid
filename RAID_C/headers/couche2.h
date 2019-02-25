@@ -45,4 +45,16 @@ int parity_index(int num_bande, int nb_disk);
  */
 void write_stripe(int pos, const stripe_t *bande, int parity_index);
 
+/**
+ * @brief 
+ * Ecrit sur le système RAID 5 le contenu du buffer
+ * à partir de la position start_byte
+ * 
+ * @param n Taille du buffer en octet
+ * @param buffer Buffer à écrire
+ * @param start_byte Position de départ sur le RAID
+ * @param nb_disk Nombre de disque du système RAID
+ */
+void write_chunk(int n, uchar *buffer, uchar start_byte, int nb_disk);
+
 #endif
