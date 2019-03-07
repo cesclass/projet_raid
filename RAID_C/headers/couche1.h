@@ -19,7 +19,8 @@
 #define SUCCES_OFF 10
 
 #define MAX_DISK 10
-
+#define DESIGNATION "../RAID/"
+#define NAME_DISK "vDisk"
 
 
 /**
@@ -31,6 +32,15 @@
 void switch_off_raid(DIR *directory, virtual_disk_t *r5Disk);
 
 /**
+ * @brief init
+ * 
+ * @param directory 
+ * @return virtual_disk_t 
+ */
+virtual_disk_t init_disk_raid5(DIR *directory);
+
+
+/**
  * @brief calculate number of block need for a file with his size
  * 
  * @param size 
@@ -39,14 +49,23 @@ void switch_off_raid(DIR *directory, virtual_disk_t *r5Disk);
 int compute_nblock(int size);
 
 /**
- * @brief 
+ * @brief write block at pos in the file dest
  * 
  * @param pos 
  * @param block 
  * @param dest 
- * @return 3 = Write error 
+ * @return 3 for error when positioning file's pointer, 4 for fwrite's error, 0 for succes 
  */
 int write_block(int pos, block_t block, FILE *dest);
+
+/**
+ * @brief read and stock a block_t data in block at pos in the file src
+ * 
+ * @param pos 
+ * @param block 
+ * @param src 
+ * @return 5 for error when positioning file's pointer, 6 for read's error, 0 for succes 
+ */
 
 int read_block(int pos, block_t *block, FILE *src);
 

@@ -20,26 +20,23 @@ virtual_disk_t init_disk_raid5(DIR *directory){
   init_super_block_raid5(r5Disk);
 
   struct dirent *current = NULL;
-  struct stat info_file;
+  char acces[BUFSIZ];
 
   while((current = readdir(directory))!= NULL){
 
-    if(stat(current->d_name,&info_file) == 0){
-      printf("File :%s\n",current->d_name);
-      r5Disk->number_of_files ++;
-      if(S_ISREG(info_file.st_mode)){
-       r5Disk->number_of_files ++;
-
-      }
-      else if(S_ISBLK(info_file.st_mode)){
-        r5Disk->storage[r5Disk->ndisk ++] = fopen(current->d_name, "w");
-
-      }
+    if(!strncmp(current->d_name,NAME_DISK,strlen(NAME_DISK))){
+      //printf("File : %s\n",current->d_name);
+      sprintf(acces,"%s%s",DESIGNATION,current->d_name);
+      r5Disk->storage[r5Disk->ndisk++] = fopen(acces,"wb");
     }
-
+    else if(strcmp(current->d_name,"../") > 0){
+      r5Disk->number_of_files ++;
+    }
   }
   return *r5Disk;
+  
 }
+
 
 
 void switch_off_raid(DIR *directory, virtual_disk_t *r5Disk){
@@ -48,6 +45,7 @@ void switch_off_raid(DIR *directory, virtual_disk_t *r5Disk){
     if(fclose(r5Disk->storage[i])!=0){
       fprintf(stderr,"Error close disk %d",i);
     }
+    printf("Disk n°%d close\n",i);
   }
   closedir(directory);
   exit(SUCCES_OFF);
@@ -88,17 +86,31 @@ int read_block(int pos, block_t *block, FILE * src){
 /*=========================================================*/
 int main(void){
     
-    DIR* direc = opendir("../RAID/");
-    if(!direc){
-      perror("Error directory");
-      exit(-1);
-    }
-    /*virtual_disk_t r5 = init_disk_raid5(direc);
-    printf("Nbdisk : %d\nNbfile : %d\n",r5.ndisk,r5.number_of_files);
-    printf("Raid mode : %d\n",r5.raidmode);
-    
-    switch_off_raid(direc,&r5);*/
+  DIR* direc = opendir("../RAID/");
+  if(!direc){
+    perror("Error directory");
+    exit(-1);
+  }
 
+  //FILE *src = fopen("../RAID/test","rt");
+  //fclose(src);
+
+
+
+
+
+  virtual_disk_t r5 = init_disk_raid5(direc);
+  //printf("Nbdisk : %d\nNbfile : %d\n",r5.ndisk,r5.number_of_files);
+    //printf("Raid mode : %d\n",r5.raidmode);
+  
+  printf("Nbr file/disk <%d,%d>\n",r5.number_of_files,r5.ndisk);
+    
+  switch_off_raid(direc,&r5);
+
+
+// Test des fonctions write_block && read_block
+
+/*
 
   FILE *src = fopen("source","w+b");
 
@@ -117,5 +129,8 @@ int main(void){
   for(int i=0; i < BLOCK_SIZE; printf("Data read %3c\n",block_read.data[i++]));
 
   fclose(src);
+
+*/
+
   closedir(direc);
 }
