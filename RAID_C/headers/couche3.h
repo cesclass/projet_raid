@@ -11,6 +11,10 @@
 #ifndef __COUCHE3_H__
 #define __COUCHE3_H__
 
+#include <stdio.h>
+#include <stdlib.h>
+#include "../headers/raid_defines.h"
+
 // Liste des fonctions
 void read_inode_table(void);
 void write_inode_table(void);
