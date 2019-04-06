@@ -5,14 +5,12 @@
 
 /**
  * @brief 
- * Calcule le nombre de stripe nécessaire pour un certains nombre de block,
- * en fonction du nombre de disque
+ * Calcule le nombre de stripe nécessaire pour stoquer un certains nombre de block.
  * 
  * @param nb_block Nombre de block
- * @param nb_disk Nombre de disque
  * @return int Nombre de stripe nécessaire
  */
-int compute_nstripe(int nb_block, int nb_disk);
+int compute_nstripe(int nb_block);
 
 /**
  * @brief 
@@ -31,10 +29,9 @@ void compute_parity(int nb_block, block_t *block_tab, block_t *parity_block);
  * le bloc de parité
  * 
  * @param num_bande Numéro du stripe (/!\ démmare à 1 !)
- * @param nb_disk Nombre de disque du système RAID
  * @return int Numéro du disque (/!\ démmare à 0 !)
  */
-int parity_index(int num_bande, int nb_disk);
+int parity_index(int num_bande);
 
 /**
  * @brief 

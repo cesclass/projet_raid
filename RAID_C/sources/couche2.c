@@ -4,8 +4,10 @@
 
 #include <stdlib.h>
 
-int compute_nstripe(int nb_block, int nb_disk) {
-    return nb_block / (nb_disk - 1) + !(nb_block % (nb_disk - 1) == 0);
+extern virtual_disk_t r5disk;
+
+int compute_nstripe(int nb_block) {
+    return nb_block / (r5disk.ndisk - 1) + !(nb_block % (r5disk.ndisk - 1) == 0);
 }
 
 void compute_parity(int nb_block, block_t *block_tab, block_t *parity_block) {
@@ -15,8 +17,8 @@ void compute_parity(int nb_block, block_t *block_tab, block_t *parity_block) {
     }
 }
 
-int parity_index(int num_bande, int nb_disk) {
-    return (- (num_bande % nb_disk) + nb_disk) % nb_disk;
+int parity_index(int num_bande) {
+    return (- (num_bande % r5disk.ndisk) + r5disk.ndisk) % r5disk.ndisk;
 }
 
 void write_stripe(int pos, const stripe_t *bande, int parity_index) {
@@ -25,6 +27,7 @@ void write_stripe(int pos, const stripe_t *bande, int parity_index) {
      * Tester cette fonction avec write_block dès qu'elle sera codé
      * Ne pas oublier de vérifier les arguments 
      */
+    /*
     for (int i = 0; i < bande->nblocks; i++) {
         if (i < parity_index)
             write_block(pos + i, bande->stripe[i]);
@@ -33,6 +36,7 @@ void write_stripe(int pos, const stripe_t *bande, int parity_index) {
         else
             write_block(pos + i, bande->stripe[bande->nblocks - 1]);
     }
+    */
 }
 
 void write_chunk(int n, uchar *buffer, uchar start_byte, int nb_disk) {
@@ -41,6 +45,7 @@ void write_chunk(int n, uchar *buffer, uchar start_byte, int nb_disk) {
      * Tester cette fonction avec write_block dès qu'elle sera codé
      * Ne pas oublier de vérifier les arguments 
      */
+    /*
     stripe_t bande;
     bande.nblocks = nb_disk;
     bande.stripe = malloc(nb_disk * sizeof(block_t));
@@ -58,7 +63,8 @@ void write_chunk(int n, uchar *buffer, uchar start_byte, int nb_disk) {
         }   
 
         compute_parity(nb_disk - 1, bande.stripe, (bande.stripe)+i_block);
-        write_stripe(start_byte, &bande, parity_index(num_bande, nb_disk));
+        write_stripe(start_byte, &bande, parity_index(num_bande));
         num_bande = (num_bande + 1) % nb_disk;
     }
+    */
 }
