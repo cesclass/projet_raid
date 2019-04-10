@@ -15,7 +15,7 @@ void init_disk_raid5(char *directory){
  
   for(int i = 0; i < MAX_DISK; i++){
       sprintf(acces, "%s%s%d", directory, NAME_DISK, i);
-      if(!(r5Disk.storage[i] = fopen(acces, "wb+"))){
+      if(!(r5Disk.storage[i] = fopen(acces, "rb+"))){
         perror("Error open disk");
       }
   }
@@ -77,11 +77,13 @@ void block_repair(int pos, int num_disk){
   for(int i = 0 ; i < MAX_DISK; i++){
     if(i != num_disk){
       read_block(pos,&repair,r5Disk.storage[i]);
-      for(int j = 0; j ++ < BLOCK_SIZE; save.data[j] ^= repair.data[j]);
+      for(int j = 0; j < BLOCK_SIZE; j++){
+        save.data[j] ^= repair.data[j];
+      }
     }
   }
 
-  write_block(pos, repair, r5Disk.storage[num_disk]);
+  write_block(pos, save, r5Disk.storage[num_disk]);
 }
 
 /*=========================================================*/
