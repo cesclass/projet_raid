@@ -98,39 +98,46 @@ void read_stripe(int pos, stripe_t *dest) {
  *  (Incluses dans l'interface couche2.h)
  * *************************************** */
 
-void write_chunk(int buf_len, uchar *buffer, uchar pos) {
-    /**
-     * @TODO
-     * Tester cette fonction avec write_block dès qu'elle sera codé
-     */
-    
-    stripe_t stripe;
-    stripe.nblocks = r5Disk.ndisk;
-    stripe.stripe = malloc(r5Disk.ndisk * sizeof(block_t));
-    int num_stripe = 0;
+void write_chunk(int buf_len, const uchar *buffer, uchar pos) {    
+    stripe_t str;
+    str.nblocks = r5Disk.ndisk;
+    str.stripe = malloc(str.nblocks * sizeof(block_t));
 
-    for (int i_buff = 0; i_buff < buf_len;) {
+    for (int i_buf = 0; i_buf < buf_len;) {
         /*  Construction de la stripe */
         int i_block;
-        for (i_block = 0; i_block < r5Disk.ndisk - 1; i_block++) {
+        for (i_block = 0; i_block < str.nblocks - 1; i_block++) {
             for (int i_octet = 0; i_octet < BLOCK_SIZE; i_octet++) {
-                if (i_buff < buf_len)
-                    stripe.stripe[i_block].data[i_octet] = buffer[i_buff++];
+                if (i_buf < buf_len)
+                    str.stripe[i_block].data[i_octet] = buffer[i_buf++];
                 else
-                    stripe.stripe[i_block].data[i_octet] = '\0';
+                    str.stripe[i_block].data[i_octet] = '\0';
             } 
         }   
 
         /*  Calcul de la paritee */
-        compute_parity(r5Disk.ndisk - 1, stripe.stripe, (stripe.stripe) + i_block);
+        compute_parity(str.nblocks - 1, str.stripe, (str.stripe) + i_block);
 
         /*  Ecriture de la stripe sur le disque */
-        write_stripe(pos + num_stripe, &stripe);
-
-        num_stripe ++;
+        write_stripe(pos++, &str);
     } 
 }
 
 void read_chunk(int buf_len, uchar *buffer, uchar pos) {
-    return;
+    stripe_t str;
+    str.nblocks = r5Disk.ndisk;
+    str.stripe = malloc(str.nblocks * sizeof(block_t));
+
+    for (int i_buf = 0; i_buf < buf_len;) {
+        /*  Lecture d'une Stripe */
+        read_stripe(pos++, &str);
+
+        /*  Ecriture de la Stripe lue dans le buffer */
+        for (int i_block = 0; i_block < str.nblocks - 1; i_block++) {
+            for (int i_octet = 0; i_octet < BLOCK_SIZE; i_octet++) {
+                if (i_buf < buf_len)
+                    buffer[i_buf++] = str.stripe[i_block].data[i_octet];
+            }
+        }
+    }
 }

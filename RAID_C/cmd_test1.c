@@ -3,8 +3,8 @@
  * @author Dylan CARON (dcaron81.dc@gmail.com)
  * 
  * @brief 
- * Fichier de test d'ecriture de la couche2
- * Initialise le systeme RAID5 et ecrit les octets de 0 a 255 sur le systeme.
+ * Fichier de test de la couche2 : ECRITURE
+ * Initialise le systeme RAID 5 et ecrit les octets de 0 a 255 sur le systeme.
  * 
  * @copyright Licence MIT
  */
