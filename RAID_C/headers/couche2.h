@@ -37,12 +37,12 @@ int parity_index(int num_stripe);
 
 /**
  * @brief 
- * Écrit une bande à une position donné sur le système RAID 5
+ * Ecrit une bande à une position donnee sur le systeme RAID 5
  * 
- * @param pos           N° de la ligne ou ecrire la bande
- * @param stripe        Bande à écrire
+ * @param pos           N° de la ligne ou ecrire la Stripe
+ * @param src           Stripe à écrire
  */
-void write_stripe(int pos, const stripe_t *stripe, int parity_index);
+void write_stripe(int pos, const stripe_t *src);
 
 /**
  * @brief 
@@ -54,5 +54,14 @@ void write_stripe(int pos, const stripe_t *stripe, int parity_index);
  * @param pos           Position de départ sur le RAID
  */
 void write_chunk(int buf_len, uchar *buffer, uchar pos);
+
+/**
+ * @brief
+ * Lit une bande à une position donnee sur le systeme RAID 5
+ * 
+ * @param pos           N° de la ligne ou lire la Stripe
+ * @param dest          Destination de la Stripe
+ */
+void read_stripe(int pos, stripe_t *dest);
 
 #endif

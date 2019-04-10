@@ -21,14 +21,17 @@ int parity_index(int num_stripe) {
     return (- ((num_stripe + 1) % r5Disk.ndisk) + r5Disk.ndisk) % r5Disk.ndisk;
 }
 
-void write_stripe(int pos, const stripe_t *stripe, int parity_index) {
-    for (int i = 0; i < stripe->nblocks; i++) {
-        if (i < parity_index)       /*  Ecriture des blocs positionnees avant le bloc de parite */
-            write_block(pos, stripe->stripe[i], r5Disk.storage[i]);
-        else if (i > parity_index)  /*  Ecriture des blocs positionnees apres le bloc de parite */
-            write_block(pos, stripe->stripe[i - 1], r5Disk.storage[i]);
+void write_stripe(int pos, const stripe_t *src) {
+    /*  Calcul de l'indice du bloc de parite */
+    int i_parity = parity_index(pos);
+
+    for (int i = 0; i < src->nblocks; i++) {
+        if (i < i_parity)           /*  Ecriture des blocs positionnees avant le bloc de parite */
+            write_block(pos, src->stripe[i], r5Disk.storage[i]);
+        else if (i > i_parity)      /*  Ecriture des blocs positionnees apres le bloc de parite */
+            write_block(pos, src->stripe[i - 1], r5Disk.storage[i]);
         else                        /*  Ecriture du bloc de paritee */
-            write_block(pos, stripe->stripe[stripe->nblocks - 1], r5Disk.storage[i]);
+            write_block(pos, src->stripe[src->nblocks - 1], r5Disk.storage[i]);
     }
 }
 
@@ -59,8 +62,22 @@ void write_chunk(int buf_len, uchar *buffer, uchar pos) {
         compute_parity(r5Disk.ndisk - 1, stripe.stripe, (stripe.stripe) + i_block);
 
         /*  Ecriture de la stripe sur le disque */
-        write_stripe(pos + num_stripe, &stripe, parity_index(num_stripe));
+        write_stripe(pos + num_stripe, &stripe);
 
         num_stripe ++;
     } 
+}
+
+void read_stripe(int pos, stripe_t *dest) {
+    /*  Calcul de l'indice du bloc de parite */
+    int i_parity = parity_index(pos);
+
+    for (int i = 0; i < dest->nblocks; i ++) {
+        if (i < i_parity)           /*  Lecture des blocs positionnees avant le bloc de parite */
+            read_block(pos, dest->stripe + i, r5Disk.storage[i]);
+        else if (i > i_parity)      /*  Lecture des blocs positionnees apres le bloc de parite */
+            read_block(pos, dest->stripe + (i - 1), r5Disk.storage[i]);
+        else                        /*  Lecture du bloc de paritee */
+            read_block(pos, dest->stripe + (dest->nblocks - 1), r5Disk.storage[i]);
+    }
 }
