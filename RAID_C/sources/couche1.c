@@ -51,13 +51,9 @@ int write_block(int pos, block_t block, FILE *dest){
     perror("Error write pos");
     return ERROR_SEEK_WRITE;
   }
-  /*block_wr = fwrite(&block, sizeof(block_t), 1, dest);
+  block_wr = fwrite(&block, sizeof(block_t), 1, dest);
 
-  return (block_wr * sizeof(block_t) == 1) ? EXIT_SUCCESS : ERROR_WRITE;*/
-
-  //for(int i = 0; i < 4; fwrite(block.data[i++], sizeof(uchar),1,dest));
-  fwrite(block.data, sizeof(uchar),4,dest);
-  return 0;
+  return (block_wr * sizeof(block_t) == 1) ? EXIT_SUCCESS : ERROR_WRITE;
 }
 
 
@@ -68,10 +64,7 @@ int read_block(int pos, block_t *block, FILE * src){
     return ERROR_SEEK_READ;
   }
 
-  //return (fread(block, sizeof(block_t) ,1 , src) == 1)? EXIT_SUCCESS : ERROR_READ;
-  //for(int i =0; i < 4; fread(&(block->data[i++]),sizeof(uchar),1,src));
-  fread(block->data,sizeof(uchar),4,src);
-  return 0;
+  return (fread(block, sizeof(block_t) ,1 , src) == 1)? EXIT_SUCCESS : ERROR_READ;
 }
 
 
