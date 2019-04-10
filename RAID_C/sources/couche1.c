@@ -15,7 +15,9 @@ void init_disk_raid5(char *directory){
  
   for(int i = 0; i < MAX_DISK; i++){
       sprintf(acces, "%s%s%d", directory, NAME_DISK, i);
-      r5Disk.storage[i] = fopen(acces, "wb");
+      if(!(r5Disk.storage[i] = fopen(acces, "wb+"))){
+        perror("Error open disk");
+      }
   }
   
   /* Init Super_Block  && Inode_Table RAID 
@@ -68,7 +70,7 @@ int read_block(int pos, block_t *block, FILE * src){
 }
 
 
-int block_repair(int pos, int num_disk){
+void block_repair(int pos, int num_disk){
   block_t repair, save;
   for(int i=0; i < MAX_DISK; save.data[i++]=0 );
 
