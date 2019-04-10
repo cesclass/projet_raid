@@ -13,9 +13,9 @@ void init_disk_raid5(char *directory){
 
   char acces[BUFSIZ];
  
-  for(int i = 0; i < MAX_DISK; ++i){
-      sprintf(acces, "%s/%s%d", DESIGNATION, NAME_DISK, i);
-      r5Disk.storage[r5Disk.ndisk++] = fopen(acces, "wb");
+  for(int i = 0; i < MAX_DISK; i++){
+      sprintf(acces, "%s%s%d", directory, NAME_DISK, i);
+      r5Disk.storage[i] = fopen(acces, "wb");
   }
   
   /* Init Super_Block  && Inode_Table RAID 
@@ -51,9 +51,13 @@ int write_block(int pos, block_t block, FILE *dest){
     perror("Error write pos");
     return ERROR_SEEK_WRITE;
   }
-  block_wr = fwrite(&block, sizeof(block_t), 1, dest);
+  /*block_wr = fwrite(&block, sizeof(block_t), 1, dest);
 
-  return (block_wr * sizeof(block_t) == 1) ? EXIT_SUCCESS : ERROR_WRITE;
+  return (block_wr * sizeof(block_t) == 1) ? EXIT_SUCCESS : ERROR_WRITE;*/
+
+  //for(int i = 0; i < 4; fwrite(block.data[i++], sizeof(uchar),1,dest));
+  fwrite(block.data, sizeof(uchar),4,dest);
+  return 0;
 }
 
 
@@ -64,7 +68,10 @@ int read_block(int pos, block_t *block, FILE * src){
     return ERROR_SEEK_READ;
   }
 
-  return (fread(block, sizeof(block_t) ,1 , src) == 1)? EXIT_SUCCESS : ERROR_READ;
+  //return (fread(block, sizeof(block_t) ,1 , src) == 1)? EXIT_SUCCESS : ERROR_READ;
+  //for(int i =0; i < 4; fread(&(block->data[i++]),sizeof(uchar),1,src));
+  fread(block->data,sizeof(uchar),4,src);
+  return 0;
 }
 
 
