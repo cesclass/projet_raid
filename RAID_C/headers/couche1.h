@@ -18,55 +18,89 @@
 
 #define SUCCES_OFF 10
 
-#define MAX_DISK 10
-#define DESIGNATION "../RAID/"
-#define NAME_DISK "vDisk"
+#define MAX_DISK 4
+#define NAME_DISK "vDisk"   
 
 
 /**
- * @brief close all disk and close directory
+ * @brief
+ * 
+ * Initialise les champs de la variables globales r5Disk
+ * Elle ouvre tous les disk virtuels present dans le repertoire
+ * designe par la directory
  * 
  * @param directory 
- * @param r5Disk 
  */
-void switch_off_raid(DIR *directory, virtual_disk_t *r5Disk);
+void init_disk_raid5(char *directory);
 
 /**
- * @brief init
+ * @brief 
  * 
- * @param directory 
- * @return virtual_disk_t 
+ * Ferme tous les disks ouverts du systeme RAID
+ * 
  */
-virtual_disk_t init_disk_raid5(DIR *directory);
+void switch_off_raid();
 
 
 /**
- * @brief calculate number of block need for a file with his size
+ * @brief
  * 
- * @param size 
+ * Calcule le nombre de block necessaire pour ecrire size
+ * 
+ * @param size : taille a decouper en block
+ * 
  * @return int 
  */
 int compute_nblock(int size);
 
 /**
- * @brief write block at pos in the file dest
+ * @brief
  * 
- * @param pos 
- * @param block 
- * @param dest 
- * @return 3 for error when positioning file's pointer, 4 for fwrite's error, 0 for succes 
+ * Ecris sur le fichier dest block a la position pos;
+ * 
+ * @param pos : position du block a ecrire
+ * @param block : block a ecrire
+ * @param dest : fichier sur lequel doit etre ecrit block
+ * 
+ * @return 0 en cas de succes, 3 en cas d'erreur de positionnement sur le fichier
+ *                             4 en cas d'erreur d'ecriture
  */
 int write_block(int pos, block_t block, FILE *dest);
 
 /**
- * @brief read and stock a block_t data in block at pos in the file src
+ * @brief
  * 
- * @param pos 
- * @param block 
- * @param src 
- * @return 5 for error when positioning file's pointer, 6 for read's error, 0 for succes 
+ * Lis sur le fichier src le block a la position pos
+ * 
+ * @param pos : position du block a lire
+ * @param block : block a lire
+ * @param src : fichier sur lequel doit etre lu le block
+ * 
+ * @return 0 en cas de succes, 5 en cas d'erreur de positionnement sur le fichier
+ *                             6 en cas d'erreur de lecture
  */
-
 int read_block(int pos, block_t *block, FILE *src);
+
+/**
+ * @brief 
+ * 
+ * Repare un block errone en faisant le XOR des autres blocks intactes 
+ * a la meme position
+ *  
+ * @param pos : position du block a reparer
+ * @param numDisk : numero du disk ou se situe le block
+ * 
+ */
+void block_repair(int pos, int numDisk);
+
+/**
+ * @brief 
+ * 
+ * Affiche le contenu de block sous la forme hexadecimal
+ * 
+ * @param block : block a afficher en hexa
+ * 
+ */
+void hexa_display(block_t block);
 
 #endif
