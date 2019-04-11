@@ -71,8 +71,8 @@ int read_block(int pos, block_t *block, FILE * src){
 
 
 void block_repair(int pos, int num_disk, block_t *repair){
-  block_t repair, read;
-  for(int i=0; i < MAX_DISK; repair->data[i++]=0 );
+  block_t read;
+  for(int i=0; i < MAX_DISK; repair->data[i++] = 0);
 
   for(int i = 0 ; i < MAX_DISK; i++){
     if(i != num_disk){
