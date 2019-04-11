@@ -87,7 +87,7 @@ void block_repair(int pos, int num_disk, block_t *repair){
 
 /*=========================================================*/
 
-void hexa_display(block_t block){
+void dump_block_hexa(block_t block){
 
   int value;
   for(int i = 0; i < BLOCK_SIZE; i++){

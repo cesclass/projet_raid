@@ -101,6 +101,6 @@ void block_repair(int pos, int numDisk, block_t *repair);
  * @param block : block a afficher en hexa
  * 
  */
-void hexa_display(block_t block);
+void dump_block_hexa(block_t block);
 
 #endif
