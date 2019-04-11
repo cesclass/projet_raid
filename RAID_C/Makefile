@@ -14,7 +14,7 @@ SRCS = $(wildcard $(SRCDIR)/*.c)
 OBJS = $(subst $(SRCDIR)/,$(OBJDIR)/, $(subst .c,.o, $(SRCS)))
 
 # Définir les executables principaux ici
-EXEC = test_c2
+EXEC = cmd_test1 cmd_test2
 
 ifeq ($(DEBUG), yes)
 	CFLAGS += -g
@@ -31,7 +31,7 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Création automatique des exécutables
-$(EXEC): %: %.c $(OBJS)
+$(EXEC): %: $(TSTDIR)/%.c $(OBJS)
 	$(CC) $(CFLAGS) -o $(BINDIR)/$@ $^ $(LDFLAGS)
 
 .PHONY: makedir
