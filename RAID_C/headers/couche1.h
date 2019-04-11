@@ -91,7 +91,7 @@ int read_block(int pos, block_t *block, FILE *src);
  * @param numDisk : numero du disk ou se situe le block
  * 
  */
-void block_repair(int pos, int numDisk);
+void block_repair(int pos, int numDisk, block_t *repair);
 
 /**
  * @brief 
