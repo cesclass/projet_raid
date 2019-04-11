@@ -1,3 +1,6 @@
 .metadate
 .vscode
 .nosync
+*.o
+
+RAID_C/builds/test_c2
