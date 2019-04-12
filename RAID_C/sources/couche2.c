@@ -41,7 +41,7 @@ void read_stripe(int pos, stripe_t *dest) {
 
     for (int i = 0; i < dest->nblocks; i ++) {
         if (i < i_parity) {             /*  Lecture des blocs positionnees avant le bloc de parite */
-            if (read_block(pos, dest->stripe + i, r5Disk.storage[i]) == ERROR_READ) 
+            if (read_block(pos, dest->stripe + i, r5Disk.storage[i]) == ERROR_READ)
                 block_repair(pos, i, dest->stripe + i);
         } else if (i > i_parity) {      /*  Lecture des blocs positionnees apres le bloc de parite */
             if (read_block(pos, dest->stripe + (i - 1), r5Disk.storage[i]) == ERROR_READ)
@@ -53,10 +53,12 @@ void read_stripe(int pos, stripe_t *dest) {
     }
 }
 
-void write_chunk(int buf_len, const uchar *buffer, uchar pos) {    
+uint write_chunk(int buf_len, const uchar *buffer, uchar pos) {    
     stripe_t str;
     str.nblocks = r5Disk.ndisk;
     str.stripe = malloc(str.nblocks * sizeof(block_t));
+
+    pos /= (MAX_DISK * BLOCK_SIZE);
 
     for (int i_buf = 0; i_buf < buf_len;) {
         /*  Construction de la stripe */
@@ -76,12 +78,16 @@ void write_chunk(int buf_len, const uchar *buffer, uchar pos) {
         /*  Ecriture de la stripe sur le disque */
         write_stripe(pos++, &str);
     } 
+
+    return (int)(pos) * MAX_DISK * BLOCK_SIZE;
 }
 
 void read_chunk(int buf_len, uchar *buffer, uchar pos) {
     stripe_t str;
     str.nblocks = r5Disk.ndisk;
     str.stripe = malloc(str.nblocks * sizeof(block_t));
+
+    pos /= (MAX_DISK * BLOCK_SIZE);
 
     for (int i_buf = 0; i_buf < buf_len;) {
         /*  Lecture d'une Stripe */
