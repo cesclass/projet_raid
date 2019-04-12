@@ -1,6 +1,10 @@
-.metadate
+.metadata
 .vscode
 .nosync
-*.o
+.gitignore
 
-RAID_C/builds/test_c2
+RAID/
+builds/
+objects/
+
+Makefile
