@@ -70,20 +70,19 @@ int read_block(int pos, block_t *block, FILE * src){
 }
 
 
-void block_repair(int pos, int num_disk){
-  block_t repair, save;
-  for(int i=0; i < MAX_DISK; save.data[i++]=0 );
+void block_repair(int pos, int num_disk, block_t *repair){
+  block_t read;
+  for(int i=0; i < MAX_DISK; repair->data[i++] = 0);
 
   for(int i = 0 ; i < MAX_DISK; i++){
     if(i != num_disk){
-      read_block(pos,&repair,r5Disk.storage[i]);
+      read_block(pos,&read,r5Disk.storage[i]);
       for(int j = 0; j < BLOCK_SIZE; j++){
-        save.data[j] ^= repair.data[j];
+        repair->data[j] ^= read.data[j];
       }
     }
   }
-
-  write_block(pos, save, r5Disk.storage[num_disk]);
+  
 }
 
 /*=========================================================*/
