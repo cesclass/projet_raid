@@ -12,22 +12,29 @@
 #include "../headers/couche1.h"
 #include "../headers/couche2.h"
 
+#define ERR_ARGS    101
+
 virtual_disk_t r5Disk;
 
 int main(int argc, char *argv[]) {
-    /*  Init du RAID 5 */
-    printf("Initialisation du systeme RAID 5... \n");
+    char usage[BUFSIZ];
+    sprintf(usage, "Usage : %s repertoire_disques\n", argv[0]);
 
+    /*  Gestion des erreurs d'usage */
+    if (argc < 2 || argc > 2) {
+        fprintf(stderr, usage);
+        exit(ERR_ARGS);
+    }
+
+    /*  Init du RAID 5 */
     init_disk_raid5("../RAID/");
 
     /*  Creation du buffer */
-    printf("Creation du buffer de 255 octets... \n");
-
     uchar buffer[255];
     for(uchar i = 0; i < 255; buffer[i] = i++);
 
     /*  Ecriture sur le RAID 5 */
-    printf("Ecriture du buffer sur le systeme RAID 5... \n");
+    printf("Ecriture de 255 octets sur le systeme RAID 5... \n");
 
-    write_chunk(255, buffer, 0);
+    write_chunk(255, buffer, 32);
 }

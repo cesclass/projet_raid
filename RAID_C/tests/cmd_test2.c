@@ -13,10 +13,20 @@
 #include "../headers/couche1.h"
 #include "../headers/couche2.h"
 
+#include <stdio.h>
+
+#define ERR_ARGS    101
+
 virtual_disk_t r5Disk;
 
+/**
+ * @brief 
+ * Affiche proprement le buffer passe en parammetre sur stdout
+ * 
+ * @param buf_len       Taille du buffer a afficher en octet
+ * @param buffer        buffer a afficher
+ */
 void dump_buffer(int buf_len, uchar *buffer) {
-
     for(int i = 0; i < buf_len;) {
         printf("000");
         if (i < 0x100) printf("0");
@@ -31,19 +41,23 @@ void dump_buffer(int buf_len, uchar *buffer) {
 }
 
 int main(int argc, char *argv[]) {
-    /*  Init du RAID 5 */
-    printf("Initialisation du systeme RAID 5... \n");
+    char usage[BUFSIZ];
+    sprintf(usage, "Usage : %s repertoire_disques\n", argv[0]);
 
+    /*  Gestion des erreurs d'usage */
+    if (argc < 2 || argc > 2) {
+        fprintf(stderr, usage);
+        exit(ERR_ARGS);
+    }
+
+    /*  Init du RAID 5 */
     init_disk_raid5("../RAID/");
 
-    /*  Creation du buffer */
-    printf("Lecture des 255 octets sur le systeme RAID 5... \n");
+    /*  Lecture des 255 octets */
+    printf("Lecture de 255 octets sur le systeme RAID 5 : \n");
 
     uchar buffer[255];
     read_chunk(255, buffer, 0);
-
-    /*  Affichage du buffer */
-    printf("Affichage du contenu lu : \n");
 
     dump_buffer(255, buffer);
 }
