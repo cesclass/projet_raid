@@ -1,8 +1,0 @@
-.metadate
-.vscode
-.nosync
-.gitignore
-objects/
-builds/
-tests/
-Makefile
