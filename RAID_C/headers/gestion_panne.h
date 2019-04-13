@@ -2,6 +2,7 @@
 #define GESTION_PANNE_H_
 
 #include "couche1.h"
+#include "couche2.h"
 #include "raid_defines.h"
 
 /**

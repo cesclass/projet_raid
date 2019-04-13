@@ -3,7 +3,7 @@
 #define ERROR_INIT 1
 #define ERROR_CREATE_DISK 2
 
-extern virtual_disk_t r5Disk;
+virtual_disk_t r5Disk;
 
 int main (int argc, char * argv[]){
 
@@ -12,16 +12,14 @@ int main (int argc, char * argv[]){
         exit(ERROR_INIT);
     }
 
+
     printf("Debut de la reparation du disk\n");
     char *directory = argv[1];
     int numdisk = atoi(argv[2]);
     char acces[BUFSIZ];
 
-    sprintf(acces,"%s%s%d", directory,NAME_DISK, numdisk);
-    if(!(r5Disk.storage[numdisk] = fopen(acces,"wb+"))){
-        perror("Error reopen wrong disk");
-        exit(ERROR_CREATE_DISK);
-    }
+    init_disk_raid5(directory);
+    
     printf("Lancement reparation\n");
 
     repair_disk(numdisk);
