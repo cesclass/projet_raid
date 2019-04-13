@@ -4,7 +4,7 @@
  * 
  * @brief   
  * Fichier de declaration des fonctions de 
- *  la couche 3 pour le projet RAID
+ *  la couche 3 pour le projet RAID.
  * 
  * @copyright Licence MIT
  */
@@ -18,52 +18,82 @@
 #include "../headers/couche2.h"
 #include "../headers/couche1.h"
 
+// Taille(s)
 #define INODE_TABLE_TOTAL_SIZE  INODE_TABLE_SIZE*INODE_SIZE*BLOCK_SIZE
 #define INODE_BYTE_SIZE         INODE_SIZE*BLOCK_SIZE
+#define REAL_SUPER_BLOCK_SIZE   12
 
+// Erreur(s)
 #define ERR_UNUSED_INODE        11
 
-// Liste des fonctions
+/* 
+ * Gestion des inodes
+ * ***************************************************************************/
 
 /**
  * @brief 
- * 
+ * Charge la table d'inodes depuis les disques virtuels.
  */
 void read_inode_table(void);
 
 /**
  * @brief 
- * 
+ * Ecrit la table d'inodes sur les disques virtuels.
  */
 void write_inode_table(void);
 
 /**
  * @brief 
+ * Supprime (reinitialise) une inode dans la table d'inodes.
  * 
- * @param indice 
+ * @param indice            indice de l'inode a supprimer
  */
 void delete_inode(int indice);
 
 /**
- * @brief Get the unused inode object
+ * @brief
+ * Cherche une inode vide et retourne son indice.
+ * Retourne un code d'erreur si aucune inode n'est disponnible.
  * 
- * @return uint 
+ * @return uint             indice de la premiere inode vide
+ *                      OU  11 en cas d'erreur (aucune inode vide)
  */
 uint get_unused_inode(void);
 
 /**
  * @brief 
+ * Initialise une nouvelle inode avec les valeurs passes en parametre.
+ * La nouvelle inode est selectionnee avec get_unused_inode().
  * 
- * @param filename 
- * @param size 
- * @param first_byte 
- * @return uint 
+ * @param filename          Nom du fichier (31 caractere(s) max)
+ * @param size              Taille du fichier en octets
+ * @param first_byte        Indice du premier octet sur les disques virtuels
+ * @return uint             0 si OK, 11 si KO
  */
 uint init_inode(char * filename, uint size, uint first_byte);
 
+/*
+ * Gestion du super block
+ * ***************************************************************************/
 
+/**
+ * @brief 
+ * Charge le super bloc depuis les disques virtuels.
+ */
 void read_super_block(void);
+
+/**
+ * @brief 
+ * Ecrit le super block sur les disques virtuels. 
+ */
 void write_super_block(void);
-void set_first_free_byte(void);
+
+/**
+ * @brief
+ * Met a jour la valeur du premier octet libre sur le systeme RAID.
+ * 
+ * @param first_free_byte   Premier octet libre sur les disques
+ */
+void set_first_free_byte(uint first_free_byte);
 
 #endif

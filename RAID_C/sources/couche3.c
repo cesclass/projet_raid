@@ -13,14 +13,17 @@
 
 extern virtual_disk_t r5Disk;
 
+/* 
+ * Gestion des inodes
+ * ***************************************************************************/
+
 void read_inode_table(void) {
     uchar buff[INODE_TABLE_TOTAL_SIZE];
     read_chunk(INODE_TABLE_TOTAL_SIZE, buff, INODES_START);
 
+    // cast et copie des inodes dans la table
     inode_t *table = (inode_t *) buff;
-    for (int i = 0; i < INODE_TABLE_SIZE; i ++) {
-        r5Disk.inodes[i] = table[i];
-    }
+    for (int i = 0; i < INODE_TABLE_SIZE; r5Disk.inodes[i] = table[i++]); 
 }
 
 void write_inode_table(void) {
@@ -30,7 +33,11 @@ void write_inode_table(void) {
 
 void delete_inode(int indice) {
     inode_t * inode = &r5Disk.inodes[indice];
+    
+    // Remise a zero du tableau contenant le nom du fichier
+    // Autre solution : inode->filename[0] = `\0`;
     for(int i = 0; i < FILENAME_MAX_SIZE; inode->filename[i++] = '\0');
+    
     inode->first_byte = 0;
     inode->nblock = 0;
     inode->size = 0;
@@ -38,6 +45,7 @@ void delete_inode(int indice) {
 
 uint get_unused_inode(void) {
     for(uint i = 0; i < INODE_TABLE_SIZE; i++) {
+        // si size vaut 0, l'inode est vide
         if (!r5Disk.inodes[i].size) return i;
     }
     return ERR_UNUSED_INODE;
@@ -52,20 +60,29 @@ uint init_inode(char * filename, uint size, uint first_byte) {
     inode_t * inode = &(r5Disk.inodes[indice]);
     sprintf(inode->filename, filename);
     inode->size = size;
-    inode->first_byte = first_byte;
+    inode->first_byte = first_byte;         /*WARNING*/
     inode->nblock = compute_nblock(size);
-    /*DUGAT*/
     return 0;
 }
 
+/*
+ * Gestion du super block
+ * ***************************************************************************/
+
 void read_super_block(void) {
-    return;
+    uchar buff[REAL_SUPER_BLOCK_SIZE];
+    read_chunk(REAL_SUPER_BLOCK_SIZE, buff, 0);
+
+    // cast et copie du super block
+    super_block_t * block = (super_block_t*) buff;
+    r5Disk.super_block = (*block);
 }
 
 void write_super_block(void) {
-    return;
+    uchar * buff = (uchar*) &(r5Disk.super_block);
+    write_chunk(REAL_SUPER_BLOCK_SIZE, buff, 0);
 }
 
-void set_first_free_byte(void) {
-    return;
+void set_first_free_byte(uint first_free_byte) {
+    r5Disk.super_block.first_free_byte = first_free_byte;
 }
