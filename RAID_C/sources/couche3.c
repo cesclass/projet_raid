@@ -23,7 +23,9 @@ void read_inode_table(void) {
 
     // cast et copie des inodes dans la table
     inode_t *table = (inode_t *) buff;
-    for (int i = 0; i < INODE_TABLE_SIZE; r5Disk.inodes[i] = table[i++]); 
+    for (int i = 0; i < INODE_TABLE_SIZE; i++) {
+        r5Disk.inodes[i] = table[i];
+    } 
 }
 
 void write_inode_table(void) {
