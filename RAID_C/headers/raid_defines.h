@@ -10,7 +10,7 @@
 #define INODE_TABLE_SIZE 10 // taille fixe = nb max fichiers
 #define MAX_MSG 1024 // uchar
 #define SUPER_BLOCK_SIZE 4 // nb blocs avec parité
-#define INODES_START SUPER_BLOCK_SIZE*BLOCK_SIZE+1 // en octets
+#define INODES_START SUPER_BLOCK_SIZE*BLOCK_SIZE // en octets
 #define INODE_SIZE 11 // en blocks avec parité
 
 typedef unsigned int uint; // même taille que int
@@ -36,7 +36,7 @@ typedef inode_t inode_table_t[INODE_TABLE_SIZE];// la taille est fixe
 
 typedef struct super_block_s{
   enum raid raid_type;
-  uint nb_blocks_used ; //
+  uint nb_blocks_used; //
   uint first_free_byte; // premier octet libre
   } super_block_t;
 
@@ -59,7 +59,7 @@ typedef struct stripe_s {
 
 typedef struct file_s{
   uint size; // Size of file in bytes
-  uchar data [MAX_FILE_SIZE] ; // only text files
-} file_t ;
+  uchar data [MAX_FILE_SIZE]; // only text files
+} file_t;
 
 #endif // __R5_DEFINES__
