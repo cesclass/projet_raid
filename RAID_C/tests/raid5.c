@@ -75,7 +75,6 @@ int main(int argc, char *argv[]) {
         printf("%sRAID 5 >> %s", PNK_COL, RST_COL);
         cmd[0] = '\0'; arg[0] = '\0';
         read_cmd(cmd, arg);
-        printf("%s | %s\n", cmd, arg);
 
         /*  Gestion des commandes */
         if      (!strcmp(cmd, "help"))      cmd_help();

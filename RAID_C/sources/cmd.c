@@ -1,4 +1,11 @@
+#include "../headers/couche3.h"
+
 #include <stdio.h>
+
+#define RED_COL     "\x1B[31m"
+#define RST_COL     "\x1B[0m"
+
+extern virtual_disk_t r5Disk;
 
 void cmd_help() {
     printf("A propos du systeme RAID 5\n");
@@ -30,29 +37,126 @@ void cmd_help() {
 }
 
 void cmd_ls(char *arg) {
-    
+    char usage[BUFSIZ];
+    sprintf(usage, "Usage : ls [-l]\n");
+
+    /*  Affichage en mode liste detaille */
+    if (!strcmp(arg, "-l")) {
+
+    }
+
+    /*  Affichage normal */
+    else if (!strcmp(arg, "")) {
+        
+    }
+
+    /*  Erreur d'argument */
+    else {
+        fprintf(stderr, "%s[ERR]%s %s Argument invalide\n",
+                RED_COL, RST_COL, arg);
+        fprintf(stderr, usage);
+    }
 }
 
 void cmd_cat(char *arg) {
+    char usage[BUFSIZ];
+    sprintf(usage, "Usage : cat <nom_de_fichier>\n");
 
+    /*  Erreur d'argument */
+    if (!strcmp(arg, "")) {
+        fprintf(stderr, "%s[ERR]%s Argument vide\n",
+                RED_COL, RST_COL);
+        fprintf(stderr, usage);
+    }
+
+    /*  Recherche du fichier */
+    else {
+
+    }
 }
 
 void cmd_rm(char *arg) {
+    char usage[BUFSIZ];
+    sprintf(usage, "Usage : rm <nom_de_fichier>\n");
 
+    /*  Erreur d'argument */
+    if (!strcmp(arg, "")) {
+        fprintf(stderr, "%s[ERR]%s Argument vide\n",
+                RED_COL, RST_COL);
+        fprintf(stderr, usage);
+    }
+
+    /*  Recherche du fichier */
+    else {
+        
+    }
 }
 
 void cmd_create(char *arg) {
+    char usage[BUFSIZ];
+    sprintf(usage, "Usage : create <nom_de_fichier>\n");
+
+    /*  Erreur d'argument */
+    if (!strcmp(arg, "")) {
+        fprintf(stderr, "%s[ERR]%s Argument vide\n",
+                RED_COL, RST_COL);
+        fprintf(stderr, usage);
+    }
+
+    /*  Recherche du fichier */
+    else {
+        
+    }
 
 }
 
 void cmd_edit(char *arg) {
+    char usage[BUFSIZ];
+    sprintf(usage, "Usage : edit <nom_de_fichier>\n");
 
+    /*  Erreur d'argument */
+    if (!strcmp(arg, "")) {
+        fprintf(stderr, "%s[ERR]%s Argument vide\n",
+                RED_COL, RST_COL);
+        fprintf(stderr, usage);
+    }
+
+    /*  Recherche du fichier */
+    else {
+        
+    }
 }
 
 void cmd_load(char *arg) {
+    char usage[BUFSIZ];
+    sprintf(usage, "Usage : load <nom_de_fichier>\n");
 
+    /*  Erreur d'argument */
+    if (!strcmp(arg, "")) {
+        fprintf(stderr, "%s[ERR]%s Argument vide\n",
+                RED_COL, RST_COL);
+        fprintf(stderr, usage);
+    }
+
+    /*  Recherche du fichier */
+    else {
+        
+    }
 }
 
 void cmd_store(char *arg) {
+    char usage[BUFSIZ];
+    sprintf(usage, "Usage : store <nom_de_fichier>\n");
 
+    /*  Erreur d'argument */
+    if (!strcmp(arg, "")) {
+        fprintf(stderr, "%s[ERR]%s Argument vide\n",
+                RED_COL, RST_COL);
+        fprintf(stderr, usage);
+    }
+
+    /*  Recherche du fichier */
+    else {
+        
+    }
 }
