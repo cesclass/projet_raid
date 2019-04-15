@@ -3,6 +3,7 @@
 #include <stdio.h>
 
 #define RED_COL     "\x1B[31m"
+#define GRN_COL     "\x1B[32m"
 #define RST_COL     "\x1B[0m"
 
 extern virtual_disk_t r5Disk;
@@ -37,12 +38,39 @@ void cmd_help() {
 }
 
 void cmd_ls(char *arg) {
-    char usage[BUFSIZ];
+    char usage[BUFSIZ], print[BUFSIZ] = "";
     sprintf(usage, "Usage : ls [-l]\n");
+
+    //read_inode_table();
 
     /*  Affichage en mode liste detaille */
     if (!strcmp(arg, "-l")) {
+        uint taille, total = 0;
+        char taille_str[16];
+        
+        for (int i = 0; i < INODE_TABLE_SIZE; i++) {
+            if (taille = strlen(r5Disk.inodes[i].filename)) {
+                /*  Construction de l'affichage du ls -l */
+                /*   - Nom du fichier */
+                strcat(print, GRN_COL);
+                strcat(print, r5Disk.inodes[i].filename);
+                strcat(print, RST_COL);
 
+                /*   - Alignement avec des espaces */
+                for (int j = taille; j < 33; j ++) strcat(print, " ");
+                
+                /*   - Taille du fichier */
+                sprintf(taille_str, "%d Octets\n", r5Disk.inodes[i].size);
+                strcat(print, taille_str);
+
+                /*  Calcul du poid total des fichier du systeme RAID */
+                total += r5Disk.inodes[i].size;
+            }
+        }
+
+        /*  Affichage du resultat de la commande ls -l */
+        printf("Total : %d Octets\n", total);
+        printf("%s", print);
     }
 
     /*  Affichage normal */
