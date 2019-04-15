@@ -48,7 +48,7 @@ void cmd_ls(char *arg) {
         uint taille, total = 0;
         char taille_str[16];
         
-        for (int i = 0; i < INODE_TABLE_SIZE; i++) {
+        for (int i = 0; i < INODE_TABLE_SIZE; i ++) {
             if (taille = strlen(r5Disk.inodes[i].filename)) {
                 /*  Construction de l'affichage du ls -l */
                 /*   - Nom du fichier */
@@ -75,7 +75,12 @@ void cmd_ls(char *arg) {
 
     /*  Affichage normal */
     else if (!strcmp(arg, "")) {
-        
+        printf("%s", GRN_COL);
+        for (int i = 0; i < INODE_TABLE_SIZE; i ++) {
+            if (r5Disk.inodes[i].filename[0] != '\0') 
+                printf("%s  ", r5Disk.inodes[i].filename);
+        }
+        printf("%s\n", RST_COL);
     }
 
     /*  Erreur d'argument */
