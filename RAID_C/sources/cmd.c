@@ -1,4 +1,6 @@
 #include "../headers/couche3.h"
+#include "../headers/couche4.h"
+#include "../headers/cmd.h"
 
 #include <stdio.h>
 
@@ -8,10 +10,18 @@
 
 extern virtual_disk_t r5Disk;
 
+void saisie_fichier(file_t *f) {
+    for (f->size = 0; (f->data[f->size] = getchar()) != '$'; ++ f->size);
+    f->data[f->size ++] = '\0';
+    printf("\n%d caracteres :\n%s\n", f->size, f->data);
+}
+
 void cmd_help() {
     printf("A propos du systeme RAID 5\n");
     printf("Vous pouvez interagir avec le systeme RAID 5 ");
     printf("grace aux commandes suivantes :\n");
+
+    printf("help : Affiche l'aide suivante.\n");
 
     printf("ls [-l] : Affiche l'enssemble des fichiers ");
     printf("presents sur le systeme.\n");
@@ -40,8 +50,6 @@ void cmd_help() {
 void cmd_ls(char *arg) {
     char usage[BUFSIZ], print[BUFSIZ] = "";
     sprintf(usage, "Usage : ls [-l]\n");
-
-    //read_inode_table();
 
     /*  Affichage en mode liste detaille */
     if (!strcmp(arg, "-l")) {
@@ -91,6 +99,9 @@ void cmd_ls(char *arg) {
     }
 }
 
+/**
+ * @TODO tester cette fonction avec read_file (couche 4)
+ */
 void cmd_cat(char *arg) {
     char usage[BUFSIZ];
     sprintf(usage, "Usage : cat <nom_de_fichier>\n");
@@ -103,11 +114,19 @@ void cmd_cat(char *arg) {
     }
 
     /*  Recherche du fichier */
-    else {
-
-    }
+    /*else {
+        file_t f;
+        if (read_file(arg, &f))
+            printf("%s\n", f.data);
+        else
+            fprintf(stderr, "%s[ERR]%s %s : Fichier introuvable\n",
+                    RED_COL, RST_COL, arg);
+    }*/
 }
 
+/**
+ * @TODO tester cette fonction avec delete_file (couche 4)
+ */
 void cmd_rm(char *arg) {
     char usage[BUFSIZ];
     sprintf(usage, "Usage : rm <nom_de_fichier>\n");
@@ -119,12 +138,20 @@ void cmd_rm(char *arg) {
         fprintf(stderr, usage);
     }
 
-    /*  Recherche du fichier */
-    else {
-        
-    }
+    /*  Suppression du fichier */
+    /*else {
+        if (delete_file(arg)) {
+            printf("%s : Fichier supprime\n");
+            write_inode_table();
+        } else
+            fprintf(stderr, "%s[ERR]%s %s : Fichier introuvable\n",
+                    RED_COL, RST_COL, arg);
+    }*/
 }
 
+/**
+ * @TODO tester cette fonction avec write_file (couche 4)
+ */
 void cmd_create(char *arg) {
     char usage[BUFSIZ];
     sprintf(usage, "Usage : create <nom_de_fichier>\n");
@@ -138,11 +165,23 @@ void cmd_create(char *arg) {
 
     /*  Recherche du fichier */
     else {
+        file_t f;
+        printf("Veuillez saisir le contenu du nouveau fichier %s.\n", arg);
+        printf("Pour terminer votre saisie, tapez '$' puis ENTREE.\n");
         
+        /*  Saisie du nouveau fichier */
+        for (f.size = 0; (f.data[f.size] = getchar()) != '0'; ++ f.size);
+        f.data[f.size ++] = '\0';
+        
+        /*  Enregistrement du nouveau ficheir */
+        write_file(arg, &f);
     }
 
 }
 
+/**
+ * @TODO tester cette fonction avec write_file et read_file (couche 4)
+ */
 void cmd_edit(char *arg) {
     char usage[BUFSIZ];
     sprintf(usage, "Usage : edit <nom_de_fichier>\n");
@@ -154,9 +193,31 @@ void cmd_edit(char *arg) {
         fprintf(stderr, usage);
     }
 
-    /*  Recherche du fichier */
+    /*  Edition du fichier */
     else {
-        
+        /*  Si le fichier existe */
+        if (read_file(arg, &f)) {
+            file_t f;
+
+            /*  Affichage de l'ancien fichier */
+            printf("%s (%d Octets)\n", arg, r5Disk.inodes[i].size);
+            printf("%s\n", f.data);
+
+            printf("\nVeuillez saisir le contenu du fichier %s.\n", arg);
+            printf("Pour terminer votre saisie, tapez '$' puis ENTREE.\n");
+            
+            /*  Saisie du nouveau fichier */
+            for (f.size = 0; (f.data[f.size] = getchar()) != '0'; ++ f.size);
+            f.data[f.size ++] = '\0';
+            
+            /*  Enregistrement du nouveau fichier */
+            write_file(arg, &f);
+        } 
+
+        /*  Si le fichier nexiste pas */
+        else
+            fprintf(stderr, "%s[ERR]%s %s : Fichier introuvable\n",
+                    RED_COL, RST_COL, arg);
     }
 }
 
