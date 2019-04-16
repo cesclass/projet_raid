@@ -46,7 +46,7 @@ void write_inode_table(void);
  * @brief 
  * Supprime (reinitialise) une inode dans la table d'inodes.
  * 
- * @param indice            indice de l'inode a supprimer
+ * @param indice            Indice de l'inode a supprimer
  */
 void delete_inode(int indice);
 
@@ -55,8 +55,8 @@ void delete_inode(int indice);
  * Cherche une inode vide et retourne son indice.
  * Retourne un code d'erreur si aucune inode n'est disponnible.
  * 
- * @return uint             indice de la premiere inode vide
- *                      OU  11 en cas d'erreur (aucune inode vide)
+ * @return uint             Indice de la premiere inode vide
+ *                      OU  ERR_UNUSED_INODE (aucune inode vide)
  */
 uint get_unused_inode(void);
 
@@ -68,7 +68,8 @@ uint get_unused_inode(void);
  * @param filename          Nom du fichier (31 caractere(s) max)
  * @param size              Taille du fichier en octets
  * @param first_byte        Indice du premier octet sur les disques virtuels
- * @return uint             0 si OK, 11 si KO
+ * @return uint             Indice de l'inode initialise
+ *                      OU  ERR_UNUSED_INODE (aucune inode vide)
  */
 uint init_inode(char * filename, uint size, uint first_byte);
 
