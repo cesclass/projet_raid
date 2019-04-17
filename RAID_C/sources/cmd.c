@@ -110,9 +110,10 @@ void cmd_cat(char *arg) {
     /*  Recherche du fichier */
     else {
         file_t f;
-        if (read_file(arg, &f))
-            printf("%s\n", f.data);
-        else
+        if (read_file(arg, &f)) {
+            for(int i = 0; i < f.size; putc(f.data[i++] , stdout));
+            printf("\n");
+        } else
             fprintf(stderr, "%s[ERR]%s %s : Fichier introuvable\n",
                     RED_COL, RST_COL, arg);
     }
@@ -176,11 +177,14 @@ void cmd_create(char *arg) {
             f.data[f.size ++] = '\0';
             
             /*  Enregistrement du nouveau fichier */
-            write_file(arg, &f);
-            printf("%s : Fichier sauvegarde.\n", arg);
+            if (write_file(arg, &f)) {
+                printf("%s : Fichier sauvegarde.\n", arg);
+            } else {
+                fprintf(stderr, "%s[ERR]%s %s : Le fichier n'a pas pu etre ecrit.\n",
+                        RED_COL, RST_COL, arg);
+            }
         }
     }
-
 }
 
 /**

@@ -43,3 +43,11 @@ makedir:
 clean:
 	rm -rf $(OBJDIR)/*
 	rm -rf $(BINDIR)/*
+
+.PHONY: reset_raid
+reset_raid:
+	rm -rf ../RAID/*
+	touch ../RAID/vDisk0
+	touch ../RAID/vDisk1
+	touch ../RAID/vDisk2
+	touch ../RAID/vDisk3
