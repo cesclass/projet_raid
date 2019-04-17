@@ -28,9 +28,9 @@ void read_inode_table(void) {
     } 
 }
 
-void write_inode_table(void) {
+uint write_inode_table(void) {
     uchar * buff = (uchar*) r5Disk.inodes;
-    write_chunk(INODE_TABLE_TOTAL_SIZE, buff, INODES_START);
+    return write_chunk(INODE_TABLE_TOTAL_SIZE, buff, INODES_START);
 }
 
 void delete_inode(int indice) {
@@ -74,9 +74,9 @@ void read_super_block(void) {
     r5Disk.super_block = (*block);
 }
 
-void write_super_block(void) {
+uint write_super_block(void) {
     uchar * buff = (uchar*) &(r5Disk.super_block);
-    write_chunk(REAL_SUPER_BLOCK_SIZE, buff, 0);
+    return write_chunk(REAL_SUPER_BLOCK_SIZE, buff, 0);
 }
 
 void set_first_free_byte(uint first_free_byte) {
