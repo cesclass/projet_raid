@@ -19,7 +19,15 @@ int main(){
     for(int i = 0; i < MAX_DISK; i++){
         assert(r5Disk.storage[i] != NULL);
     }
-    
+
+    /* Verification Super Block */
+    assert(r5Disk.super_block.first_free_byte != 0);
+    printf("First free byte : %d\n", r5Disk.super_block.first_free_byte);
+    assert(r5Disk.super_block.nb_blocks_used != 0);
+    printf("Nb blocks used : %d\n", r5Disk.super_block.nb_blocks_used);
+    assert(r5Disk.super_block.raid_type == CINQ);
+    printf("Raid type : %d\n", r5Disk.super_block.raid_type);    
+
 
     printf("OK\n");
     printf("---------------------------\n");

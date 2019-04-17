@@ -1,4 +1,5 @@
 #include "../headers/couche1.h"
+#include "../headers/couche3.h"
 
 extern virtual_disk_t r5Disk;
 
@@ -27,7 +28,7 @@ void init_disk_raid5(char *directory){
   if( ftell(r5Disk.storage[0]) == EOF ){
     /* Super Block */
     r5Disk.super_block.raid_type = r5Disk.raidmode;
-    r5Disk.super_block.nb_blocks_used = INODE_TABLE_TOTAL_SIZE + REAL_SUPER_BLOCK_SIZE;
+    r5Disk.super_block.nb_blocks_used = INODE_TABLE_SIZE * INODE_SIZE + REAL_SUPER_BLOCK_SIZE;
     r5Disk.super_block.first_free_byte = r5Disk.super_block.nb_blocks_used;
     write_super_block();
 
