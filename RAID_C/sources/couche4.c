@@ -3,6 +3,8 @@
  * @author Cyril ESCLASSAN (cyril.esclassan@univ-tlse3.fr)
  * 
  * @brief 
+ * Fichier de definition des fonctions de 
+ *  la couche 4 pour le projet RAID.
  * 
  * @copyright Licence MIT
  * 
@@ -57,7 +59,7 @@ uint read_file(char * filename, file_t * file) {
     } else {
         file->size = r5disk.inodes[id].size;
         read_chunk(
-            r5disk.inodes[id].size,
+            file->size,
             file->data,
             r5disk.inodes[id].first_byte
         );
