@@ -30,7 +30,7 @@ void init_disk_raid5(char *directory){
 
     /* Super Block */
     r5Disk.super_block.raid_type = r5Disk.raidmode;
-    r5Disk.super_block.first_free_byte = write_inode_table();
+    set_first_free_byte( write_inode_table());
     r5Disk.super_block.nb_blocks_used = r5Disk.super_block.first_free_byte / BLOCK_SIZE;
     write_super_block();
 
@@ -99,7 +99,7 @@ void block_repair(int pos, int num_disk, block_t *repair){
   block_t read;
  
   /* set les valeurs du block a reparer a 0 */
-  for(int i=0; i < MAX_DISK; repair->data[i++] = 0);
+  for(int i = 0; i < BLOCK_SIZE; repair->data[i++] = 0);
 
   for(int i = 0 ; i < MAX_DISK; i++){
     if(i != num_disk){
@@ -119,7 +119,7 @@ void dump_block_hexa(block_t block){
   int value;
   for(int i = 0; i < BLOCK_SIZE; i++){
     value = (int)block.data[i];
-    printf("%x ", value);
+    printf("%2x ", value);
   }
-  printf("\n");
+  printf(" | ");
 }

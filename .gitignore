@@ -1,14 +1,6 @@
 .metadata
 .vscode
 .nosync
-<<<<<<< HEAD
-*.o
-.gitignore
-
-RAID_C/builds/test_c2
-RAID_C/tests/test_c1.c
-=======
 objects/
 builds/
 RAID/
->>>>>>> couche1_dev
