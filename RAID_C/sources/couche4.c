@@ -12,39 +12,70 @@
 
 extern virtual_disk_t r5disk;
 
-int search_inode(char * filename);
-
 uint write_file(char * filename, file_t * file) {
-    super_block_t * sb = &(r5disk.super_block);
+    super_block_t * block = &(r5disk.super_block);
     inode_table_t inodes = &(r5disk.inodes);
     uint id = search_inode(filename);
+    uint new_pos;
 
     // Inode existante mais pas assez de place
-    if(file->size > r5disk.inodes[id].size) {
-        delete_inode(id);
-    }
+    if(id != NO_INODE_MATCH && file->size > inodes[id].size) delete_inode(id);
 
     // Inode inexistante : creation d'une inode (avec gestion d'erreur)
     if(id == NO_INODE_MATCH) {
-        id = get_unused_inode();
-        uint init = init_inode(filename, file->size, sb->first_free_byte);
-        if(init == ERR_UNUSED_INODE) return ERR_UNUSED_INODE;
+        id = init_inode(filename, file->size, block->first_free_byte);
+        if(id == ERR_UNUSED_INODE) return 0;
+    
+    // Inode existante : MaJ de l'inode
+    } else {
+        inodes[id].size = file->size;
     }
 
-    // Ecriture et MaJ de l'inode et du super block
-    inodes[id].size = file->size;
-    uint pos = write_chunk(file->size, file->data, inodes[id].first_byte);
+    // Ecriture du fichier
+    new_pos = write_chunk(
+        file->size, 
+        file->data, 
+        inodes[id].first_byte
+    );
+    
+    // Ecriture de l'inode
+    write_inode_table();
 
-    if (pos > sb->first_free_byte) {
-        sb->first_free_byte = pos;
+    // MaJ du super block et ecriture si necessaire
+    if (new_pos > block->first_free_byte) {
+        block->first_free_byte = new_pos;
+        write_super_block();
     }
 
-    return 0;
+    return 1;
 }
 
+uint read_file(char * filename, file_t * file) {
+    uint id = search_inode(filename);
+    if(id == NO_INODE_MATCH) {
+        return 0;
+    } else {
+        file->size = r5disk.inodes[id].size;
+        read_chunk(
+            r5disk.inodes[id].size,
+            file->data,
+            r5disk.inodes[id].first_byte
+        );
+        return 1;
+    }
+}
 
+uint delete_file(char * filename) {
+    uint id = search_inode(filename);
+    if (id == NO_INODE_MATCH) {
+        return 0;
+    } else {
+        delete_inode(id);
+        return 1;
+    }
+}
 
-int search_inode(char * filename) {
+uint search_inode(char * filename) {
     for(int i = 0; i < INODE_TABLE_SIZE; i++) {
         if(!strcmp(filename, r5disk.inodes[i].filename)) return i;
     }
