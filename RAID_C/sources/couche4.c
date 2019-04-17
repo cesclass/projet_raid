@@ -21,7 +21,10 @@ uint write_file(char * filename, file_t * file) {
     uint new_pos;
 
     // Inode existante mais pas assez de place
-    if(id != NO_INODE_MATCH && file->size > inodes[id].size) delete_inode(id);
+    if(id != NO_INODE_MATCH && file->size > inodes[id].size) {
+        delete_inode(id);
+        id = NO_INODE_MATCH;
+    }
 
     // Inode inexistante : creation d'une inode (avec gestion d'erreur)
     if(id == NO_INODE_MATCH) {
