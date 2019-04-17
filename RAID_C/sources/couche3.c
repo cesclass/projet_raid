@@ -35,11 +35,7 @@ void write_inode_table(void) {
 
 void delete_inode(int indice) {
     inode_t * inode = &r5Disk.inodes[indice];
-    
-    // Remise a zero du tableau contenant le nom du fichier
-    // Autre solution : inode->filename[0] = `\0`;
-    for(int i = 0; i < FILENAME_MAX_SIZE; inode->filename[i++] = '\0');
-    
+    inode->filename[0] = '\0';
     inode->first_byte = 0;
     inode->nblock = 0;
     inode->size = 0;
@@ -48,23 +44,21 @@ void delete_inode(int indice) {
 uint get_unused_inode(void) {
     for(uint i = 0; i < INODE_TABLE_SIZE; i++) {
         // si size vaut 0, l'inode est vide
-        if (!r5Disk.inodes[i].size) return i;
+        if (r5Disk.inodes[i].filename[0] == '\0') return i;
     }
     return ERR_UNUSED_INODE;
 }
 
 uint init_inode(char * filename, uint size, uint first_byte) {
     uint indice = get_unused_inode();
-    if(indice == ERR_UNUSED_INODE) {
-        return indice;
-    }
+    if(indice == ERR_UNUSED_INODE) return indice;
 
     inode_t * inode = &(r5Disk.inodes[indice]);
     sprintf(inode->filename, filename);
     inode->size = size;
-    inode->first_byte = first_byte;         /*WARNING*/
+    inode->first_byte = first_byte;
     inode->nblock = compute_nblock(size);
-    return 0;
+    return indice;
 }
 
 /*
