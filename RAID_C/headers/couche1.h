@@ -1,3 +1,14 @@
+/**
+ * @file couche1.h
+ * @author Guillaume B (guillaume.broise@univ-tlse3.fr)
+ * 
+ * @brief   
+ * Fichier de declaration des fonctions de la couche 1
+ * pour le systeme RAID 5
+ * 
+ * @copyright Licence MIT
+ */
+
 #ifndef __COUCHE1_H_
 #define __COUCHE1_H_
 
@@ -8,13 +19,13 @@
 #include <string.h>
 
 #include "raid_defines.h"
+#include "couche3.h"
 
+/* Erreur */
 #define ERROR_FILE 1
 #define ERROR_FILE_CLOSE 2
-#define ERROR_SEEK_WRITE 3
-#define ERROR_WRITE 4
-#define ERROR_SEEK_READ 5
-#define ERROR_READ 6
+#define ERROR_WRITE 3
+#define ERROR_READ 4
 
 #define SUCCES_OFF 10
 
@@ -101,6 +112,6 @@ void block_repair(int pos, int numDisk, block_t *repair);
  * @param block : block a afficher en hexa
  * 
  */
-void hexa_display(block_t block);
+void dump_block_hexa(block_t block);
 
 #endif

@@ -3,6 +3,8 @@
  * @author Cyril ESCLASSAN (cyril.esclassan@univ-tlse3.fr)
  * 
  * @brief 
+ * Fichier de definition des fonctions de 
+ *  la couche 4 pour le projet RAID.
  * 
  * @copyright Licence MIT
  * 
@@ -10,11 +12,11 @@
 
 #include "../headers/couche4.h"
 
-extern virtual_disk_t r5disk;
+extern virtual_disk_t r5Disk;
 
 uint write_file(char * filename, file_t * file) {
-    super_block_t * block = &(r5disk.super_block);
-    inode_table_t inodes = &(r5disk.inodes);
+    super_block_t * block = &(r5Disk.super_block);
+    inode_t * inodes = r5Disk.inodes;
     uint id = search_inode(filename);
     uint new_pos;
 
@@ -55,11 +57,11 @@ uint read_file(char * filename, file_t * file) {
     if(id == NO_INODE_MATCH) {
         return 0;
     } else {
-        file->size = r5disk.inodes[id].size;
+        file->size = r5Disk.inodes[id].size;
         read_chunk(
-            r5disk.inodes[id].size,
+            file->size,
             file->data,
-            r5disk.inodes[id].first_byte
+            r5Disk.inodes[id].first_byte
         );
         return 1;
     }
@@ -75,9 +77,40 @@ uint delete_file(char * filename) {
     }
 }
 
+uint load_file_from_host(char * filename) {
+    FILE * file = fopen(filename, "rt");
+    if (file == NULL) return 0;
+
+    file_t read;
+    read.size = 0;
+    uchar c = getc(file);
+    while(!feof(file)) {
+        read.data[read.size++] = c;
+        c = getc(file);
+    }
+    fclose(file);
+
+    if(!write_file(filename, &read)) return 0;
+
+    return 1;
+}
+
+uint store_file_to_host(char * filename) {
+    file_t write;
+    if(!read_file(filename, &write)) return 0;
+
+    FILE * file = fopen(filename, "wt");
+    if(file == NULL) return 0;
+
+    fwrite(write.data, 1, write.size, file);
+    fclose(file);
+
+    return 1;
+}
+
 uint search_inode(char * filename) {
     for(int i = 0; i < INODE_TABLE_SIZE; i++) {
-        if(!strcmp(filename, r5disk.inodes[i].filename)) return i;
+        if(!strcmp(filename, r5Disk.inodes[i].filename)) return i;
     }
     return NO_INODE_MATCH;
 }
