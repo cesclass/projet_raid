@@ -14,7 +14,7 @@ extern virtual_disk_t r5disk;
 
 uint write_file(char * filename, file_t * file) {
     super_block_t * block = &(r5disk.super_block);
-    inode_table_t inodes = &(r5disk.inodes);
+    inode_t * inodes = r5disk.inodes;
     uint id = search_inode(filename);
     uint new_pos;
 
@@ -73,6 +73,37 @@ uint delete_file(char * filename) {
         delete_inode(id);
         return 1;
     }
+}
+
+uint load_file_from_host(char * filename) {
+    FILE * file = fopen(filename, "rt");
+    if (file == NULL) return 0;
+
+    file_t read;
+    read.size = 0;
+    uchar c = getc(file);
+    while(!feof(file)) {
+        read.data[read.size++] = c;
+        c = getc(file);
+    }
+    fclose(file);
+
+    if(!write_file(filename, &read)) return 0;
+
+    return 1;
+}
+
+uint store_file_to_host(char * filename) {
+    file_t write;
+    if(!read_file(filename, &write)) return 0;
+
+    FILE * file = fopen(filename, "wt");
+    if(file == NULL) return 0;
+
+    fwrite(write.data, 1, write.size, file);
+    fclose(file);
+
+    return 1;
 }
 
 uint search_inode(char * filename) {
