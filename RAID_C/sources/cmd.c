@@ -10,12 +10,6 @@
 
 extern virtual_disk_t r5Disk;
 
-void saisie_fichier(file_t *f) {
-    for (f->size = 0; (f->data[f->size] = getchar()) != '$'; ++ f->size);
-    f->data[f->size ++] = '\0';
-    printf("\n%d caracteres :\n%s\n", f->size, f->data);
-}
-
 void cmd_help() {
     printf("A propos du systeme RAID 5\n");
     printf("Vous pouvez interagir avec le systeme RAID 5 ");
@@ -68,7 +62,7 @@ void cmd_ls(char *arg) {
                 for (int j = taille; j < 33; j ++) strcat(print, " ");
                 
                 /*   - Taille du fichier */
-                sprintf(taille_str, "%d Octets\n", r5Disk.inodes[i].size);
+                sprintf(taille_str, "%d \tOctets\n", r5Disk.inodes[i].size);
                 strcat(print, taille_str);
 
                 /*  Calcul du poid total des fichier du systeme RAID */
@@ -140,8 +134,8 @@ void cmd_rm(char *arg) {
 
     /*  Suppression du fichier */
     else {
-        if (delete_file(arg) != NO_INODE_MATCH) {
-            printf("%s : Fichier supprime\n");
+        if (delete_file(arg)) {
+            printf("%s : Fichier supprime\n", arg);
             write_inode_table();
         } else
             fprintf(stderr, "%s[ERR]%s %s : Fichier introuvable\n",
@@ -177,11 +171,13 @@ void cmd_create(char *arg) {
             printf("Pour terminer votre saisie, tapez '$' puis ENTREE.\n");
             
             /*  Saisie du nouveau fichier */
-            for (f.size = 0; (f.data[f.size] = getchar()) != '0'; ++ f.size);
+            for (f.size = 0; (f.data[f.size] = getchar()) != '$'; ++ f.size);
+            getchar();
             f.data[f.size ++] = '\0';
             
-            /*  Enregistrement du nouveau ficheir */
+            /*  Enregistrement du nouveau fichier */
             write_file(arg, &f);
+            printf("%s : Fichier sauvegarde.\n", arg);
         }
     }
 
@@ -203,19 +199,21 @@ void cmd_edit(char *arg) {
 
     /*  Edition du fichier */
     else {
+        file_t f;
+
         /*  Si le fichier existe */
         if (read_file(arg, &f)) {
-            file_t f;
 
             /*  Affichage de l'ancien fichier */
-            printf("%s (%d Octets)\n", arg, r5Disk.inodes[i].size);
+            printf("%s (%d Octets)\n", arg, f.size);
             printf("%s\n", f.data);
 
             printf("\nVeuillez saisir le contenu du fichier %s.\n", arg);
             printf("Pour terminer votre saisie, tapez '$' puis ENTREE.\n");
             
             /*  Saisie du nouveau fichier */
-            for (f.size = 0; (f.data[f.size] = getchar()) != '0'; ++ f.size);
+            for (f.size = 0; (f.data[f.size] = getchar()) != '$'; ++ f.size);
+            getchar();
             f.data[f.size ++] = '\0';
             
             /*  Enregistrement du nouveau fichier */
@@ -245,26 +243,26 @@ void cmd_load(char *arg) {
         char reponse;
 
         /*  Demande de confirmation */
-        do {
+        /*do {
             printf("Si le fichier %s existe sur le RAID, ", arg);
             printf("il sera ecrase.\n ");
             printf("Confirmez-vous l'operation ? (o ou n)\n");
 
             if ((reponse = getchar()) != 'o' && reponse != 'O'
                     && reponse != 'n' && reponse != 'N')
-                printf("%s : reponse invalide.\n", reponse);
+                printf("%c : reponse invalide.\n", reponse);
 
         } while (reponse != 'o' && reponse != 'O' && reponse != 'n'
                 && reponse != 'N');
 
         if (reponse == 'o' || reponse == 'O') {
             if (load_file_from_host(arg))
-                printf("%s correctement copie sur le RAID.\n");
+                printf("%s correctement copie sur le RAID.\n", arg);
             else
                 fprintf(stderr, "%s[ERR]%s %s : Fichier introuvable\n",
                         RED_COL, RST_COL, arg);
         } else
-            printf("load %s avorte\n", arg);
+            printf("load %s avorte\n", arg);*/
     }
 }
 
