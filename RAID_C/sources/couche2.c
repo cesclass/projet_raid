@@ -53,7 +53,7 @@ void read_stripe(int pos, stripe_t *dest) {
     }
 }
 
-uint write_chunk(int buf_len, const uchar *buffer, uchar pos) {    
+uint write_chunk(int buf_len, const uchar *buffer, uint pos) {    
     stripe_t str;
     str.nblocks = r5Disk.ndisk;
     str.stripe = malloc(str.nblocks * sizeof(block_t));
@@ -82,7 +82,7 @@ uint write_chunk(int buf_len, const uchar *buffer, uchar pos) {
     return (int)(pos) * MAX_DISK * BLOCK_SIZE;
 }
 
-void read_chunk(int buf_len, uchar *buffer, uchar pos) {
+void read_chunk(int buf_len, uchar *buffer, uint pos) {
     stripe_t str;
     str.nblocks = r5Disk.ndisk;
     str.stripe = malloc(str.nblocks * sizeof(block_t));
