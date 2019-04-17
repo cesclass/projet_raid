@@ -23,26 +23,29 @@ void init_disk_raid5(char *directory){
   }
   
   /* Init Super_Block  && Inode_Table RAID  */
-
- 
-  if( ftell(r5Disk.storage[0]) == EOF ){
-    /* Super Block */
-    r5Disk.super_block.raid_type = r5Disk.raidmode;
-    r5Disk.super_block.nb_blocks_used = INODE_TABLE_SIZE * INODE_SIZE + REAL_SUPER_BLOCK_SIZE;
-    r5Disk.super_block.first_free_byte = r5Disk.super_block.nb_blocks_used;
-    write_super_block();
-
+  if( fgetc(r5Disk.storage[0]) == EOF ){
     /* Table d'inode & Inode */
     for(int i = 0; i++ < INODE_TABLE_SIZE;init_inode("\0",0, 0));
     write_inode_table();
-    
+
+    /* Super Block */
+    r5Disk.super_block.raid_type = r5Disk.raidmode;
+    r5Disk.super_block.first_free_byte = write_inode_table();
+    r5Disk.super_block.nb_blocks_used = r5Disk.super_block.first_free_byte / BLOCK_SIZE;
+    write_super_block();
+
   }
   else {
     read_inode_table();
     read_super_block();
-  }
-  
 
+    /* Compte le nombre fichier */
+    for(int i = 0; i < INODE_TABLE_SIZE; i++){
+      if( r5Disk.inodes[i].filename[0] != '\0'){
+        r5Disk.number_of_files ++;
+      }
+    }
+  }
 }
 
 void switch_off_raid(){
