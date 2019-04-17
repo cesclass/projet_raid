@@ -39,8 +39,10 @@ void read_inode_table(void);
 /**
  * @brief 
  * Ecrit la table d'inodes sur les disques virtuels.
+ * 
+ * @return uint             Premier octet apres l'ecriture
  */
-void write_inode_table(void);
+uint write_inode_table(void);
 
 /**
  * @brief 
@@ -86,8 +88,10 @@ void read_super_block(void);
 /**
  * @brief 
  * Ecrit le super block sur les disques virtuels. 
+ * 
+ * @return uint             Premier octet apres l'ecriture
  */
-void write_super_block(void);
+uint write_super_block(void);
 
 /**
  * @brief
