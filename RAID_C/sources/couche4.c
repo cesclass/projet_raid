@@ -81,7 +81,7 @@ uint delete_file(char * filename) {
 }
 
 uint load_file_from_host(char * filename) {
-    FILE * file = fopen(filename, "rt");
+    FILE * file = fopen(filename, "r");
     if (file == NULL) return 0;
 
     file_t read;
@@ -92,7 +92,7 @@ uint load_file_from_host(char * filename) {
         c = getc(file);
     }
     fclose(file);
-
+    
     if(!write_file(filename, &read)) return 0;
 
     return 1;
@@ -102,10 +102,10 @@ uint store_file_to_host(char * filename) {
     file_t write;
     if(!read_file(filename, &write)) return 0;
 
-    FILE * file = fopen(filename, "wt");
+    FILE * file = fopen(filename, "w");
     if(file == NULL) return 0;
 
-    fwrite(write.data, 1, write.size, file);
+    fwrite(write.data, 1, write.size-1, file);
     fclose(file);
 
     return 1;
