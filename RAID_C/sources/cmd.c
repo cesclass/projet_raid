@@ -114,14 +114,14 @@ void cmd_cat(char *arg) {
     }
 
     /*  Recherche du fichier */
-    /*else {
+    else {
         file_t f;
         if (read_file(arg, &f))
             printf("%s\n", f.data);
         else
             fprintf(stderr, "%s[ERR]%s %s : Fichier introuvable\n",
                     RED_COL, RST_COL, arg);
-    }*/
+    }
 }
 
 /**
@@ -139,14 +139,14 @@ void cmd_rm(char *arg) {
     }
 
     /*  Suppression du fichier */
-    /*else {
-        if (delete_file(arg)) {
+    else {
+        if (delete_file(arg) != NO_INODE_MATCH) {
             printf("%s : Fichier supprime\n");
             write_inode_table();
         } else
             fprintf(stderr, "%s[ERR]%s %s : Fichier introuvable\n",
                     RED_COL, RST_COL, arg);
-    }*/
+    }
 }
 
 /**
@@ -165,16 +165,24 @@ void cmd_create(char *arg) {
 
     /*  Recherche du fichier */
     else {
-        file_t f;
-        printf("Veuillez saisir le contenu du nouveau fichier %s.\n", arg);
-        printf("Pour terminer votre saisie, tapez '$' puis ENTREE.\n");
+        /*  Si le fichier existe deja */
+        if (search_inode(arg) != NO_INODE_MATCH)
+            fprintf(stderr, "%s[ERR]%s %s : Le fichier existe deja.\n",
+                    RED_COL, RST_COL, arg);
         
-        /*  Saisie du nouveau fichier */
-        for (f.size = 0; (f.data[f.size] = getchar()) != '0'; ++ f.size);
-        f.data[f.size ++] = '\0';
-        
-        /*  Enregistrement du nouveau ficheir */
-        write_file(arg, &f);
+        /*  Creation du nouveau fichier */
+        else {
+            file_t f;
+            printf("Veuillez saisir le contenu du nouveau fichier %s.\n", arg);
+            printf("Pour terminer votre saisie, tapez '$' puis ENTREE.\n");
+            
+            /*  Saisie du nouveau fichier */
+            for (f.size = 0; (f.data[f.size] = getchar()) != '0'; ++ f.size);
+            f.data[f.size ++] = '\0';
+            
+            /*  Enregistrement du nouveau ficheir */
+            write_file(arg, &f);
+        }
     }
 
 }
@@ -234,7 +242,29 @@ void cmd_load(char *arg) {
 
     /*  Recherche du fichier */
     else {
-        
+        char reponse;
+
+        /*  Demande de confirmation */
+        do {
+            printf("Si le fichier %s existe sur le RAID, ", arg);
+            printf("il sera ecrase.\n ");
+            printf("Confirmez-vous l'operation ? (o ou n)\n");
+
+            if ((reponse = getchar()) != 'o' && reponse != 'O'
+                    && reponse != 'n' && reponse != 'N')
+                printf("%s : reponse invalide.\n", reponse);
+
+        } while (reponse != 'o' && reponse != 'O' && reponse != 'n'
+                && reponse != 'N');
+
+        if (reponse == 'o' || reponse == 'O') {
+            if (load_file_from_host(arg))
+                printf("%s correctement copie sur le RAID.\n");
+            else
+                fprintf(stderr, "%s[ERR]%s %s : Fichier introuvable\n",
+                        RED_COL, RST_COL, arg);
+        } else
+            printf("load %s avorte\n", arg);
     }
 }
 
