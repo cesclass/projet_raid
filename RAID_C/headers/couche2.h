@@ -71,9 +71,11 @@ void read_stripe(int pos, stripe_t *dest);
  * 
  * @param buf_len       Taille du buffer en octet
  * @param buffer        Buffer à écrire
- * @param pos           Position de départ sur le RAID
+ * @param pos           Position de départ pour l'ecriture sur le RAID (en octet)
+ * 
+ * @return uint         Premier octet libre
  */
-void write_chunk(int buf_len, const uchar *buffer, uchar pos);
+uint write_chunk(int buf_len, const uchar *buffer, uchar pos);
 
 /**
  * @brief
@@ -82,7 +84,7 @@ void write_chunk(int buf_len, const uchar *buffer, uchar pos);
  * 
  * @param buf_len       Taille du buffer en octet (et nombre d'octets a lire)
  * @param buffer        Buffer de srockage
- * @param pos           Position de départ sur le RAID
+ * @param pos           Position de départ pour la lecture sur le RAID (en octet)
  */
 void read_chunk(int buf_len, uchar *buffer, uchar pos);
 

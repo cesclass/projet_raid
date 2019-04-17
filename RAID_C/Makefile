@@ -14,7 +14,7 @@ SRCS = $(wildcard $(SRCDIR)/*.c)
 OBJS = $(subst $(SRCDIR)/,$(OBJDIR)/, $(subst .c,.o, $(SRCS)))
 
 # Définir les executables principaux ici
-EXEC = cmd_test1 cmd_test2
+EXEC = test_c1
 
 ifeq ($(DEBUG), yes)
 	CFLAGS += -g
