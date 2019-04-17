@@ -12,11 +12,11 @@
 
 #include "../headers/couche4.h"
 
-extern virtual_disk_t r5disk;
+extern virtual_disk_t r5Disk;
 
 uint write_file(char * filename, file_t * file) {
-    super_block_t * block = &(r5disk.super_block);
-    inode_t * inodes = r5disk.inodes;
+    super_block_t * block = &(r5Disk.super_block);
+    inode_t * inodes = r5Disk.inodes;
     uint id = search_inode(filename);
     uint new_pos;
 
@@ -57,11 +57,11 @@ uint read_file(char * filename, file_t * file) {
     if(id == NO_INODE_MATCH) {
         return 0;
     } else {
-        file->size = r5disk.inodes[id].size;
+        file->size = r5Disk.inodes[id].size;
         read_chunk(
             file->size,
             file->data,
-            r5disk.inodes[id].first_byte
+            r5Disk.inodes[id].first_byte
         );
         return 1;
     }
@@ -110,7 +110,7 @@ uint store_file_to_host(char * filename) {
 
 uint search_inode(char * filename) {
     for(int i = 0; i < INODE_TABLE_SIZE; i++) {
-        if(!strcmp(filename, r5disk.inodes[i].filename)) return i;
+        if(!strcmp(filename, r5Disk.inodes[i].filename)) return i;
     }
     return NO_INODE_MATCH;
 }
