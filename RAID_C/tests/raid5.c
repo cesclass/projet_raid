@@ -46,7 +46,7 @@ void read_cmd(char *cmd, char *arg) {
     int i, j;
     char read[CMD_LEN + ARG_LEN + 2];
     for (i = 0; (read[i] = getchar()) != '\n'; i++);
-    for (i = 0; read[i] != ' ' && read[i] != '\n'; cmd[i] = read[i++]);
+    for (i = 0; read[i] != ' ' && read[i] != '\n'; cmd[i] = read[i], i ++);
     cmd[i] = '\0';
     if (read[i] != '\n') {
         i++;
@@ -57,7 +57,7 @@ void read_cmd(char *cmd, char *arg) {
 
 int main(int argc, char *argv[]) {
     char usage[BUFSIZ], cmd[CMD_LEN], arg[CMD_LEN];
-    sprintf(usage, "Usage : %s repertoire_disques", argv[0]);
+    sprintf(usage, "Usage : %s repertoire_disques\n", argv[0]);
 
     /*  Gestion des erreurs d'arguments */
     if (argc != 2) {
