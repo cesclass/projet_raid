@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
 
     /*  Gestion des erreurs d'usage */
     if (argc < 2 || argc > 2) {
-        fprintf(stderr, usage);
+        fprintf(stderr, "%s", usage);
         exit(ERR_ARGS);
     }
 

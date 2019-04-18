@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
 
     /*  Gestion des erreurs d'arguments */
     if (argc != 2) {
-        fprintf(stderr, usage);
+        fprintf(stderr, "%s", usage);
         exit(ERR_ARGS);
     }
 
