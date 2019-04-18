@@ -29,7 +29,8 @@
  *  retourne l'indice de cette inode dans la table.
  * 
  * @param filename      Nom du fichier recherche
- * @return uint         1 : OK / 0 : KO
+ * @return uint         Indice de l'inode
+ *                  OU  NO_INODE_MATCH en cas d'erreur
  */
 uint search_inode(char * filename);
 
