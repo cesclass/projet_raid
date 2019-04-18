@@ -1,3 +1,14 @@
+/**
+ * @file test_c1.c
+ * @author Guillaume B (guillaume.broise@univ-tlse3.fr)
+ * 
+ * @brief   
+ * Fichier de test pour les fonctions de la couche1
+ * du systeme RAID 5
+ * 
+ * @copyright Licence MIT
+ * 
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>

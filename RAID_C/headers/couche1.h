@@ -7,15 +7,13 @@
  * pour le systeme RAID 5
  * 
  * @copyright Licence MIT
+ * 
  */
 
 #ifndef __COUCHE1_H_
 #define __COUCHE1_H_
 
 #include <stdlib.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <dirent.h>
 #include <string.h>
 
 #include "raid_defines.h"
@@ -38,9 +36,9 @@
  * 
  * Initialise les champs de la variables globales r5Disk
  * Elle ouvre tous les disk virtuels present dans le repertoire
- * designe par la directory
  * 
- * @param directory 
+ * @param directory : nom du repertoire ou se trouve le systeme RAID
+ * 
  */
 void init_disk_raid5(char *directory);
 
@@ -60,7 +58,7 @@ void switch_off_raid();
  * 
  * @param size : taille a decouper en block
  * 
- * @return int 
+ * @return int : nombre de block necessaire
  */
 int compute_nblock(int size);
 
