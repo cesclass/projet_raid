@@ -1,3 +1,15 @@
+/**
+ * @file couche1.c
+ * @author Guillaume B (guillaume.broise@univ-tlse3.fr)
+ * 
+ * @brief   
+ * Fichier de definition des fonctions de la couche 1
+ * pour le systeme RAID 5
+ * 
+ * @copyright Licence MIT
+ * 
+ */
+
 #include "../headers/couche1.h"
 #include "../headers/couche3.h"
 
@@ -22,7 +34,7 @@ void init_disk_raid5(char *directory){
       }
   }
   
-  /* Init Super_Block  && Inode_Table RAID  */
+  /* Init Super_Block & Inode_Table RAID  */
   if( fgetc(r5Disk.storage[0]) == EOF ){
     /* Table d'inode & Inode */
     for(int i = 0; i++ < INODE_TABLE_SIZE;init_inode("\0",0, 0));
@@ -55,7 +67,6 @@ void switch_off_raid(){
     if(fclose(r5Disk.storage[i]) != 0){
       fprintf(stderr, "Error close disk %d", i);
     }
-    printf("Disk n°%d close\n", i);
   }
   exit(SUCCES_OFF);
 }
@@ -118,6 +129,7 @@ void dump_block_hexa(block_t block){
 
   int value;
   for(int i = 0; i < BLOCK_SIZE; i++){
+    /* converti le caractere en entier pour l'affichage */
     value = (int)block.data[i];
     printf("%2x ", value);
   }
