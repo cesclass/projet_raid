@@ -1,8 +1,27 @@
+/**
+ * @file dump_raid5.c
+ * @author Guillaume B (guillaume.broise@univ-tlse3.fr)
+ * 
+ * @brief   
+ * Programme d'affichage des disks du systeme RAID
+ * stripe par stripe
+ * 
+ * @copyright Licence MIT
+ * 
+ */
 #include "../headers/gestion_panne.h"
 
 #define ERROR_INIT 1
 
 virtual_disk_t r5Disk;
+
+/**
+ * @brief 
+ * Affiche tous les blocks de la stripe a la position pos
+ * 
+ * @param pos : pos de la stripe a afficher
+ * 
+ */
 
 void dump_stripe_hexa(int pos){
     /*calcule du block de partie */
@@ -42,7 +61,7 @@ int main(int argc, char * argv[]){
     /* calcule le nombre de stripe necessaire pour nb_block */
     int nb_stripe = compute_nstripe(nb_block);
 
-    /* affiche des stripes */
+    /* affichage des stripes */
     for(int i = 0; i != nb_stripe; i++){
         dump_stripe_hexa(i);
     }

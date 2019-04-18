@@ -1,3 +1,14 @@
+/**
+ * @file gestion_panne.h
+ * @author Guillaume B (guillaume.broise@univ-tlse3.fr)
+ * 
+ * @brief   
+ * Fichier de declaration de la fonction de reparation de 
+ * disks pour le systeme RAID 5
+ * 
+ * @copyright Licence MIT
+ * 
+ */
 #ifndef GESTION_PANNE_H_
 #define GESTION_PANNE_H_
 

@@ -1,3 +1,14 @@
+/**
+ * @file cmd_repair.c
+ * @author Guillaume B (guillaume.broise@univ-tlse3.fr)
+ * 
+ * @brief   
+ * Programme de reparation d'un disk errone
+ * 
+ * @copyright Licence MIT
+ * 
+ */
+
 #include "../headers/gestion_panne.h"
 
 #define ERROR_INIT 1
