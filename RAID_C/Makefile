@@ -1,8 +1,16 @@
+# ******************************************************************** #
+# @file 	Makefile du projet RAID									   #
+# @author 	Dylan CARON (dcaron81.dc@gmail.com)                        #
+#         															   #
+# @copyright Licence MIT											   #
+# ******************************************************************** #
+
 INCLDIR	:= headers
 OBJDIR	:= objects
 SRCDIR	:= sources
 BINDIR	:= builds
 TSTDIR	:= tests
+DSKDIR	:= ../RAID
 
 CC 		:= gcc
 CFLAGS 	:= -Wall
@@ -46,8 +54,8 @@ clean:
 
 .PHONY: reset_raid
 reset_raid:
-	rm -rf ../RAID/*
-	touch ../RAID/vDisk0
-	touch ../RAID/vDisk1
-	touch ../RAID/vDisk2
-	touch ../RAID/vDisk3
+	rm -rf $(DSKDIR)/*
+	touch $(DSKDIR)/vDisk0
+	touch $(DSKDIR)/vDisk1
+	touch $(DSKDIR)/vDisk2
+	touch $(DSKDIR)/vDisk3

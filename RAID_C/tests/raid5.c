@@ -87,6 +87,7 @@ int main(int argc, char *argv[]) {
         else if (!strcmp(cmd, "store"))     cmd_store(arg);
         else if (!strcmp(cmd, "quit")) {
             printf("Sortie du systeme RAID 5.\n");
+            switch_off_raid();
         } else {
             printf("Commande non reconnue.\n");
             printf("Tapez \"help\" pour plus d'information.\n");

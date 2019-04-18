@@ -93,9 +93,6 @@ void cmd_ls(char *arg) {
     }
 }
 
-/**
- * @TODO tester cette fonction avec read_file (couche 4)
- */
 void cmd_cat(char *arg) {
     char usage[BUFSIZ];
     sprintf(usage, "Usage : cat <nom_de_fichier>\n");
@@ -119,9 +116,6 @@ void cmd_cat(char *arg) {
     }
 }
 
-/**
- * @TODO tester cette fonction avec delete_file (couche 4)
- */
 void cmd_rm(char *arg) {
     char usage[BUFSIZ];
     sprintf(usage, "Usage : rm <nom_de_fichier>\n");
@@ -144,9 +138,6 @@ void cmd_rm(char *arg) {
     }
 }
 
-/**
- * @TODO tester cette fonction avec write_file (couche 4)
- */
 void cmd_create(char *arg) {
     char usage[BUFSIZ];
     sprintf(usage, "Usage : create <nom_de_fichier>\n");
@@ -156,6 +147,21 @@ void cmd_create(char *arg) {
         fprintf(stderr, "%s[ERR]%s Argument vide\n",
                 RED_COL, RST_COL);
         fprintf(stderr, usage);
+    }
+
+    if (strlen(arg) > FILENAME_MAX_SIZE - 1) {
+        fprintf(stderr, "%s[ERR]%s %s : ",
+                RED_COL, RST_COL, arg);
+        fprintf(stderr, "Nom de fichier trop long. (Max 31 caracteres)\n");
+        return;
+    }
+
+    if (arg[0] == ' ') {
+        fprintf(stderr, "%s[ERR]%s %s : ",
+                RED_COL, RST_COL, arg);
+        fprintf(stderr, "Nom invalide.\n");
+        fprintf(stderr, "le nom du fichier ne peut commencer par un espace.\n");
+        return;
     }
 
     /*  Recherche du fichier */
@@ -187,9 +193,6 @@ void cmd_create(char *arg) {
     }
 }
 
-/**
- * @TODO tester cette fonction avec write_file et read_file (couche 4)
- */
 void cmd_edit(char *arg) {
     char usage[BUFSIZ];
     sprintf(usage, "Usage : edit <nom_de_fichier>\n");
@@ -242,31 +245,48 @@ void cmd_load(char *arg) {
         fprintf(stderr, usage);
     }
 
+    if (strlen(arg) > FILENAME_MAX_SIZE - 1) {
+        fprintf(stderr, "%s[ERR]%s %s : ",
+                RED_COL, RST_COL, arg);
+        fprintf(stderr, "Nom de fichier trop long. (Max 31 caracteres)\n");
+        return;
+    }
+
+    if (arg[0] == ' ') {
+        fprintf(stderr, "%s[ERR]%s %s : ",
+                RED_COL, RST_COL, arg);
+        fprintf(stderr, "Nom invalide.\n");
+        fprintf(stderr, "le nom du fichier ne peut commencer par un espace.\n");
+        return;
+    }
+
     /*  Recherche du fichier */
     else {
         char reponse;
 
         /*  Demande de confirmation */
-        /*do {
+        do {
             printf("Si le fichier %s existe sur le RAID, ", arg);
-            printf("il sera ecrase.\n ");
-            printf("Confirmez-vous l'operation ? (o ou n)\n");
+            printf("il sera ecrase.\n");
+            printf("Confirmez-vous l'operation ? (o ou n) ");
 
             if ((reponse = getchar()) != 'o' && reponse != 'O'
                     && reponse != 'n' && reponse != 'N')
                 printf("%c : reponse invalide.\n", reponse);
+            getchar();
 
         } while (reponse != 'o' && reponse != 'O' && reponse != 'n'
                 && reponse != 'N');
 
         if (reponse == 'o' || reponse == 'O') {
+
             if (load_file_from_host(arg))
                 printf("%s correctement copie sur le RAID.\n", arg);
             else
                 fprintf(stderr, "%s[ERR]%s %s : Fichier introuvable\n",
                         RED_COL, RST_COL, arg);
         } else
-            printf("load %s avorte\n", arg);*/
+            printf("load %s avorte\n", arg);
     }
 }
 
@@ -283,6 +303,29 @@ void cmd_store(char *arg) {
 
     /*  Recherche du fichier */
     else {
-        
+        char reponse;
+
+        /*  Demande de confirmation */
+        do {
+            printf("Si le fichier %s existe sur le systeme hote, ", arg);
+            printf("il sera ecrase.\n");
+            printf("Confirmez-vous l'operation ? (o ou n) ");
+
+            if ((reponse = getchar()) != 'o' && reponse != 'O'
+                    && reponse != 'n' && reponse != 'N')
+                printf("%c : reponse invalide.\n", reponse);
+            getchar();
+
+        } while (reponse != 'o' && reponse != 'O' && reponse != 'n'
+                && reponse != 'N');
+
+        if (reponse == 'o' || reponse == 'O') {
+            if (store_file_to_host(arg))
+                printf("%s correctement copie sur le RAID.\n", arg);
+            else
+                fprintf(stderr, "%s[ERR]%s %s : Fichier introuvable\n",
+                        RED_COL, RST_COL, arg);
+        } else
+            printf("load %s avorte\n", arg);
     }
 }
