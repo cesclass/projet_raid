@@ -47,7 +47,7 @@ void read_cmd(char *cmd, char *arg) {
     int i, j;
     char read[CMD_LEN + ARG_LEN + 2];
     for (i = 0; (read[i] = getchar()) != '\n'; i++);
-    for (i = 0; read[i] != ' ' && read[i] != '\n'; cmd[i] = read[i++]);
+    for (i = 0; read[i] != ' ' && read[i] != '\n'; cmd[i] = read[i], i ++);
     cmd[i] = '\0';
     if (read[i] != '\n') {
         i++;
@@ -62,7 +62,7 @@ int main(int argc, char *argv[]) {
 
     /*  Gestion des erreurs d'arguments */
     if (argc != 2) {
-        fprintf(stderr, usage);
+        fprintf(stderr, "%s", usage);
         exit(ERR_ARGS);
     }
 

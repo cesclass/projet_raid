@@ -51,7 +51,7 @@ void cmd_ls(char *arg) {
         char taille_str[16];
         
         for (int i = 0; i < INODE_TABLE_SIZE; i ++) {
-            if (taille = strlen(r5Disk.inodes[i].filename)) {
+            if ((taille = strlen(r5Disk.inodes[i].filename))) {
                 /*  Construction de l'affichage du ls -l */
                 /*   - Nom du fichier */
                 strcat(print, GRN_COL);
@@ -89,7 +89,7 @@ void cmd_ls(char *arg) {
     else {
         fprintf(stderr, "%s[ERR]%s %s Argument invalide\n",
                 RED_COL, RST_COL, arg);
-        fprintf(stderr, usage);
+        fprintf(stderr, "%s", usage);
     }
 }
 
@@ -101,7 +101,7 @@ void cmd_cat(char *arg) {
     if (!strcmp(arg, "")) {
         fprintf(stderr, "%s[ERR]%s Argument vide\n",
                 RED_COL, RST_COL);
-        fprintf(stderr, usage);
+        fprintf(stderr, "%s", usage);
     }
 
     /*  Recherche du fichier */
@@ -124,7 +124,7 @@ void cmd_rm(char *arg) {
     if (!strcmp(arg, "")) {
         fprintf(stderr, "%s[ERR]%s Argument vide\n",
                 RED_COL, RST_COL);
-        fprintf(stderr, usage);
+        fprintf(stderr, "%s", usage);
     }
 
     /*  Suppression du fichier */
@@ -146,7 +146,7 @@ void cmd_create(char *arg) {
     if (!strcmp(arg, "")) {
         fprintf(stderr, "%s[ERR]%s Argument vide\n",
                 RED_COL, RST_COL);
-        fprintf(stderr, usage);
+        fprintf(stderr, "%s", usage);
     }
 
     if (strlen(arg) > FILENAME_MAX_SIZE - 1) {
@@ -201,7 +201,7 @@ void cmd_edit(char *arg) {
     if (!strcmp(arg, "")) {
         fprintf(stderr, "%s[ERR]%s Argument vide\n",
                 RED_COL, RST_COL);
-        fprintf(stderr, usage);
+        fprintf(stderr, "%s", usage);
     }
 
     /*  Edition du fichier */
@@ -227,7 +227,7 @@ void cmd_edit(char *arg) {
             write_file(arg, &f);
         } 
 
-        /*  Si le fichier nexiste pas */
+        /*  Si le fichier n'existe pas */
         else
             fprintf(stderr, "%s[ERR]%s %s : Fichier introuvable\n",
                     RED_COL, RST_COL, arg);
@@ -242,7 +242,7 @@ void cmd_load(char *arg) {
     if (!strcmp(arg, "")) {
         fprintf(stderr, "%s[ERR]%s Argument vide\n",
                 RED_COL, RST_COL);
-        fprintf(stderr, usage);
+        fprintf(stderr, "%s", usage);
     }
 
     if (strlen(arg) > FILENAME_MAX_SIZE - 1) {
@@ -298,7 +298,7 @@ void cmd_store(char *arg) {
     if (!strcmp(arg, "")) {
         fprintf(stderr, "%s[ERR]%s Argument vide\n",
                 RED_COL, RST_COL);
-        fprintf(stderr, usage);
+        fprintf(stderr, "%s", usage);
     }
 
     /*  Recherche du fichier */
