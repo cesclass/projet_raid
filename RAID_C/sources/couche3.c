@@ -54,7 +54,7 @@ uint init_inode(char * filename, uint size, uint first_byte) {
     if(indice == ERR_UNUSED_INODE) return indice;
 
     inode_t * inode = &(r5Disk.inodes[indice]);
-    sprintf(inode->filename, filename);
+    sprintf(inode->filename, "%s", filename);
     inode->size = size;
     inode->first_byte = first_byte;
     inode->nblock = compute_nblock(size);
