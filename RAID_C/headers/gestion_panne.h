@@ -13,9 +13,7 @@
  * 
  * @param numdisk : numero du disk a reparer
  * 
- * @return int 
- * 
  */
-int repair_disk(int numdisk);
+void repair_disk(int numdisk);
 
 #endif

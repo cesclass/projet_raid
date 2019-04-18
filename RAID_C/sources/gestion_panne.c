@@ -2,7 +2,7 @@
 
 extern virtual_disk_t r5Disk;
 
-int repair_disk(int numdisk){
+void repair_disk(int numdisk){
     block_t repair;
     int disk = (numdisk == 0);
 
@@ -16,5 +16,4 @@ int repair_disk(int numdisk){
         block_repair(i, numdisk, &repair);
         write_block(i, repair, r5Disk.storage[numdisk]);
     }
-    return 0;
 }
