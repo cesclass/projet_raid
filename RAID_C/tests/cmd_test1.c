@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
 
     /*  Gestion des erreurs d'usage */
     if (argc < 2 || argc > 2) {
-        fprintf(stderr, usage);
+        fprintf(stderr, "%s", usage);
         exit(ERR_ARGS);
     }
 
@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
 
     /*  Creation du buffer */
     uchar buffer[255];
-    for(uchar i = 0; i < 255; buffer[i] = i++);
+    for(uchar i = 0; i < 255; buffer[i] = i, i ++);
 
     /*  Ecriture sur le RAID 5 */
     printf("Ecriture de 255 octets sur le systeme RAID 5... \n");

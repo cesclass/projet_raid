@@ -43,7 +43,6 @@ int main (int argc, char * argv[]){
         else {
             /* ouverture en ecriture du disk corrompu */
             r5Disk.storage[i] = fopen(acces,"wb");
-            printf("ECRITURE:%s\n", acces);
         }
     }
 
