@@ -1,3 +1,14 @@
+/**
+ * @file couche2.c
+ * @author Dylan CARON (dcaron81.dc@gmail.com)
+ * 
+ * @brief 
+ * Definitions des fonctions relatives a la couche 2,
+ *  soit a la gestion des stripes et du controle d'erreur.
+ * 
+ * @copyright Licence MIT
+ */
+
 #include "../headers/couche1.h"
 #include "../headers/couche2.h"
 #include "../headers/raid_defines.h"

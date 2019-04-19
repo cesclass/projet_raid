@@ -1,3 +1,14 @@
+/**
+ * @file cmd.c
+ * @author Dylan CARON (dcaron81.dc@gmail.com)
+ * 
+ * @brief 
+ * Définitions des fonctions relatives aux commandes
+ *  utilisables avec le systeme RAID 5
+ * 
+ * @copyright Licence MIT
+ */
+
 #include "../headers/couche3.h"
 #include "../headers/couche4.h"
 #include "../headers/cmd.h"
