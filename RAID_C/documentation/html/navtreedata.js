@@ -23,7 +23,7 @@ for the JavaScript code in this file
 */
 var NAVTREE =
 [
-  [ "PROJET RAID", "index.html", [
+  [ "Projet RAID", "index.html", [
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
       [ "Data Structure Index", "classes.html", null ]

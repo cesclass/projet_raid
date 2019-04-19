@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.15"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Projet RAID: headers/couche2.h File Reference</title>
+<title>Projet RAID: sources/couche2.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -58,50 +58,58 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-$(document).ready(function(){initNavTree('couche2_8h.html','');});
+$(document).ready(function(){initNavTree('couche2_8c.html','');});
 /* @license-end */
 </script>
 <div id="doc-content">
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">couche2.h File Reference</div>  </div>
+<div class="title">couche2.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Interface de la couche 2 du système RAID5 Permet d'ecrire des tableaux de donnees au format uchar directement sur le systeme RAID5.  
+<p>Definitions des fonctions relatives a la couche 2, soit a la gestion des stripes et du controle d'erreur.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;../headers/raid_defines.h&quot;</code><br />
-</div>
-<p><a href="couche2_8h_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
+<div class="textblock"><code>#include &quot;<a class="el" href="couche1_8h_source.html">../headers/couche1.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="couche2_8h_source.html">../headers/couche2.h</a>&quot;</code><br />
+<code>#include &quot;../headers/raid_defines.h&quot;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aaf027bbbec38dd332c8022a554e576db"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="couche2_8h.html#aaf027bbbec38dd332c8022a554e576db">compute_nstripe</a> (int nb_block)</td></tr>
+<tr class="memitem:aaf027bbbec38dd332c8022a554e576db"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="couche2_8c.html#aaf027bbbec38dd332c8022a554e576db">compute_nstripe</a> (int nb_block)</td></tr>
 <tr class="memdesc:aaf027bbbec38dd332c8022a554e576db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcule le nombre de stripe nécessaire pour stoquer un certains nombre de block.  <a href="#aaf027bbbec38dd332c8022a554e576db">More...</a><br /></td></tr>
 <tr class="separator:aaf027bbbec38dd332c8022a554e576db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4cd2b3b41487e3b7076cc57735e27b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="couche2_8h.html#aa4cd2b3b41487e3b7076cc57735e27b0">compute_parity</a> (int nb_block, <a class="el" href="structblock__s.html">block_t</a> *block_tab, <a class="el" href="structblock__s.html">block_t</a> *parity_block)</td></tr>
+<tr class="memitem:aa4cd2b3b41487e3b7076cc57735e27b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="couche2_8c.html#aa4cd2b3b41487e3b7076cc57735e27b0">compute_parity</a> (int nb_block, <a class="el" href="structblock__s.html">block_t</a> *block_tab, <a class="el" href="structblock__s.html">block_t</a> *parity_block)</td></tr>
 <tr class="memdesc:aa4cd2b3b41487e3b7076cc57735e27b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcule le block de parité des block composant block_tab. Le block de parité est placé dans le 3ème paramètre.  <a href="#aa4cd2b3b41487e3b7076cc57735e27b0">More...</a><br /></td></tr>
 <tr class="separator:aa4cd2b3b41487e3b7076cc57735e27b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0fcb48cabc6caae518db348b2878f470"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="couche2_8h.html#a0fcb48cabc6caae518db348b2878f470">parity_index</a> (int num_stripe)</td></tr>
+<tr class="memitem:a0fcb48cabc6caae518db348b2878f470"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="couche2_8c.html#a0fcb48cabc6caae518db348b2878f470">parity_index</a> (int num_stripe)</td></tr>
 <tr class="memdesc:a0fcb48cabc6caae518db348b2878f470"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcule le numéro du disque sur lequel doit être stoqué le bloc de parité  <a href="#a0fcb48cabc6caae518db348b2878f470">More...</a><br /></td></tr>
 <tr class="separator:a0fcb48cabc6caae518db348b2878f470"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1274d9f60e49e3a6b124ceb49a8d8de0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="couche2_8h.html#a1274d9f60e49e3a6b124ceb49a8d8de0">write_stripe</a> (int pos, const <a class="el" href="structstripe__s.html">stripe_t</a> *src)</td></tr>
+<tr class="memitem:a1274d9f60e49e3a6b124ceb49a8d8de0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="couche2_8c.html#a1274d9f60e49e3a6b124ceb49a8d8de0">write_stripe</a> (int pos, const <a class="el" href="structstripe__s.html">stripe_t</a> *src)</td></tr>
 <tr class="memdesc:a1274d9f60e49e3a6b124ceb49a8d8de0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ecrit une bande à une position donnee sur le systeme RAID 5.  <a href="#a1274d9f60e49e3a6b124ceb49a8d8de0">More...</a><br /></td></tr>
 <tr class="separator:a1274d9f60e49e3a6b124ceb49a8d8de0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aacd470a16fd5f954ec1be9700c687588"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="couche2_8h.html#aacd470a16fd5f954ec1be9700c687588">read_stripe</a> (int pos, <a class="el" href="structstripe__s.html">stripe_t</a> *dest)</td></tr>
+<tr class="memitem:aacd470a16fd5f954ec1be9700c687588"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="couche2_8c.html#aacd470a16fd5f954ec1be9700c687588">read_stripe</a> (int pos, <a class="el" href="structstripe__s.html">stripe_t</a> *dest)</td></tr>
 <tr class="memdesc:aacd470a16fd5f954ec1be9700c687588"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lit une bande à une position donnee sur le systeme RAID 5.  <a href="#aacd470a16fd5f954ec1be9700c687588">More...</a><br /></td></tr>
 <tr class="separator:aacd470a16fd5f954ec1be9700c687588"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac1b701ea7fae9a35b19dc712a8316b33"><td class="memItemLeft" align="right" valign="top">uint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="couche2_8h.html#ac1b701ea7fae9a35b19dc712a8316b33">write_chunk</a> (int buf_len, const uchar *buffer, uint pos)</td></tr>
+<tr class="memitem:ac1b701ea7fae9a35b19dc712a8316b33"><td class="memItemLeft" align="right" valign="top">uint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="couche2_8c.html#ac1b701ea7fae9a35b19dc712a8316b33">write_chunk</a> (int buf_len, const uchar *buffer, uint pos)</td></tr>
 <tr class="memdesc:ac1b701ea7fae9a35b19dc712a8316b33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ecrit sur le système RAID 5 le contenu du buffer à partir de la position pos.  <a href="#ac1b701ea7fae9a35b19dc712a8316b33">More...</a><br /></td></tr>
 <tr class="separator:ac1b701ea7fae9a35b19dc712a8316b33"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a02526b88ce74b0ac8a78aa675dfa449f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="couche2_8h.html#a02526b88ce74b0ac8a78aa675dfa449f">read_chunk</a> (int buf_len, uchar *buffer, uint pos)</td></tr>
+<tr class="memitem:a02526b88ce74b0ac8a78aa675dfa449f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="couche2_8c.html#a02526b88ce74b0ac8a78aa675dfa449f">read_chunk</a> (int buf_len, uchar *buffer, uint pos)</td></tr>
 <tr class="memdesc:a02526b88ce74b0ac8a78aa675dfa449f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lit sur le système RAID 5 un nombre d'octets definis par buf_len et les stocke dans le buffer à partir de la position pos.  <a href="#a02526b88ce74b0ac8a78aa675dfa449f">More...</a><br /></td></tr>
 <tr class="separator:a02526b88ce74b0ac8a78aa675dfa449f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a95b5425e7df13b77b38e1b85a4c804e3"><td class="memItemLeft" align="right" valign="top"><a id="a95b5425e7df13b77b38e1b85a4c804e3"></a>
+<a class="el" href="structvirtual__disk__s.html">virtual_disk_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>r5Disk</b></td></tr>
+<tr class="separator:a95b5425e7df13b77b38e1b85a4c804e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Interface de la couche 2 du système RAID5 Permet d'ecrire des tableaux de donnees au format uchar directement sur le systeme RAID5. </p>
+<div class="textblock"><p>Definitions des fonctions relatives a la couche 2, soit a la gestion des stripes et du controle d'erreur. </p>
 <dl class="section author"><dt>Author</dt><dd>Dylan CARON (<a href="#" onclick="location.href='mai'+'lto:'+'dca'+'ro'+'n81'+'.d'+'c@g'+'ma'+'il.'+'co'+'m'; return false;">dcaro<span style="display: none;">.nosp@m.</span>n81.<span style="display: none;">.nosp@m.</span>dc@gm<span style="display: none;">.nosp@m.</span>ail.<span style="display: none;">.nosp@m.</span>com</a>)</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Licence MIT </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
@@ -371,7 +379,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_7f57b1e41c5acd0e859ae5f3a2b075a9.html">headers</a></li><li class="navelem"><a class="el" href="couche2_8h.html">couche2.h</a></li>
+    <li class="navelem"><a class="el" href="dir_08d237fc27d4ecd563f71c5d52f2fecc.html">sources</a></li><li class="navelem"><a class="el" href="couche2_8c.html">couche2.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.15 </li>
