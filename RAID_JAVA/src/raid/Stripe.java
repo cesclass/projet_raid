@@ -9,15 +9,15 @@ package raid;
  * @version 19.04.20
  */
 public class Stripe {
-	private int nBlock;
+	private int nBlocks;
 	private Block[] datas;
 	private Block parity;
 	
 	public Stripe() {
-		nBlock = VirtualDisk.NDISK;
+		nBlocks = VirtualDisk.NDISK;
 		
-		datas = new Block[nBlock - 1];
-		for (int i = 0; i < nBlock - 1; datas[i++] = new Block());
+		datas = new Block[nBlocks - 1];
+		for (int i = 0; i < nBlocks - 1; datas[i++] = new Block());
 		
 		parity = new Block();		
 	}
@@ -25,12 +25,12 @@ public class Stripe {
 	/**
 	 * Calcule le nombre de stripe necessaire pour stoquer un certains nombre de block.
 	 * 
-	 * @param nBlock		Nombre de block
+	 * @param nBlocks		Nombre de block
 	 * 
 	 * @return int			Nombre de Stripe necessaire
 	 */
-	public int computeNStripe(int nBlock) {
-		return nBlock / (this.nBlock - 1) + ((nBlock % (this.nBlock - 1) != 0) ? 1 : 0);
+	public int computeNStripe(int nBlocks) {
+		return nBlocks / (this.nBlocks - 1) + ((nBlocks % (this.nBlocks - 1) != 0) ? 1 : 0);
 	}
 	
 	/**
@@ -38,7 +38,7 @@ public class Stripe {
 	 */
 	public void computeParity() {
 		for (int i = 0; i < RaidDefine.BLOCK_SIZE; i++) {
-			for (int j = 0; j < (nBlock - 1); 
+			for (int j = 0; j < (nBlocks - 1); 
 					parity.setDataI(i, parity.getDataI(i) ^ datas[j++].getDataI(i));
 		}
 	}
@@ -52,7 +52,7 @@ public class Stripe {
 	 * @return int			Numéro du disque (/!\ démmare à 0 !)
 	 */
 	public int parityIndex(int numStripe) {
-		return ((- ((numStripe + 1) % nBlock) + nBlock) % nBlock);
+		return ((- ((numStripe + 1) % nBlocks) + nBlocks) % nBlocks);
 	}
 	
 	/**
@@ -64,15 +64,14 @@ public class Stripe {
 		/*	Calcul de l'indice du bloc de parite */
 		int iParity = parityIndex(pos);
 		
-		for (int i = 0; i < nBlock; i++) {
-			if (i < iParity)		/*	Ecriture des blocs positionnees avant le bloc de parite */
+		for (int i = 0; i < nBlocks; i++) {
+			if (i < iParity)			/*	Ecriture des blocs positionnees avant le bloc de parite */
 				datas[i].writeBlock(pos, i);
-			else if(i > iParity)	/*	Ecriture des blocs positionnees apres le bloc de parite */
+			else if(i > iParity)		/*	Ecriture des blocs positionnees apres le bloc de parite */
 				datas[i - 1].writeBlock(pos, i);
-			else					/*	Ecriture du bloc de paritee */
+			else						/*	Ecriture du bloc de paritee */
 				parity.writeBlock(pos, i);
 		}	
-		
 	}
 	
 	/**
@@ -81,6 +80,39 @@ public class Stripe {
 	 * @param pos           N° de la ligne ou lire la Stripe
 	 */
 	public void readStripe(int pos) {
+		/*	Calcul de l'indice du bloc de parite */
+		int iParity = parityIndex(pos);
 		
+		for (int i = 0; i < nBlocks; i ++) {
+			if (i < iParity) {			/*  Lecture des blocs positionnees avant le bloc de parite */
+				if (!datas[i].readBlock(pos, i))
+					datas[i].blockRepair(pos, i);
+			} else if (i > iParity)	{	/*  Lecture des blocs positionnees apres le bloc de parite */
+				if (!datas[i - 1].readBlock(pos, i))
+					datas[i - 1].blockRepair(pos, i);
+			} else {					/*  Lecture du bloc de paritee */
+				if (!parity.readBlock(pos, i))
+					parity.blockRepair(pos, i);
+			}
+		}
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
