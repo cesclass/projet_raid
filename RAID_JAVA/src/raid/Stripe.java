@@ -52,6 +52,35 @@ public class Stripe {
 	 * @return int			Numéro du disque (/!\ démmare à 0 !)
 	 */
 	public int parityIndex(int numStripe) {
-		return (- ((numStripe + 1) % nBlock) + nBlock) % nBlock;
+		return ((- ((numStripe + 1) % nBlock) + nBlock) % nBlock);
+	}
+	
+	/**
+	 * Ecrit une bande à une position donnee sur le systeme RAID 5.
+	 * 
+	 * @param pos			N° de la ligne ou ecrire la Stripe
+	 */
+	public void writeStripe(int pos) {
+		/*	Calcul de l'indice du bloc de parite */
+		int iParity = parityIndex(pos);
+		
+		for (int i = 0; i < nBlock; i++) {
+			if (i < iParity)		/*	Ecriture des blocs positionnees avant le bloc de parite */
+				datas[i].writeBlock(pos, i);
+			else if(i > iParity)	/*	Ecriture des blocs positionnees apres le bloc de parite */
+				datas[i - 1].writeBlock(pos, i);
+			else					/*	Ecriture du bloc de paritee */
+				parity.writeBlock(pos, i);
+		}	
+		
+	}
+	
+	/**
+	 * Lit une bande à une position donnee sur le systeme RAID 5
+	 * 
+	 * @param pos           N° de la ligne ou lire la Stripe
+	 */
+	public void readStripe(int pos) {
+		
 	}
 }
