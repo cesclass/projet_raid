@@ -32,7 +32,7 @@ void dump_buffer(int buf_len, uchar *buffer) {
         if (i < 0x100) printf("0");
         if (i < 0x10)  printf("0");
         printf("%x  ", i);
-        for (int j = 0; j < 10 && i < buf_len; j++) {
+        for (int j = 0; j < 8 && i < buf_len; j++) {
             if (buffer[i] < 0x10) printf("0");
             printf("%x ", buffer[i++]);
         }

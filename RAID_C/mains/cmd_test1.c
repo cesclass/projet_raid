@@ -30,11 +30,11 @@ int main(int argc, char *argv[]) {
     init_disk_raid5("../RAID/");
 
     /*  Creation du buffer */
-    uchar buffer[255];
-    for(uchar i = 0; i < 255; buffer[i] = i, i ++);
+    uchar buffer[256];
+    for(uchar i = 0; i < 256; buffer[i] = i, i ++);
 
     /*  Ecriture sur le RAID 5 */
-    printf("Ecriture de 255 octets sur le systeme RAID 5... \n");
+    printf("Ecriture de 256 octets sur le systeme RAID 5... \n");
 
-    write_chunk(255, buffer, 32);
+    write_chunk(256, buffer, 0);
 }
