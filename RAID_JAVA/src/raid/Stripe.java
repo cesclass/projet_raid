@@ -110,7 +110,7 @@ public class Stripe {
 	 * 
 	 * @return int			Premier octet libre apres l'ecriture
 	 */
-	public int writeChunk(int bufLen, byte[] buffer, int pos) {
+	public static int writeChunk(int bufLen, byte[] buffer, int pos) {
 		pos /= (nBlocks * RaidDefine.BLOCK_SIZE);
 		
 		for (int iBuf = 0; iBuf < bufLen;) {
@@ -144,7 +144,7 @@ public class Stripe {
 	 * @param buffer		Buffer de stockage
 	 * @param pos			Position de depart pour la lecture sur le RAID (en octet)
 	 */
-	public void readChunk(int bufLen, byte[] buffer, int pos) {
+	public static void readChunk(int bufLen, byte[] buffer, int pos) {
 		pos /= (nBlocks * RaidDefine.BLOCK_SIZE);
 		
 		for (int iBuf = 0; iBuf < bufLen;) {
