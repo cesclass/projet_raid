@@ -9,18 +9,10 @@ package raid;
  * @version 19.04.20
  */
 public class Stripe {
-	private int nBlocks;
-	private Block[] datas;
-	private Block parity;
-	
-	public Stripe(int nDisks) {
-		nBlocks = nDisks;
-		
-		datas = new Block[nBlocks - 1];
-		for (int i = 0; i < nBlocks - 1; datas[i++] = new Block());
-		
-		parity = new Block();		
-	}
+	private static int nBlocks = VirtualDisk.getNDisk();
+	private static Block[] datas = new Block[nBlocks - 1];
+	private static Block parity = new Block();
+
 	
 	/**
 	 * Calcule le nombre de stripe necessaire pour stoquer un certains nombre de block.
@@ -29,17 +21,17 @@ public class Stripe {
 	 * 
 	 * @return int			Nombre de Stripe necessaire
 	 */
-	public int computeNStripe(int nBlocks) {
-		return nBlocks / (this.nBlocks - 1) + ((nBlocks % (this.nBlocks - 1) != 0) ? 1 : 0);
+	public static int computeNStripe(int nBlocksToStore) {
+		return nBlocksToStore / (nBlocks - 1) + ((nBlocksToStore % (nBlocks - 1) != 0) ? 1 : 0);
 	}
 	
 	/**
 	 * Calcule le block de parite de la Stripe et le met a jour.
 	 */
-	public void computeParity() {
+	public static void computeParity() {
 		for (int i = 0; i < RaidDefine.BLOCK_SIZE; i++) {
 			for (int j = 0; j < (nBlocks - 1); 
-					parity.setDataI(i, parity.getDataI(i) ^ datas[j++].getDataI(i)));
+					parity.setDataI(i, (byte) (parity.getDataI(i) ^ datas[j++].getDataI(i))));
 		}
 	}
 	
@@ -51,7 +43,7 @@ public class Stripe {
 	 * 
 	 * @return int			Numero du disque (/!\ demmare a 0 !)
 	 */
-	public int parityIndex(int numStripe) {
+	public static int parityIndex(int numStripe) {
 		return ((- ((numStripe + 1) % nBlocks) + nBlocks) % nBlocks);
 	}
 	
@@ -60,7 +52,7 @@ public class Stripe {
 	 * 
 	 * @param pos			N* de la ligne ou ecrire la Stripe
 	 */
-	public void writeStripe(int pos) {
+	public static void writeStripe(int pos) {
 		/*	Calcul de l'indice du bloc de parite */
 		int iParity = parityIndex(pos);
 		
@@ -79,21 +71,23 @@ public class Stripe {
 	 * 
 	 * @param pos           N� de la ligne ou lire la Stripe
 	 */
-	public void readStripe(int pos) {
+	public static void readStripe(int pos) {
 		/*	Calcul de l'indice du bloc de parite */
 		int iParity = parityIndex(pos);
 		
+		/*	Creation de la Stripe */
+		for (int i = 0; i < nBlocks - 1; datas[i++] = new Block());
 		for (int i = 0; i < nBlocks; i ++) {
 			if (i < iParity) {			/*  Lecture des blocs positionnees avant le bloc de parite */
-				if (!datas[i].readBlock(pos, i)) {
+				if (datas[i].readBlock(pos, i) == Block.ERROR_READ) {
 					datas[i].blockRepair(pos, i);
 				}
 			} else if (i > iParity)	{	/*  Lecture des blocs positionnees apres le bloc de parite */
-				if (!datas[i - 1].readBlock(pos, i)) {
+				if (datas[i - 1].readBlock(pos, i) == Block.ERROR_READ) {
 					datas[i - 1].blockRepair(pos, i);
 				}
 			} else {					/*  Lecture du bloc de parite */
-				if (!parity.readBlock(pos, i)) {
+				if (parity.readBlock(pos, i) == Block.ERROR_READ) {
 					parity.blockRepair(pos, i);
 				}
 			}
@@ -115,22 +109,23 @@ public class Stripe {
 		
 		for (int iBuf = 0; iBuf < bufLen;) {
 			/*	Construction de la stripe */
+			for (int i = 0; i < nBlocks - 1; datas[i++] = new Block());
 			int iBlock;
 			for (iBlock = 0; iBlock < nBlocks - 1; iBlock++) {
 				for (int iByte = 0; iByte < RaidDefine.BLOCK_SIZE; iByte ++) {
 					if (iBuf < bufLen) {
 						datas[iBlock].setDataI(iByte, buffer[iBuf++]);
 					} else {
-						datas[iBlock].setDataI(iByte, '\0');
+						datas[iBlock].setDataI(iByte, (byte) 0);
 					}
 				}
 			}
 		
 			/*	Calcul de la parite */
-			this.computeParity();
+			computeParity();
 			
 			/*	Ecriture de la Stripe sur le RAID */
-			this.writeStripe(pos++);
+			writeStripe(pos++);
 		}
 		
 		return (pos * nBlocks * RaidDefine.BLOCK_SIZE);
@@ -149,13 +144,13 @@ public class Stripe {
 		
 		for (int iBuf = 0; iBuf < bufLen;) {
 			/*	Lecture d'une Stripe */
-			this.readStripe(pos++);
+			readStripe(pos++);
 			
 			/*	Ecriture de la stripe lue dans le buffer */
 			for (int iBlock = 0; iBlock < nBlocks - 1; iBlock ++) {
 				for (int iByte = 0; iByte < RaidDefine.BLOCK_SIZE; iByte ++) {
 					if (iBuf < bufLen) {
-						buffer[iBuf] = datas[iBlock].getByteI(iByte);
+						buffer[iBuf] = datas[iBlock].getDataI(iByte);
 					}
 				}
 			}
