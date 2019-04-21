@@ -1,4 +1,5 @@
 package raid;
+import java.io.*;
 
 public class Block{
 
@@ -13,13 +14,25 @@ public class Block{
         data[indice] = valeur;
     }
 
-    /* A completer */
+    /**
+     * calcule le nombre de block necessaire pour ecrire taille 
+     * 
+     * @param taille : taille a decouper en block
+     * @return : nombre de block necessaire
+     * 
+     */
+
     public int computeNBlock(int taille){
-        return 0;
+        return taille / RaidDefine.BLOCK_SIZE + (taille % RaidDefine.BLOCK_SIZE);
     }
 
     /* A completer */
-    public int writeBlock(){
+    public int writeBlock(VirtualDisk r5Disk, int position, int numdisk){
+        RandomAccessFile source = r5Disk.getStorage(numdisk);
+
+        source.seek(position);
+        
+
         return 0;
     }
 
