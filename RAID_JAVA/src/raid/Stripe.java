@@ -13,8 +13,8 @@ public class Stripe {
 	private Block[] datas;
 	private Block parity;
 	
-	public Stripe() {
-		nBlocks = VirtualDisk.NDISK;
+	public Stripe(int nDisks) {
+		nBlocks = nDisks;
 		
 		datas = new Block[nBlocks - 1];
 		for (int i = 0; i < nBlocks - 1; datas[i++] = new Block());
