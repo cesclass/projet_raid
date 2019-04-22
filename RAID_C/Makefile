@@ -54,6 +54,7 @@ clean:
 
 .PHONY: reset_raid
 reset_raid:
+	mkdir -p $(BINDIR)
 	rm -rf $(DSKDIR)/*
 	touch $(DSKDIR)/vDisk0
 	touch $(DSKDIR)/vDisk1
