@@ -19,6 +19,6 @@ public class RaidDefine {
 	public final static int INODE_SIZE = 11;
 	public final static int MAXDISK = 4;
 
-	public final static String PATH  = "../RAID/";
+	public final static String PATH  = "RAID/";
 	public final static String NAMEDISK = "vDisk";
 }

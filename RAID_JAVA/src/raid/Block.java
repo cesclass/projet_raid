@@ -3,7 +3,7 @@ import java.io.*;
 
 public class Block{
 
-    private byte []data = new byte[RaidDefine.BLOCK_SIZE];
+    public byte []data = new byte[RaidDefine.BLOCK_SIZE];
 
     /* Getters and Setters */
     public byte getDataI(int indice){
@@ -21,23 +21,24 @@ public class Block{
      * @return : nombre de block necessaire
      * 
      */
-
-    public int computeNBlock(int taille){
+    public static int computeNBlock(int taille){
         return taille / RaidDefine.BLOCK_SIZE + (taille % RaidDefine.BLOCK_SIZE);
     }
 
     /* A completer */
-    public int writeBlock(VirtualDisk r5Disk, int position, int numdisk, Block writeB) throws IOException {
-        r5Disk.getStorage(numdisk).write(writeB.data, position, writeB.data.length);
+    public int writeBlock(VirtualDisk r5Disk, int position, int numdisk) throws IOException {
+        r5Disk.getStorage(numdisk).seek(position);
+        r5Disk.getStorage(numdisk).write(this.data);
 
         return 0;
     }
 
     /* A completer */
-    public Block readBlock(VirtualDisk r5Disk, int position, int numdisk, Block readB) throws IOException { 
-        r5Disk.getStorage(numdisk).read(readB.data, position, readB.data.length);
+    public Block readBlock(VirtualDisk r5Disk, int position, int numdisk) throws IOException { 
+        r5Disk.getStorage(numdisk).seek(position);
+        r5Disk.getStorage(numdisk).read(this.data);
 
-        return readB;
+        return this;
     }
 
     /* A completer */
@@ -48,22 +49,22 @@ public class Block{
         Block read = new Block();
         for(int i = 0; i < RaidDefine.MAXDISK; i++) {
             if( i != numdisk){
-                read = readBlock(r5Disk, position, i, repair);
+                read = readBlock(r5Disk, position, i);
                 for(int j = 0; j < RaidDefine.BLOCK_SIZE; j++){
                     repair.data[j] ^= read.data[j];
                 }
             }
         }
-        writeBlock(r5Disk, position, numdisk, repair);
+        writeBlock(r5Disk, position, numdisk);
     }
 
     /* A completer */
-    public void dumpBlockHexa(Block dump){
-        StringBuilder strDump = new StringBuilder(dump.data.length*2);
-        for(byte b: dump.data){
+    public void dumpBlockHexa(){
+        StringBuilder strDump = new StringBuilder(this.data.length*2);
+        for(byte b: this.data){
             strDump.append(String.format("%x", b));
         }
-        System.out.println(" " + strDump);
+        System.out.println(strDump);
     }
 
 }

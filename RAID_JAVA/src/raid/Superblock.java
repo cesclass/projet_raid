@@ -4,12 +4,12 @@ package raid;
  * @author Dylan
  *
  */
-public class Superblock {
+public class SuperBlock {
 	private RaidType raidType;
 	private int nbBlocksUsed;
 	private int firstFreeByte;
 	
-	public Superblock() {
+	public SuperBlock() {
 		raidType = null;
 		nbBlocksUsed = 0;
 		firstFreeByte = 0;
