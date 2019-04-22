@@ -9,7 +9,7 @@ public class VirtualDisk{
     private int nbDisque = 0;
     private int nbFile = 0;
     /* Def raid type */
-    private File []storage = new File[RaidDefine.MAX_DISK];
+    private RandomAccessFile []storage = new RandomAccessFile[RaidDefine.BLOCK_SIZE];
 
     /* Constructor */
     public VirtualDisk(){
@@ -17,7 +17,7 @@ public class VirtualDisk{
     }
 
     /* Getters et Setters */
-    public File getStorage(int indice){
+    public RandomAccessFile getStorage(int indice){
         return storage[indice];
     }
 
