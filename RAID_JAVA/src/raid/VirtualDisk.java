@@ -9,18 +9,15 @@ public class VirtualDisk{
     private int nbDisque = 0;
     private int nbFile = 0;
     /* Def raid type */
-    private RandomAccessFile []storage;
+    private File []storage = new File[RaidDefine.MAX_DISK];
 
     /* Constructor */
     public VirtualDisk(){
 
-        for(int i = 0; i < RaidDefine.MAX_DISK; i++){
-            storage[i] = new RandomAccessFile(RaidDefine.PATH + RaidDefine.NAMEDISK + i, "rw");
-        }
     }
 
     /* Getters et Setters */
-    public RandomAccessFile getStorage(int indice){
+    public File getStorage(int indice){
         return storage[indice];
     }
 

@@ -27,11 +27,12 @@ public class Block{
     }
 
     /* A completer */
-    public int writeBlock(VirtualDisk r5Disk, int position, int numdisk){
-        RandomAccessFile source = r5Disk.getStorage(numdisk);
+    public int writeBlock(VirtualDisk r5Disk, int position, int numdisk, Block writeB) throws IOException {
+        RandomAccessFile source = new RandomAccessFile(r5Disk.getStorage(numdisk), "rw");
 
         source.seek(position);
-        
+        for(int i = 0; i < RaidDefine.BLOCK_SIZE; source.write(writeB.data[i]));
+        source.close();
 
         return 0;
     }
