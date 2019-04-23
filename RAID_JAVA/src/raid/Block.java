@@ -3,7 +3,7 @@ import java.io.*;
 
 public class Block{
 
-    public byte []data = new byte[RaidDefine.BLOCK_SIZE];
+    private byte []data = new byte[RaidDefine.BLOCK_SIZE];
 
     /* Getters and Setters */
     public byte getDataI(int indice){
@@ -26,19 +26,15 @@ public class Block{
     }
 
     /* A completer */
-    public int writeBlock(VirtualDisk r5Disk, int position, int numdisk) throws IOException {
+    public void writeBlock(VirtualDisk r5Disk, int position, int numdisk) throws IOException {
         r5Disk.getStorage(numdisk).seek(position);
         r5Disk.getStorage(numdisk).write(this.data);
-
-        return 0;
     }
 
     /* A completer */
-    public Block readBlock(VirtualDisk r5Disk, int position, int numdisk) throws IOException { 
+    public void readBlock(VirtualDisk r5Disk, int position, int numdisk) throws IOException { 
         r5Disk.getStorage(numdisk).seek(position);
         r5Disk.getStorage(numdisk).read(this.data);
-
-        return this;
     }
 
     /* A completer */
@@ -49,13 +45,13 @@ public class Block{
         Block read = new Block();
         for(int i = 0; i < RaidDefine.MAXDISK; i++) {
             if( i != numdisk){
-                read = readBlock(r5Disk, position, i);
+                read.readBlock(r5Disk, position, i);
                 for(int j = 0; j < RaidDefine.BLOCK_SIZE; j++){
                     repair.data[j] ^= read.data[j];
                 }
             }
         }
-        writeBlock(r5Disk, position, numdisk);
+        repair.writeBlock(r5Disk, position, numdisk);
     }
 
     /* A completer */

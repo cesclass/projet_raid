@@ -6,6 +6,7 @@ import java.io.*;
  *
  */
 public class SuperBlock implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private RaidType raidType;
 	private int nbBlocksUsed;
 	private int firstFreeByte;
@@ -20,14 +21,14 @@ public class SuperBlock implements Serializable{
 		this.firstFreeByte = ffb;
 	}
 
-	public void write() throws IOException {
+	public void write(VirtualDisk r5Disk) throws IOException {
 		byte[] buff = serialize();
-		Stripe.writeChunk(buff.length, buff, 0);
+		Stripe.writeChunk(r5Disk, buff.length, buff, 0);
 	}
 
-	public static SuperBlock read(SuperBlock s) throws ClassNotFoundException, IOException {
+	public static void read(VirtualDisk r5Disk, SuperBlock s) throws ClassNotFoundException, IOException {
 		byte[] buff = new byte[RaidDefine.SUPER_BLOCK_BYTE_SIZE];
-		Stripe.readChunk(buff.length, buff, 0);
+		Stripe.readChunk(r5Disk, buff.length, buff, 0);
 
 		s = deserialize(buff);
 	}

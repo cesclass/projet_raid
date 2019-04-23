@@ -7,6 +7,7 @@ import java.io.*;
  *
  */
 public class Inode implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private byte[] fileName = new byte[RaidDefine.FILENAME_MAX_SIZE];
 	private int size;
 	private int nBlocks;
@@ -49,15 +50,19 @@ public class Inode implements Serializable {
 		return fileName[0] == 0;
 	}
 
-	public static Inode read(int pos) throws ClassNotFoundException, IOException {
+	
+
+	public static int read(VirtualDisk r5Disk, int pos, Inode i) throws ClassNotFoundException, IOException {
 		byte[] buff = new byte[RaidDefine.INODE_BYTE_SIZE];
-		Stripe.readChunk(buff.length, buff, pos);
-		return deserialize(buff);
+		pos = Stripe.readChunk(r5Disk, buff.length, buff, pos);
+		i =  deserialize(buff);
+
+		return pos;
 	}
 
-	public int write(int pos) throws IOException {
+	public int write(VirtualDisk r5Disk, int pos) throws IOException {
 		byte[] buff = serialize();
-		return Stripe.writeChunk(buff.length, buff, pos);
+		return Stripe.writeChunk(r5Disk, buff.length, buff, pos);
 	}
 	
 	public byte[] serialize() throws IOException {

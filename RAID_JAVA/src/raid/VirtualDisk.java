@@ -12,13 +12,13 @@ public class VirtualDisk{
     private RandomAccessFile []storage = new RandomAccessFile[RaidDefine.MAXDISK];
 
     /* Constructor */
-    public VirtualDisk() throws IOException {
-        /* ouverture des disks du systeme RAID*/
+    public VirtualDisk() throws IOException, ClassNotFoundException {
+        /* ouverture des disks du systeme RAID  */
         for(int i = 0; i < nbDisque; i++){
             storage[i] = new RandomAccessFile(RaidDefine.PATH + RaidDefine.NAMEDISK + i, "rw");
         }
 
-        int ffb = Stripe.computeNStripe(Block.computeNBlock(RaidDefine.SUPER_BLOCK_BYTE_SIZE)) * 
+        int pos = Stripe.computeNStripe(Block.computeNBlock(RaidDefine.SUPER_BLOCK_BYTE_SIZE)) * 
                     RaidDefine.BLOCK_SIZE * nbDisque;
 
         if(storage[0].length() == 0){
@@ -28,19 +28,19 @@ public class VirtualDisk{
             /* Inodes */
             for (int i = 0; i < this.tabInode.length; i++) {
                 this.tabInode[i] = new Inode();
-                ffb = tabInode[i].write(ffb);
+                pos = tabInode[i].write(this, pos);
             }
 
-            superBlock.setFirstFreeByte(ffb);
-            superBlock.write();
+            superBlock.setFirstFreeByte(pos);
+            superBlock.write(this);
 
         } else {
             /* SuperBlock */
-            this.superBlock = SuperBlock.read();
+            SuperBlock.read(this, this.superBlock);
             
             /* Inode */
             for (int i = 0; i < this.tabInode.length; i++) {
-                this.tabInode[i] = tabInode[i].read(i);
+                pos = Inode.read(this, pos, tabInode[i]);
             }
         }
     }
@@ -48,6 +48,14 @@ public class VirtualDisk{
     /* Getters et Setters */
     public RandomAccessFile getStorage(int indice){
         return storage[indice];
+    }
+
+    public Inode getUnusedInode() {
+        for (int i = 0; i < RaidDefine.INODE_TABLE_SIZE; i++) {
+            if (tabInode[i].isUnused()) return tabInode[i];
+        }
+
+        return null;
     }
 
     /**
@@ -61,7 +69,23 @@ public class VirtualDisk{
         }
     }
 
-    public void repairDisk(){
-        
+
+    public String toString() {
+        String str = "";
+
+        str += "superBlock : \n" + this.superBlock.toString();
+        str += "tabInodes : \n";
+        for(int i = 0; i < this.tabInode.length; i++) {
+            if(!this.tabInode[i].isUnused()) {
+                str += "inode " + i + " :\n" + this.tabInode[i].toString() + "\n";
+            }
+        }
+        str += "nbDisks : " + this.nbDisque + "\n";
+        str += "nbFiles : " + this.nbFile + "\n";
+        str += "raidType : " + this.raidType.name() + "\n";
+
+        str += "\n";
+        return str;
     }
-}
+ }
+
