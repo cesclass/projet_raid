@@ -79,6 +79,7 @@ public class Stripe {
 		
 		/*	Creation de la Stripe */
 		for (int i = 0; i < nBlocks - 1; datas[i++] = new Block());
+
 		for (int i = 0; i < nBlocks; i ++) {
 			if (i < iParity) {			/*  Lecture des blocs positionnees avant le bloc de parite */
 				try {
@@ -159,7 +160,7 @@ public class Stripe {
 			for (int iBlock = 0; iBlock < nBlocks - 1; iBlock ++) {
 				for (int iByte = 0; iByte < RaidDefine.BLOCK_SIZE; iByte ++) {
 					if (iBuf < bufLen) {
-						buffer[iBuf] = datas[iBlock].getDataI(iByte);
+						buffer[iBuf ++] = datas[iBlock].getDataI(iByte);
 					}
 				}
 			}

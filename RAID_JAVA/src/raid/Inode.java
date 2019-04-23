@@ -50,8 +50,6 @@ public class Inode implements Serializable {
 		return fileName[0] == 0;
 	}
 
-	
-
 	public static int read(VirtualDisk r5Disk, int pos, Inode i) throws ClassNotFoundException, IOException {
 		byte[] buff = new byte[RaidDefine.INODE_BYTE_SIZE];
 		pos = Stripe.readChunk(r5Disk, buff.length, buff, pos);

@@ -26,11 +26,12 @@ public class VirtualDisk{
             superBlock = new SuperBlock();
             
             /* Inodes */
+            /*
             for (int i = 0; i < this.tabInode.length; i++) {
                 this.tabInode[i] = new Inode();
                 pos = tabInode[i].write(this, pos);
             }
-
+            */
             superBlock.setFirstFreeByte(pos);
             superBlock.write(this);
 
@@ -39,9 +40,11 @@ public class VirtualDisk{
             SuperBlock.read(this, this.superBlock);
             
             /* Inode */
+            /*
             for (int i = 0; i < this.tabInode.length; i++) {
                 pos = Inode.read(this, pos, tabInode[i]);
             }
+            */
         }
     }
 
@@ -73,16 +76,18 @@ public class VirtualDisk{
     public String toString() {
         String str = "";
 
-        str += "superBlock : \n" + this.superBlock.toString();
-        str += "tabInodes : \n";
+        str += " > superBlock : \n" + this.superBlock.toString();
+        str += "\n > tabInodes : \n";
+        /*
         for(int i = 0; i < this.tabInode.length; i++) {
             if(!this.tabInode[i].isUnused()) {
                 str += "inode " + i + " :\n" + this.tabInode[i].toString() + "\n";
             }
         }
-        str += "nbDisks : " + this.nbDisque + "\n";
-        str += "nbFiles : " + this.nbFile + "\n";
-        str += "raidType : " + this.raidType.name() + "\n";
+        */
+        str += "\n > nbDisks : " + this.nbDisque + "\n";
+        str += "\n > nbFiles : " + this.nbFile + "\n";
+        str += "\n > raidType : " + this.raidType.name() + "\n";
 
         str += "\n";
         return str;
