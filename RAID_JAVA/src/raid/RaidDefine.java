@@ -21,4 +21,7 @@ public class RaidDefine {
 
 	public final static String PATH  = "RAID/";
 	public final static String NAMEDISK = "vDisk";
+
+	public final static int INODE_BYTE_SIZE = 143;
+	public final static int SUPER_BLOCK_BYTE_SIZE = 170;
 }

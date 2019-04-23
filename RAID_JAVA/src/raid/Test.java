@@ -4,47 +4,26 @@ import java.io.*;
 import raid.*;
 
 public class Test {
-    public static void main(String[] args) throws IOException {
-        /* Ici c'est la zone de test des lapinous */
-        /*
-        Inode i1 = new Inode("Inode0".getBytes(), 15, 55);
-        System.out.println("Inode pre serial : " + i1.toString());
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        /* Tests des inodes */
+        Inode i1 = new Inode("Inode".getBytes(), 0, 0);
+        System.out.println("Inode pre serial : \n" + i1);
         
         byte[] is = i1.serialize();
-        System.out.println("Inode serialize" + is.toString());
+        System.out.println("Inode serialized size : " + is.length);
         
-        Inode i2 = (Inode) Inode.deserialize(is);
-        System.out.println("Inode post serial : " + i2.toString());
-        */
-        // <3
-        RandomAccessFile test = new RandomAccessFile(RaidDefine.PATH + RaidDefine.NAMEDISK + 0 , "rw");
-        System.out.println(test.length());
+        Inode i2 = Inode.deserialize(is);
+        System.out.println("Inode post serial : \n" + i2);
 
-        /* test methode Block */
-        int size = 400;
-        System.out.println("Compute nblock : " + Block.computeNBlock(size));
-        
-        /* Write & Read block */
-        Block write = new Block();
-        Block read = new Block();
-        byte a = 65;
-        for(int i = 0; i < RaidDefine.BLOCK_SIZE; write.setDataI(i++,a));
-        
-        System.out.println("Ecriture de write");
-        write.dumpBlockHexa();
-        test.write(write.data, 0, write.data.length);
-        write.dumpBlockHexa();
+        /* Tests des SuperBlock */
+        SuperBlock s1 = new SuperBlock();
+        System.out.println("SuperBlock : \n" + s1);
 
-        read.dumpBlockHexa();
-        System.out.println("Lecture de read");
+        byte[] ss = s1.serialize();
+        System.out.println("SuperBlock serialized size : " + ss.length);
 
-        test.seek(0);
-        test.read(read.data);
-        test.read(read.data, 0, read.data.length);
-        //test.read(read.data, 0,4);
-
-        read.dumpBlockHexa();
-        test.close();
+        SuperBlock s2 = SuperBlock.deserialize(ss);
+        System.out.println("SuperBlock : \n" + s2);
     }
 
 }
