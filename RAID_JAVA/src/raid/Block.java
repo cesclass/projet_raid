@@ -27,13 +27,13 @@ public class Block{
 
     /* A completer */
     public void writeBlock(VirtualDisk r5Disk, int position, int numdisk) throws IOException {
-        r5Disk.getStorage(numdisk).seek(position);
+        r5Disk.getStorage(numdisk).seek(position*RaidDefine.BLOCK_SIZE);
         r5Disk.getStorage(numdisk).write(this.data);
     }
 
     /* A completer */
     public void readBlock(VirtualDisk r5Disk, int position, int numdisk) throws IOException { 
-        r5Disk.getStorage(numdisk).seek(position);
+        r5Disk.getStorage(numdisk).seek(position*RaidDefine.BLOCK_SIZE);
         r5Disk.getStorage(numdisk).read(this.data);
     }
 
@@ -61,6 +61,17 @@ public class Block{
             strDump.append(String.format("%x", b));
         }
         System.out.println(strDump);
+    }
+
+    public String toString() {
+        String str = "";
+        for(byte b: this.data){
+            if (b < 0x10 && b >= 0x00) {
+                str += 0;
+            }
+            str += String.format("%x", b);
+        }
+        return str;
     }
 
 }

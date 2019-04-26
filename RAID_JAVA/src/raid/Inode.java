@@ -52,7 +52,8 @@ public class Inode implements Serializable {
 
 	public static int read(VirtualDisk r5Disk, int pos, Inode i) throws ClassNotFoundException, IOException {
 		byte[] buff = new byte[RaidDefine.INODE_BYTE_SIZE];
-		pos = Stripe.readChunk(r5Disk, buff.length, buff, pos);
+		Stripe str = new Stripe();
+		pos = str.readChunk(r5Disk, buff.length, buff, pos);
 		i =  deserialize(buff);
 
 		return pos;
@@ -60,7 +61,8 @@ public class Inode implements Serializable {
 
 	public int write(VirtualDisk r5Disk, int pos) throws IOException {
 		byte[] buff = serialize();
-		return Stripe.writeChunk(r5Disk, buff.length, buff, pos);
+		Stripe str = new Stripe();
+		return str.writeChunk(r5Disk, buff.length, buff, pos);
 	}
 	
 	public byte[] serialize() throws IOException {

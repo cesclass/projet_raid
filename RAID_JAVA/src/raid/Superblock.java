@@ -23,25 +23,17 @@ public class SuperBlock implements Serializable{
 
 	public void write(VirtualDisk r5Disk) throws IOException {
 		byte[] buff = serialize();
-		Stripe.writeChunk(r5Disk, buff.length, buff, 0);
-		
-		RandomAccessFile in = new RandomAccessFile("in", "rw");
-		in.write(buff);
-		in.close();
+		Stripe str = new Stripe();
+		str.writeChunk(r5Disk, buff.length, buff, 0);
 	}
 
 	public static void read(VirtualDisk r5Disk, SuperBlock s) throws ClassNotFoundException, IOException {
 		byte[] buff = new byte[RaidDefine.SUPER_BLOCK_BYTE_SIZE];
-		Stripe.readChunk(r5Disk, buff.length, buff, 0);
-
-		RandomAccessFile out = new RandomAccessFile("out", "rw");
-		out.write(buff);
-		out.close();
-
+		Stripe str = new Stripe();
+		str.readChunk(r5Disk, buff.length, buff, 0);
 		s = deserialize(buff);
 	}
 
-	
 	public byte[] serialize() throws IOException {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		ObjectOutputStream os = new ObjectOutputStream(out);

@@ -18,7 +18,9 @@ public class VirtualDisk{
             storage[i] = new RandomAccessFile(RaidDefine.PATH + RaidDefine.NAMEDISK + i, "rw");
         }
 
-        int pos = Stripe.computeNStripe(Block.computeNBlock(RaidDefine.SUPER_BLOCK_BYTE_SIZE)) * 
+        Stripe str = new Stripe();
+
+        int pos = str.computeNStripe(Block.computeNBlock(RaidDefine.SUPER_BLOCK_BYTE_SIZE)) * 
                     RaidDefine.BLOCK_SIZE * nbDisque;
 
         if(storage[0].length() == 0){
@@ -32,6 +34,7 @@ public class VirtualDisk{
                 pos = tabInode[i].write(this, pos);
             }
             */
+            
             superBlock.setFirstFreeByte(pos);
             superBlock.write(this);
 
@@ -76,7 +79,7 @@ public class VirtualDisk{
     public String toString() {
         String str = "";
 
-        str += " > superBlock : \n" + this.superBlock.toString();
+        str += " > superBlock : \n" + ((superBlock != null) ? this.superBlock.toString() : "NULL"); //debug
         str += "\n > tabInodes : \n";
         /*
         for(int i = 0; i < this.tabInode.length; i++) {
