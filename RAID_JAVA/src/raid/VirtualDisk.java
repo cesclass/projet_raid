@@ -18,37 +18,58 @@ public class VirtualDisk{
             storage[i] = new RandomAccessFile(RaidDefine.PATH + RaidDefine.NAMEDISK + i, "rw");
         }
 
-        Stripe str = new Stripe();
-
-        int pos = str.computeNStripe(Block.computeNBlock(RaidDefine.SUPER_BLOCK_BYTE_SIZE)) * 
-                    RaidDefine.BLOCK_SIZE * nbDisque;
-
         if(storage[0].length() == 0){
             /* SuperBlock */
-            superBlock = new SuperBlock();
+            this.superBlock = new SuperBlock();
             
             /* Inodes */
-            /*
             for (int i = 0; i < this.tabInode.length; i++) {
                 this.tabInode[i] = new Inode();
-                pos = tabInode[i].write(this, pos);
             }
-            */
-            
-            superBlock.setFirstFreeByte(pos);
-            superBlock.write(this);
+            this.superBlock.setFirstFreeByte(this.writeInodeTable());
+            this.writeSuperBlock();
 
         } else {
             /* SuperBlock */
-            SuperBlock.read(this, this.superBlock);
+            this.readSuperBlock();
             
             /* Inode */
-            /*
-            for (int i = 0; i < this.tabInode.length; i++) {
-                pos = Inode.read(this, pos, tabInode[i]);
-            }
-            */
+            this.readInodeTable();
         }
+    }
+
+    public int writeInodeTable() throws IOException {
+        Stripe str = new Stripe();
+        int pos = str.computeNStripe(Block.computeNBlock(RaidDefine.SUPER_BLOCK_BYTE_SIZE)) * 
+                    RaidDefine.BLOCK_SIZE * nbDisque;
+                    
+        for (int i = 0; i < this.tabInode.length; i++) {
+            pos = tabInode[i].write(this, pos);
+        }
+
+        return pos;
+    }
+
+    public void readInodeTable() throws ClassNotFoundException, IOException {
+        Stripe str = new Stripe();
+        int pos = str.computeNStripe(Block.computeNBlock(RaidDefine.SUPER_BLOCK_BYTE_SIZE)) * 
+                    RaidDefine.BLOCK_SIZE * nbDisque;
+
+        byte[] buff = new byte[RaidDefine.INODE_BYTE_SIZE];
+        for (int i = 0; i < this.tabInode.length; i++) {
+            pos = Inode.read(this, pos, buff);
+            this.tabInode[i] = Inode.deserialize(buff);
+        }
+    }
+
+    public void writeSuperBlock() throws IOException {
+        this.superBlock.write(this);
+    }
+
+    public void readSuperBlock() throws ClassNotFoundException, IOException {
+        byte[] buff = new byte[RaidDefine.SUPER_BLOCK_BYTE_SIZE];
+        SuperBlock.read(this, buff);
+        this.superBlock = SuperBlock.deserialize(buff);
     }
 
     /* Getters et Setters */
@@ -79,15 +100,15 @@ public class VirtualDisk{
     public String toString() {
         String str = "";
 
-        str += " > superBlock : \n" + ((superBlock != null) ? this.superBlock.toString() : "NULL"); //debug
+        str += " > superBlock : \n" + this.superBlock;
+        
         str += "\n > tabInodes : \n";
-        /*
         for(int i = 0; i < this.tabInode.length; i++) {
             if(!this.tabInode[i].isUnused()) {
                 str += "inode " + i + " :\n" + this.tabInode[i].toString() + "\n";
             }
         }
-        */
+
         str += "\n > nbDisks : " + this.nbDisque + "\n";
         str += "\n > nbFiles : " + this.nbFile + "\n";
         str += "\n > raidType : " + this.raidType.name() + "\n";

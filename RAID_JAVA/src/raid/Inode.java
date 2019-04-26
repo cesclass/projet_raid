@@ -20,7 +20,7 @@ public class Inode implements Serializable {
 		firstByte = 0;
 	}
 
-	public Inode(byte[] fileName, int size, int firstFreeByte) {
+	public void init(byte[] fileName, int size, int firstFreeByte) {
 		setFileName(fileName);
 		this.size = size;
 		nBlocks = Block.computeNBlock(size);
@@ -50,11 +50,9 @@ public class Inode implements Serializable {
 		return fileName[0] == 0;
 	}
 
-	public static int read(VirtualDisk r5Disk, int pos, Inode i) throws ClassNotFoundException, IOException {
-		byte[] buff = new byte[RaidDefine.INODE_BYTE_SIZE];
+	public static int read(VirtualDisk r5Disk, int pos, byte[] buffer) throws ClassNotFoundException, IOException {
 		Stripe str = new Stripe();
-		pos = str.readChunk(r5Disk, buff.length, buff, pos);
-		i =  deserialize(buff);
+		pos = str.readChunk(r5Disk, buffer.length, buffer, pos);
 
 		return pos;
 	}
