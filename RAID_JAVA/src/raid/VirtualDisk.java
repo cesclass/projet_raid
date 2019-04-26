@@ -77,11 +77,35 @@ public class VirtualDisk{
         return storage[indice];
     }
 
+    public int getNbFile() {
+        return this.nbFile;
+    }
+
+    public void setNbFile(int nbf) {
+        this.nbFile = nbf;
+    }
+
     public Inode getUnusedInode() {
         for (int i = 0; i < RaidDefine.INODE_TABLE_SIZE; i++) {
             if (tabInode[i].isUnused()) return tabInode[i];
         }
 
+        return null;
+    }
+
+    public SuperBlock getSuperBlock() {
+        return this.superBlock;
+    }
+
+    public Inode searchInode(byte[] filename) {
+        String sfilename = new String(filename);
+        String sinode;
+        for (Inode i : tabInode) {
+            sinode = new String(i.getFileName());
+            if(sinode.equals(sfilename)) {
+                return i;
+            }
+        }
         return null;
     }
 

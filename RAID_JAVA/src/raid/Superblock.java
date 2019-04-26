@@ -21,6 +21,10 @@ public class SuperBlock implements Serializable{
 		this.firstFreeByte = ffb;
 	}
 
+	public int getFirstFreeByte() {
+		return this.firstFreeByte;
+	}
+
 	public void write(VirtualDisk r5Disk) throws IOException {
 		byte[] buff = serialize();
 		Stripe str = new Stripe();

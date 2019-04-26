@@ -5,23 +5,19 @@ import java.io.*;
 public class Test {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         VirtualDisk r5Disk = new VirtualDisk();
+
+        byte[] filename = "monfichier.txt".getBytes();
+
+        FS.deleteFile(r5Disk, filename);
+
+        /*
+        FS.writeFile(r5Disk, filename, 
+                "Touche a ton cul qui croyait prendre.".getBytes());
+        
+        System.out.println(new String(FS.readFile(r5Disk, filename)));
+        */
+
         System.out.println(r5Disk);
-
-        Inode i = r5Disk.getUnusedInode();
-        if(i == null) {
-            System.err.println("[ERR] Aucun inode de libre...");
-        }
-
-        i.init("Inode 0".getBytes(), 50, 150);
-
-        i = r5Disk.getUnusedInode();
-        if(i == null) {
-            System.err.println("[ERR] Aucun inode de libre...");
-        }
-
-        i.init("Inode 1".getBytes(), 666, 42);
-
-        r5Disk.writeInodeTable();
 
         r5Disk.switchOffRaid();
         

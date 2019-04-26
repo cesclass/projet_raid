@@ -54,15 +54,6 @@ public class Block{
         repair.writeBlock(r5Disk, position, numdisk);
     }
 
-    /* A completer */
-    public void dumpBlockHexa(){
-        StringBuilder strDump = new StringBuilder(this.data.length*2);
-        for(byte b: this.data){
-            strDump.append(String.format("%x", b));
-        }
-        System.out.println(strDump);
-    }
-
     public String toString() {
         String str = "";
         for(byte b: this.data){

@@ -27,6 +27,10 @@ public class Inode implements Serializable {
 		firstByte = firstFreeByte;
 	}
 
+	public void deleteInode() {
+		this.init("\0".getBytes(), 0, 0);
+	}
+
 	public void setFileName(byte[] fileName) {
 		int i;
 		for (i = 0; i < fileName.length; i++) {
@@ -37,13 +41,23 @@ public class Inode implements Serializable {
 		}
 	}
 
-	public byte[] getFileName() {
-		byte[] fileName = new byte[RaidDefine.FILENAME_MAX_SIZE];
-		for (int i = 0; this.fileName[i] != '$' && i < this.fileName.length; i++) {
-			fileName[i] = this.fileName[i];
-		}
+	public void setSize(int size) {
+		this.size = size;
+		this.nBlocks = Block.computeNBlock(size);
+	}
 
-		return fileName;
+	public byte[] getFileName() {
+		String filename = new String(this.fileName);
+		filename = filename.replace("$", "");
+		return filename.getBytes();
+	}
+
+	public int getSize() {
+		return this.size;
+	}
+
+	public int getFirstByte() {
+		return this.firstByte;
 	}
 
 	public boolean isUnused() {
