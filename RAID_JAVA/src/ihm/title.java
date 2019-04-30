@@ -6,15 +6,30 @@
 
 package ihm;
 
+import java.io.IOException;
+import javax.swing.DefaultListModel;
+import raid.*;
+
 /**
  *
  * @author Dylan
  */
-public class title extends javax.swing.JFrame {
+public class Title extends javax.swing.JFrame {
 
-    /** Creates new form error */
-    public title() {
+    private VirtualDisk r5Disk;
+    private static final long serialVersionUID = 1L;
+	/** Creates new form error */
+    public Title() {
         initComponents();
+    }
+
+    public javax.swing.JButton getBtnOk() {
+        return btnOk;
+    }
+    
+    private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnCreateMouseClicked
+        this.setVisible(false);
+        
     }
 
     /** This method is called from within the constructor to
@@ -25,6 +40,8 @@ public class title extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        this.setResizable(false);
+        this.setTitle("NEW");
 
         lblErrTitle = new javax.swing.JLabel();
         btnOk = new javax.swing.JButton();
@@ -33,10 +50,16 @@ public class title extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
+        
+        this.setTitle("Create File");
         lblErrTitle.setText("Entrez le nom du document :");
 
         btnOk.setText("OK");
+        btnOk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOkActionPerformed(evt);
+            }
+        });
 
         jScrollPane1.setViewportView(jTextPane1);
 
@@ -77,6 +100,15 @@ public class title extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+
+    public void setContent(String s) {
+        jTextPane1.setText(s);
+    }
+
+    public String getContent() {
+        return jTextPane1.getText();
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -94,13 +126,13 @@ public class title extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(title.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Title.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(title.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Title.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(title.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Title.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(title.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Title.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -108,7 +140,7 @@ public class title extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new title().setVisible(true);
+                new Title().setVisible(true);
             }
         });
     }

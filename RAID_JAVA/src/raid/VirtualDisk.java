@@ -97,6 +97,10 @@ public class VirtualDisk{
         return this.superBlock;
     }
 
+    public Inode getInode(int indice) {
+        return this.tabInode[indice];
+    }
+
     public Inode searchInode(byte[] filename) {
         String sfilename = new String(filename);
         String sinode;

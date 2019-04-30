@@ -8,14 +8,13 @@ public class Test {
 
         byte[] filename = "monfichier.txt".getBytes();
 
-        FS.deleteFile(r5Disk, filename);
-
-        /*
+        //FS.deleteFile(r5Disk, filename);
+        
         FS.writeFile(r5Disk, filename, 
                 "Touche a ton cul qui croyait prendre.".getBytes());
         
         System.out.println(new String(FS.readFile(r5Disk, filename)));
-        */
+        
 
         System.out.println(r5Disk);
 

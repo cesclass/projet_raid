@@ -6,14 +6,19 @@
 
 package ihm;
 
+import java.io.IOException;
+import javax.swing.DefaultListModel;
+import raid.*;
+
 /**
  *
  * @author Dylan
  */
-public class error extends javax.swing.JFrame {
+public class Error extends javax.swing.JFrame {
 
-    /** Creates new form error */
-    public error() {
+    private static final long serialVersionUID = 1L;
+	/** Creates new form error */
+    public Error() {
         initComponents();
     }
 
@@ -25,6 +30,8 @@ public class error extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        this.setResizable(false);
+        this.setTitle("ERROR");
 
         lblErrTitle = new javax.swing.JLabel();
         lblErrMsg = new javax.swing.JLabel();
@@ -87,20 +94,20 @@ public class error extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(error.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Error.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(error.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Error.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(error.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Error.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(error.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Error.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new error().setVisible(true);
+                new Error().setVisible(true);
             }
         });
     }
