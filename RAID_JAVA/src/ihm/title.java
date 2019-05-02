@@ -52,7 +52,7 @@ public class Title extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         
         this.setTitle("Create File");
-        lblErrTitle.setText("Entrez le nom du document :");
+        lblErrTitle.setText("Enter filename :                ");
 
         btnOk.setText("OK");
         btnOk.addActionListener(new java.awt.event.ActionListener() {

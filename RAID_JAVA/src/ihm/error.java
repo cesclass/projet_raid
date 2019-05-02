@@ -6,20 +6,32 @@
 
 package ihm;
 
+import java.awt.Dialog.ModalExclusionType;
 import java.io.IOException;
 import javax.swing.DefaultListModel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
 import raid.*;
 
 /**
  *
  * @author Dylan
  */
-public class Error extends javax.swing.JFrame {
+public class Error extends javax.swing.JDialog{
 
     private static final long serialVersionUID = 1L;
 	/** Creates new form error */
     public Error() {
         initComponents();
+    }
+
+    public void setErrTitle(String errTitle) {
+        lblErrTitle.setText(errTitle);
+    }
+
+    public void setErrMsg(String errMsg) {
+        lblErrMsg.setText(errMsg);
     }
 
     /** This method is called from within the constructor to
@@ -32,12 +44,13 @@ public class Error extends javax.swing.JFrame {
     private void initComponents() {
         this.setResizable(false);
         this.setTitle("ERROR");
-
+        this.setModal(true);
+        
         lblErrTitle = new javax.swing.JLabel();
         lblErrMsg = new javax.swing.JLabel();
         btnOk = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lblErrTitle.setForeground(new java.awt.Color(204, 0, 0));
         lblErrTitle.setText("ERREUR !");
@@ -46,6 +59,11 @@ public class Error extends javax.swing.JFrame {
         lblErrMsg.setText("Message d'erreur...");
 
         btnOk.setText("OK");
+        btnOk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                setVisible(false);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

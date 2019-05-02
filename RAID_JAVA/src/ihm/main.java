@@ -51,24 +51,74 @@ public class Main extends javax.swing.JFrame {
         }
     }
 
-    public boolean createFile(String filename) {
+    public void createFile(String filename) {
+        if (filename.getBytes().length > 31) {
+            triggerError("Create error",
+                    "File name is too long (> 31 Bytes)");
+            return;
+        }
+
+        String [] interdit = new String[] {"\\", "/", " ", "\n", "$", "\t"};
+        for (String s : interdit) {
+            if (filename.contains(s)) {
+                triggerError("Create error",
+                    "<html>Forbidden characters. " +
+                    "You can't use spaces, carry return, tabs or \\, /, $</html>");
+                return;
+            }
+        }
+
+        if (filename.isEmpty()) {
+            triggerError("Create error",
+                    "File name is empty.");
+            return;
+        }
+
         Inode in;
+
         if ((in = r5Disk.getUnusedInode()) == null) {
-            return false;
+            triggerError("Create error",
+                    "RAID 5 system is already full.");
+            return;
         } else {
             in.init(filename.getBytes(), 0, r5Disk.getSuperBlock().getFirstFreeByte());
             listModel.addElement(filename);
-            return false;
+            lstFiles.setSelectedValue(filename, false);
         }
     }
 
     public void showFile(String filename) throws IOException {
+        if (filename == null) {
+            txtDatas.setText("");
+            lblSize.setText("");
+            return;
+        }
+        
         byte[] buff = FS.readFile(r5Disk, filename.getBytes());
         txtDatas.setText(new String(buff));
+        lblSize.setText("Size : " + buff.length + " Byte(s)");
     }
 
     public void modifyFile(String filename) throws IOException {
         FS.writeFile(r5Disk, filename.getBytes(), txtDatas.getText().getBytes());
+    }
+
+    public void deleteFile(String filename) throws IOException{
+        if (filename == null) {
+            triggerError("Delete error", 
+                    "There is no file selected.");
+            return;
+        }
+        
+        FS.deleteFile(r5Disk, filename.getBytes());
+        listModel.removeElement(filename);
+    }
+
+    void triggerError(String errTitle, String errMsg) {
+        Error errFrame = new Error();
+        errFrame.setErrTitle(errTitle);
+        errFrame.setErrMsg(errMsg);
+        errFrame.setVisible(true);
     }
 
     /**
@@ -95,7 +145,7 @@ public class Main extends javax.swing.JFrame {
         lblTitle = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtDatas = new javax.swing.JTextPane();
-        jLabel4 = new javax.swing.JLabel();
+        lblFilename = new javax.swing.JLabel();
         btnCancel = new javax.swing.JButton();
 
         jLabel1.setText("jLabel1");
@@ -105,7 +155,6 @@ public class Main extends javax.swing.JFrame {
         lstFiles = new javax.swing.JList(listModel);
         lstFiles.addListSelectionListener(new ListSelectionListener(){
             public void valueChanged(ListSelectionEvent e) {
-                jLabel4.setText(lstFiles.getSelectedValue());
                 try {
                     showFile(lstFiles.getSelectedValue());
                 } catch (IOException e1) {
@@ -142,8 +191,7 @@ public class Main extends javax.swing.JFrame {
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
-                    FS.deleteFile(r5Disk, lstFiles.getSelectedValue().getBytes());
-                    // C'EST BUGUE !
+                    deleteFile(lstFiles.getSelectedValue());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -165,7 +213,7 @@ public class Main extends javax.swing.JFrame {
         btnStore.setMinimumSize(new java.awt.Dimension(90, 25));
         btnStore.setPreferredSize(new java.awt.Dimension(90, 25));
 
-        lblSize.setText("Size :");
+        lblSize.setText("");
 
         btnSave.setText("Save");
         btnSave.setMaximumSize(new java.awt.Dimension(90, 25));
@@ -189,7 +237,7 @@ public class Main extends javax.swing.JFrame {
         txtDatas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jScrollPane3.setViewportView(txtDatas);
 
-        jLabel4.setText("File name");
+        lblFilename.setText("                                ");
 
         btnCancel.setText("Cancel");
         btnCancel.setMaximumSize(new java.awt.Dimension(90, 25));
@@ -253,14 +301,14 @@ public class Main extends javax.swing.JFrame {
                                         layout.createSequentialGroup()
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29,
                                                         Short.MAX_VALUE)
-                                                .addComponent(jLabel4).addGap(168, 168, 168))))
+                                                .addComponent(lblFilename).addGap(168, 168, 168))))
                         .addGroup(layout.createSequentialGroup().addComponent(lblTitle).addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap()));
         layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(
                 javax.swing.GroupLayout.Alignment.TRAILING,
                 layout.createSequentialGroup().addContainerGap().addComponent(lblTitle).addGap(11, 11, 11)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(lblMyFiles).addComponent(jLabel4))
+                                .addComponent(lblMyFiles).addComponent(lblFilename))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jScrollPane3)
@@ -338,7 +386,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnStore;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel lblFilename;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblMyFiles;
