@@ -6,14 +6,14 @@
 package ihm;
 
 import java.awt.event.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.io.IOException;
 import javax.swing.DefaultListModel;
 import javax.swing.event.ListDataListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.JFileChooser;
+import javax.swing.JScrollPane;
+import java.io.*;
 
 import raid.*;
 
@@ -74,6 +74,12 @@ public class Main extends javax.swing.JFrame {
             return;
         }
 
+        if (r5Disk.searchInode(filename.getBytes()) != null) {
+            triggerError("Create error",
+                    "File already exist.");
+            return;
+        }
+
         Inode in;
 
         if ((in = r5Disk.getUnusedInode()) == null) {
@@ -101,8 +107,17 @@ public class Main extends javax.swing.JFrame {
 
     public void modifyFile(String filename) throws IOException {
         FS.writeFile(r5Disk, filename.getBytes(), txtDatas.getText().getBytes());
+        showFile(filename);
     }
 
+    /**
+     * Copie un fichier du systeme "hote" vers le systeme RAID
+     *  avec le meme nom.
+     * 
+     * @param filename
+     * 
+     * @throws IOException
+     */
     public void deleteFile(String filename) throws IOException{
         if (filename == null) {
             triggerError("Delete error", 
@@ -114,6 +129,83 @@ public class Main extends javax.swing.JFrame {
         listModel.removeElement(filename);
     }
 
+    /**
+     * Copie un fichier du systeme "hote" vers le systeme RAID
+     *  avec le meme nom.
+     * 
+     * @throws IOException
+     */
+    public void loadFile() throws IOException {
+        JFileChooser fc = new JFileChooser();
+
+        /*  Configuration de l'explorateur */
+        fc.setApproveButtonText("Load");
+        fc.setDialogTitle("Load");
+        
+        if(fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
+            File fichier = fc.getSelectedFile();
+
+            /*  Gestion d'erreurs */
+            /*   - Nom de fichier trop long */
+            if (fichier.getName().getBytes().length >= RaidDefine.FILENAME_MAX_SIZE) {
+                triggerError("Load error",
+                        "File name is too long (>= " + RaidDefine.FILENAME_MAX_SIZE + " Bytes)");
+                return;
+            }
+            
+            /*   - Fichier trop gros */
+            if (fichier.length() >= RaidDefine.MAX_FILE_SIZE) {
+                triggerError("Load error",
+                        "File is too big (>= " + RaidDefine.MAX_FILE_SIZE + " Bytes)");
+                return;
+            }
+
+            /*   - Le fichier existe deja */
+            if (r5Disk.searchInode(fichier.getName().getBytes()) != null) {
+                triggerError("Load error",
+                        "File already exist.");
+                return;
+            }
+            
+            /*  Enregistrement du fichier */
+            FS.loadFileFromHost(r5Disk, fichier);
+
+            /*  Mise a jour de la GUI */
+            listModel.addElement(fichier.getName());
+            lstFiles.setSelectedValue(fichier.getName(), true);
+            showFile(fichier.getName());
+        }
+    }
+
+    public void storeFile(){
+        JFileChooser fc = new JFileChooser();
+
+        /*  Configuration de l'explorateur */
+        fc.setApproveButtonText("Store");
+        fc.setDialogTitle("Store");
+        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+        String filename = lstFiles.getSelectedValue();
+        if (filename == null) {
+            triggerError("Store error",
+                    "No file selected.");
+            return;
+        }
+
+        if(fc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+            FS.storeFileToHost(
+                r5Disk, 
+                lstFiles.getSelectedValue().getBytes(),
+                fc.getSelectedFile().getPath()
+            );
+        }
+    }
+
+    /**
+     * 
+     * @param errTitle
+     * @param errMsg
+     */
     void triggerError(String errTitle, String errMsg) {
         Error errFrame = new Error();
         errFrame.setErrTitle(errTitle);
@@ -204,7 +296,11 @@ public class Main extends javax.swing.JFrame {
         btnLoad.setPreferredSize(new java.awt.Dimension(90, 25));
         btnLoad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //btnLoadActionPerformed(evt);
+                try {
+                    loadFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -212,7 +308,11 @@ public class Main extends javax.swing.JFrame {
         btnStore.setMaximumSize(new java.awt.Dimension(90, 25));
         btnStore.setMinimumSize(new java.awt.Dimension(90, 25));
         btnStore.setPreferredSize(new java.awt.Dimension(90, 25));
-
+        btnStore.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt){
+                storeFile();
+            }
+        });
         lblSize.setText("");
 
         btnSave.setText("Save");
@@ -235,9 +335,17 @@ public class Main extends javax.swing.JFrame {
         lblTitle.setText("RAID 5 Java");
 
         txtDatas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        txtDatas.setPreferredSize(new java.awt.Dimension(35, 200));
+        JScrollPane scroll = new JScrollPane();
+        scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED); 
+        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        txtDatas.add(scroll);
+        
         jScrollPane3.setViewportView(txtDatas);
-
-        lblFilename.setText("                                ");
+        
+        String s = new String();
+        for(int i = 0; i++ < 120; s+=" ");
+        lblFilename.setText(s);
 
         btnCancel.setText("Cancel");
         btnCancel.setMaximumSize(new java.awt.Dimension(90, 25));
