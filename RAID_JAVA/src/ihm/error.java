@@ -6,14 +6,6 @@
 
 package ihm;
 
-import java.awt.Dialog.ModalExclusionType;
-import java.io.IOException;
-import javax.swing.DefaultListModel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-
-import raid.*;
-
 /**
  *
  * @author Dylan

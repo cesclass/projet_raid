@@ -6,8 +6,6 @@
 
 package ihm;
 
-import java.io.IOException;
-import javax.swing.DefaultListModel;
 import raid.*;
 
 /**

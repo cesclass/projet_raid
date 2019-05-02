@@ -8,7 +8,6 @@ package ihm;
 import java.awt.event.*;
 import java.io.IOException;
 import javax.swing.DefaultListModel;
-import javax.swing.event.ListDataListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.JFileChooser;
