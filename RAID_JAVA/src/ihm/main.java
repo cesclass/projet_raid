@@ -27,6 +27,7 @@ public class Main extends javax.swing.JFrame {
     VirtualDisk r5Disk;
     
     private Title title;
+    private Error errFrame;
 
     /**
      * Creates new form main
@@ -37,7 +38,15 @@ public class Main extends javax.swing.JFrame {
     public Main() throws ClassNotFoundException, IOException {
 
         r5Disk = new VirtualDisk();
+
         title = new Title();
+        title.getBtnCancel().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                title.setVisible(false);
+            }
+        });
+        errFrame = new Error();
+
         initComponents();
         initList();
     }
@@ -207,7 +216,6 @@ public class Main extends javax.swing.JFrame {
      * @param errMsg
      */
     void triggerError(String errTitle, String errMsg) {
-        Error errFrame = new Error();
         errFrame.setErrTitle(errTitle);
         errFrame.setErrMsg(errMsg);
         errFrame.setVisible(true);

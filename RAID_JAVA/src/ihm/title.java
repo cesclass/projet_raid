@@ -26,6 +26,10 @@ public class Title extends javax.swing.JFrame {
     public javax.swing.JButton getBtnOk() {
         return btnOk;
     }
+
+    public javax.swing.JButton getBtnCancel() {
+        return btnCancel;
+    }
     
     private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnCreateMouseClicked
         this.setVisible(false);
@@ -47,9 +51,9 @@ public class Title extends javax.swing.JFrame {
         btnOk = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextPane1 = new javax.swing.JTextPane();
-        jButton1 = new javax.swing.JButton();
+        btnCancel = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         
         this.setTitle("Create File");
         lblErrTitle.setText("Enter filename :                ");
@@ -63,7 +67,7 @@ public class Title extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(jTextPane1);
 
-        jButton1.setText("Cancel");
+        btnCancel.setText("Cancel");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -74,7 +78,7 @@ public class Title extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1)
+                        .addComponent(btnCancel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnOk))
                     .addGroup(layout.createSequentialGroup()
@@ -93,7 +97,7 @@ public class Title extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnOk)
-                    .addComponent(jButton1))
+                    .addComponent(btnCancel))
                 .addContainerGap())
         );
 
@@ -147,7 +151,7 @@ public class Title extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnOk;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnCancel;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextPane jTextPane1;
     private javax.swing.JLabel lblErrTitle;
