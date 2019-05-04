@@ -25,6 +25,10 @@ public class Title extends javax.swing.JFrame {
         return btnOk;
     }
 
+    public javax.swing.JTextPane getTxtTitle() {
+        return txtTitle;
+    }
+
     public javax.swing.JButton getBtnCancel() {
         return btnCancel;
     }
@@ -48,7 +52,7 @@ public class Title extends javax.swing.JFrame {
         lblErrTitle = new javax.swing.JLabel();
         btnOk = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
+        txtTitle = new javax.swing.JTextPane();
         btnCancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -63,7 +67,7 @@ public class Title extends javax.swing.JFrame {
             }
         });
 
-        jScrollPane1.setViewportView(jTextPane1);
+        jScrollPane1.setViewportView(txtTitle);
 
         btnCancel.setText("Cancel");
 
@@ -104,11 +108,11 @@ public class Title extends javax.swing.JFrame {
 
 
     public void setContent(String s) {
-        jTextPane1.setText(s);
+        txtTitle.setText(s);
     }
 
     public String getContent() {
-        return jTextPane1.getText();
+        return txtTitle.getText();
     }
 
     /**
@@ -151,7 +155,7 @@ public class Title extends javax.swing.JFrame {
     private javax.swing.JButton btnOk;
     private javax.swing.JButton btnCancel;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextPane jTextPane1;
+    private javax.swing.JTextPane txtTitle;
     private javax.swing.JLabel lblErrTitle;
     // End of variables declaration//GEN-END:variables
 

@@ -6,6 +6,8 @@
 
 package ihm;
 
+import javax.swing.JButton;
+
 /**
  *
  * @author Dylan
@@ -24,6 +26,10 @@ public class Error extends javax.swing.JDialog{
 
     public void setErrMsg(String errMsg) {
         lblErrMsg.setText(errMsg);
+    }
+
+    public JButton getBtnOk() {
+        return btnOk;
     }
 
     

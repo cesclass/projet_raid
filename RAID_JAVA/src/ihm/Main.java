@@ -20,7 +20,7 @@ import raid.*;
  *
  * @author Dylan
  */
-public class Main extends javax.swing.JFrame {
+public class Main extends javax.swing.JFrame implements KeyListener {
 
     private static final long serialVersionUID = 1L;
     VirtualDisk r5Disk;
@@ -44,10 +44,46 @@ public class Main extends javax.swing.JFrame {
                 title.setVisible(false);
             }
         });
+        title.getTxtTitle().addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {}
+        
+            @Override
+            public void keyReleased(KeyEvent e) {}
+        
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    createFile(title.getContent());
+                    title.setVisible(false);
+                }
+
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    title.setVisible(false);
+                }
+            }
+        });
+
         errFrame = new Error();
+        errFrame.getBtnOk().addKeyListener(new KeyListener(){
+            @Override
+            public void keyTyped(KeyEvent e) {}
+        
+            @Override
+            public void keyReleased(KeyEvent e) {}
+        
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    errFrame.setVisible(false);
+                }
+            }
+        });
 
         initComponents();
         initList();
+
+        lstFiles.addKeyListener(this);
     }
 
     public void initList() {
@@ -218,6 +254,28 @@ public class Main extends javax.swing.JFrame {
         errFrame.setErrTitle(errTitle);
         errFrame.setErrMsg(errMsg);
         errFrame.setVisible(true);
+    }
+
+    public void keyPressed(KeyEvent ke) {
+        if (ke.getKeyCode() == KeyEvent.VK_DELETE) {
+            try {
+                deleteFile(lstFiles.getSelectedValue());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (errFrame.isVisible() && ke.getKeyCode() == KeyEvent.VK_ENTER) {
+            errFrame.setVisible(false);
+        }
+    }
+
+    public void keyReleased(KeyEvent ke) {
+        // System.out.println("Key released");
+    }
+
+    public void keyTyped(KeyEvent ke) {
+        // System.out.println("Key typed");
     }
 
     /**
