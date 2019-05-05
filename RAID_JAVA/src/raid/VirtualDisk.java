@@ -2,7 +2,16 @@ package raid;
 
 import java.io.*;
 
+/**
+ * Cree et gere le VirtualDisk.
+ *  Le VirtualDisk represente le systeme RAID et permet 
+ *  de gerer ce systeme, sa table d'Inode et son SuperBlock.
+ * 
+ * @version 19.05.05
+ */
 public class VirtualDisk{
+
+    /* Attributs */
 
     private SuperBlock superBlock;
     private Inode[] tabInode = new Inode[RaidDefine.INODE_TABLE_SIZE];
@@ -11,7 +20,16 @@ public class VirtualDisk{
     private RaidType raidType = RaidType.CINQ;
     private RandomAccessFile []storage = new RandomAccessFile[RaidDefine.MAXDISK];
 
-    /* Constructor */
+    /* Constructeur */
+
+    /**
+     * Constructeur du Virtual Disk contenant la table d'inode et
+     *  le super block. 
+     * Initialisation dynamique selon le contenu des disques virtuels.
+     * 
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public VirtualDisk() throws IOException, ClassNotFoundException {
         /* ouverture des disks du systeme RAID  */
         for(int i = 0; i < nbDisque; i++){
@@ -38,6 +56,16 @@ public class VirtualDisk{
         }
     }
 
+    /* Reader er Writer */
+
+    /**
+     * Ecrit la table d'inodes sur les disques virtuels et retourne
+     *  la position du premier octet apres la table (sur les disques virtuels).
+     * 
+     * @return Premier octet apres l'ecriture de la table
+     * 
+     * @throws IOException
+     */
     public int writeInodeTable() throws IOException {
         Stripe str = new Stripe();
         int pos = str.computeNStripe(Block.computeNBlock(RaidDefine.SUPER_BLOCK_BYTE_SIZE)) * 
@@ -50,6 +78,12 @@ public class VirtualDisk{
         return pos;
     }
 
+    /**
+     * Charge la table d'inodes depuis les disques virtuels.
+     * 
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
     public void readInodeTable() throws ClassNotFoundException, IOException {
         Stripe str = new Stripe();
         int pos = str.computeNStripe(Block.computeNBlock(RaidDefine.SUPER_BLOCK_BYTE_SIZE)) * 
@@ -62,10 +96,21 @@ public class VirtualDisk{
         }
     }
 
+    /**
+     * Ecrit le super block sur les disques virtuels.
+     * 
+     * @throws IOException
+     */
     public void writeSuperBlock() throws IOException {
         this.superBlock.write(this);
     }
 
+    /**
+     * Charge le super bloc depuis les disques virtuels.
+     * 
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
     public void readSuperBlock() throws ClassNotFoundException, IOException {
         byte[] buff = new byte[RaidDefine.SUPER_BLOCK_BYTE_SIZE];
         SuperBlock.read(this, buff);
@@ -73,18 +118,41 @@ public class VirtualDisk{
     }
 
     /* Getters et Setters */
+
+    /**
+     * Retourne un vDisk (RandomAccessFile) .
+     * 
+     * @param indice : Indice du vDisk a retourner 
+     * 
+     * @return vDisk (RandomAcessFile)
+     */
     public RandomAccessFile getStorage(int indice){
         return storage[indice];
     }
 
+    /**
+     * Retourne le nombre de fichier(s) dans le RAID.
+     * 
+     * @return nombre de fichier(s) dans le RAID
+     */
     public int getNbFile() {
         return this.nbFile;
     }
 
+    /**
+     * Met a jour le nombre de fichier(s) dans le RAID.
+     * 
+     * @param nbf : Nouveau nombre de fichier(s)
+     */
     public void setNbFile(int nbf) {
         this.nbFile = nbf;
     }
 
+    /**
+     * Retourne une inode vide si il en reste.
+     * 
+     * @return Une inode vide si possible, null sinon
+     */
     public Inode getUnusedInode() {
         for (int i = 0; i < RaidDefine.INODE_TABLE_SIZE; i++) {
             if (tabInode[i].isUnused()) return tabInode[i];
@@ -93,14 +161,33 @@ public class VirtualDisk{
         return null;
     }
 
+    /**
+     * Retourne le super block
+     * 
+     * @return Le super block
+     */
     public SuperBlock getSuperBlock() {
         return this.superBlock;
     }
 
+    /**
+     * Retourne une inode de la table d'inodes.
+     * 
+     * @param indice : Indice de l'inode dans la table
+     * 
+     * @return L'inode correspondant a l'indice si possible, null sinon
+     */
     public Inode getInode(int indice) {
         return this.tabInode[indice];
     }
 
+    /**
+     * Retourne l'inode designe par filename.
+     * 
+     * @param filename : Nom de l'inode
+     * 
+     * @return L'inode designe par filename si possible, null sinon
+     */
     public Inode searchInode(byte[] filename) {
         String sfilename = new String(filename);
         String sinode;
@@ -113,10 +200,13 @@ public class VirtualDisk{
         return null;
     }
 
+
+    /* utils */
+
     /**
+     * Ferme tous les disks du systeme RAID.
      * 
-     * Ferme tous les disks du systeme RAID
-     * 
+     * @throws IOException
      */
     public void switchOffRaid() throws IOException {
         for(int i = 0; i < nbDisque; i++){
@@ -124,7 +214,12 @@ public class VirtualDisk{
         }
     }
 
-
+    /**
+     * Retourne Une chaine contenant la representation du virtual disk et des
+     *  objets qu'il contient (inodes, super block, vDisks...)
+     * 
+     * @return Une chaine contenant la representatino du virtual disk
+     */
     public String toString() {
         String str = "";
 

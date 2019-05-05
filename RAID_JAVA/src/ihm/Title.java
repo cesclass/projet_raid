@@ -17,28 +17,48 @@ public class Title extends javax.swing.JFrame {
     public Title() {
         initComponents();
     }
-
+    /**
+     * Getter btnOk
+     * 
+     * @return btnOk
+     */
     public javax.swing.JButton getBtnOk() {
         return btnOk;
     }
 
+    /**
+     * Getter TxtTitle
+     * 
+     * @return txtTitle
+     */
     public javax.swing.JTextPane getTxtTitle() {
         return txtTitle;
     }
 
+    /**
+     * Getter btnCancel
+     * 
+     * @returnbtnCancel
+     */
     public javax.swing.JButton getBtnCancel() {
         return btnCancel;
     }
     
+    /**
+     * Ferme la fenetre lorsque l'utilisateur appuie sur le bouton "Ok"
+     * 
+     * @param evt
+     */
     private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnCreateMouseClicked
         this.setVisible(false);
         
     }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        this.setResizable(false);
-        this.setTitle("NEW");
+        this.setResizable(false); /* taille de la fenetre non redimensionnable */
+        this.setTitle("NEW"); /* titre de la fenetre */
 
+        /* Creation des composants de la fenetre */
         lblErrTitle = new javax.swing.JLabel();
         btnOk = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -96,11 +116,20 @@ public class Title extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-
+    /**
+     * Setter txtTitle
+     * 
+     * @param s : String a affecter a txtTitle
+     */
     public void setContent(String s) {
         txtTitle.setText(s);
     }
 
+    /**
+     * Getter txtTitle
+     * 
+     * @return le contenu de txtTitle
+     */
     public String getContent() {
         return txtTitle.getText();
     }
