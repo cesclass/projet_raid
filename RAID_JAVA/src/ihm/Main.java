@@ -210,6 +210,7 @@ public class Main extends javax.swing.JFrame implements KeyListener {
         
         if(fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
             File fichier = fc.getSelectedFile();
+            System.out.println(fichier.getName());
 
             /*  Gestion d'erreurs */
             /*   - Nom de fichier trop long */
@@ -234,12 +235,16 @@ public class Main extends javax.swing.JFrame implements KeyListener {
             }
             
             /*  Enregistrement du fichier */
-            FS.loadFileFromHost(r5Disk, fichier);
-
-            /*  Mise a jour de la GUI */
-            listModel.addElement(fichier.getName());
-            lstFiles.setSelectedValue(fichier.getName(), true);
-            showFile(fichier.getName());
+            if (FS.loadFileFromHost(r5Disk, fichier)) {
+                /*  Mise a jour de la GUI */
+                listModel.addElement(fichier.getName());
+                lstFiles.setSelectedValue(fichier.getName(), true);
+                showFile(fichier.getName());
+            } else {
+                triggerError("Load error",
+                        "File can't be load.");
+                return;
+            }
         }
     }
 
@@ -265,11 +270,15 @@ public class Main extends javax.swing.JFrame implements KeyListener {
         }
 
         if(fc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
-            FS.storeFileToHost(
+            if (!FS.storeFileToHost(
                 r5Disk, 
                 lstFiles.getSelectedValue().getBytes(),
                 fc.getSelectedFile().getPath()
-            );
+            )) {
+                triggerError("Store error",
+                    "File can't be stored in this directory.");
+            return;
+            }
         }
     }
 
