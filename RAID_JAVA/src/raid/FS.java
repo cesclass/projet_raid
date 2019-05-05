@@ -4,6 +4,17 @@ import java.io.*;
 
 public abstract class FS {
 
+    /**
+     * Lit un fichier sur le RAID.
+     * Retourne un tableau d'octets avec le contenu du fichier lu.
+     * 
+     * @param r5Disk : Instance du virtual disk
+     * @param filename : Nom du fichier a lire
+     * 
+     * @return Un tableau d'octets avec le contenu du fichier lu
+     * 
+     * @throws IOException
+     */
     public static byte[] readFile(VirtualDisk r5Disk, byte[] filename) throws IOException {
         Inode id = r5Disk.searchInode(filename);
         byte[] buff = null;
@@ -14,6 +25,19 @@ public abstract class FS {
         return buff;
     }
 
+    /**
+     * Ecrit un fichier sur le RAID.
+     * MaJ de la table d'inode et du super block.
+     * Retourne true si il n'y a pas eu d'erreurs, false sinon.
+     * 
+     * @param r5Disk : Instance du virtual disk
+     * @param filename : Nom du fichier a ecrire
+     * @param data : Contenu du fichier a ecrire
+     * 
+     * @return true si il n'y a pas eu d'erreurs, false sinon
+     * 
+     * @throws IOException
+     */
     public static boolean writeFile(VirtualDisk r5Disk, byte[] filename, byte[] data) throws IOException {
         Inode id = r5Disk.searchInode(filename);
 
@@ -45,6 +69,18 @@ public abstract class FS {
         return true;
     }
 
+    /**
+     * Supprime un fichier du RAID.
+     * MaJ de la table d'inode et du super block.
+     * Retourne true si il n'y a pas eu d'erreurs, false sinon.
+     * 
+     * @param r5Disk : Instance du virtual disk
+     * @param filename : Nom du fichier a supprimer
+     * 
+     * @return true si il n'y a pas eu d'erreurs, false sinon.
+     * 
+     * @throws IOException
+     */
     public static boolean deleteFile(VirtualDisk r5Disk, byte[] filename) throws IOException {
         Inode id = r5Disk.searchInode(filename);
         if (id != null) {
@@ -57,6 +93,15 @@ public abstract class FS {
         return false;
     }
 
+    /**
+     * Charge un fichier depuis l'host et l'ecrit sur le RAID
+     * Retourne true si il n'y a pas eu d'erreurs, false sinon.
+     * 
+     * @param r5Disk : Instance du virtual disk
+     * @param file : Designation du fichier a charger
+     * 
+     * @return true si il n'y a pas eu d'erreurs, false sinon.
+     */
     public static boolean loadFileFromHost(VirtualDisk r5Disk, File file) {
         try {
             RandomAccessFile raf = new RandomAccessFile(file, "r");
@@ -73,6 +118,16 @@ public abstract class FS {
         return true;
     }
 
+    /**
+     * Lit un fichier sur le RAID et le sauvegarde sur l'host.
+     * Retourne true si il n'y a pas eu d'erreurs, false sinon.
+     * 
+     * @param r5Disk : Instance du virtual disk
+     * @param filename : Nom du fichier a lire et sauvegarder
+     * @param path : Chemin designant le repertoire d'accueil du fichier
+     * 
+     * @return true si il n'y a pas eu d'erreurs, false sinon.
+     */
     public static boolean storeFileToHost(VirtualDisk r5Disk, byte[] filename, String path) {
         path += (path.charAt(0) == '/') ? '/' : '\\';
         path += new String(filename);
@@ -93,6 +148,15 @@ public abstract class FS {
         return true;
     }
 
+    /**
+     * Determine si un fichier designe par filename existe deja sur le RAID.
+     * Retourne true si le fichier existe deja, false sinon.
+     * 
+     * @param r5Disk : Instance du virtual disk
+     * @param filename : Nom du fichier a rechercher
+     * 
+     * @return true si le fichier existe deja, false sinon.
+     */
     public static boolean fileExist(VirtualDisk r5Disk, byte[] filename) {
         return (r5Disk.searchInode(filename) != null);
     }
