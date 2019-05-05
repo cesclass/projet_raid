@@ -22,9 +22,9 @@ Si les disques n'existent pas, ils seront générés. On peut donc passer un dos
 
 ### Raid 5 Java :
 L'executable du RAID 5 Java est aussi à la racine du dossier projet.
-Il s'agit du fichier raid5_java.jar.
-Pour qu'il s'execute correctement, il faut qu'il soit lancé dans le même dossier qui contient le dossier RAID (dossier qui contient les disques virtuels)
-C'est le cas par défaut à la racine du projet. Il suffit donc de lancer le programme raid5_java.jar
+Il s'agit du fichier `raid5_java.jar`.
+Pour qu'il s'execute correctement, il faut qu'il soit lancé dans le même dossier qui contient le dossier `RAID` (dossier qui contient les disques virtuels)
+C'est le cas par défaut à la racine du projet. Il suffit donc de lancer le programme `raid5_java.jar`
 
 ## Crédits
 
