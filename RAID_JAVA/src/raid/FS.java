@@ -2,6 +2,12 @@ package raid;
 
 import java.io.*;
 
+/**
+ * Classe de gestion des fichiers sur le systeme RAID
+ *  Permet l'ecriture, la lecture, la creation et la suppression de fichiers.
+ *
+ * @version 19.05.05
+ */
 public abstract class FS {
 
     /**

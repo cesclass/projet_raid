@@ -187,7 +187,7 @@ public class Stripe {
 	}
 
 	/**
-	 * Retourne un String représentant l'objet Stripe.
+	 * Retourne un String representant l'objet Stripe.
 	 * 
 	 * @return 				String représentant l'objet Stripe
 	 */
