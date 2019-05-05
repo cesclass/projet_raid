@@ -10,8 +10,11 @@ En C ou en Java, le système RAID 5 utilise un repertoire dans lequels il stoque
 Par defaut, le dossier `RAID` à la racine du projet contient ces disques.
 Pour réinitialiser ces disques, et partir d'un système RAID vierge, il faut supprimer ces disques virtuels.
 
-### Raid 5 C :
-L'executable du RAID 5 C est à la racine du dossier du projet (dans le dossier `projet_raid`)
+### Raid 5 C (sous unix) :
+
+L'executable du RAID 5 C est à la racine du dossier du projet (dans le dossier `projet_raid`).
+Il a été compilé sous Unix et est donc destiné à être lancé sous Unix !
+Il sera nécessaire de réeffectuer une compilation pour le lancer sur un autre système.
 Pour l'exécuter, il suffit de lancer la commande dans ce même dossier :
 ```shell
 ./raid5 repertoire_disque
