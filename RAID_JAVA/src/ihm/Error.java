@@ -21,7 +21,7 @@ public class Error extends javax.swing.JDialog{
     }
 
     /**
-     * Sette du titre de l'erreur
+     * Setter du titre de l'erreur
      * 
      * @param errTitle : titre de l'erreur a afficher 
      */
