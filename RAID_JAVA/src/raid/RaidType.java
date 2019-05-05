@@ -4,6 +4,11 @@ package raid;
  * @author Dylan
  *
  */
+
+ /**
+  * Type du Raid
+  *
+  */
 public enum RaidType {
 	ZERO,
 	UN,
