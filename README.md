@@ -30,8 +30,8 @@ C'est le cas par défaut à la racine du projet. Il suffit donc de lancer le pro
 
 Il serait déraisonable de ne pas cloturer ce fichier README par un petit crédit aux développeurs de génie qui ont participé à la construction de ce projet.
 J'ai nommé :
- - Cyril Esclassan, Chef de projet Tortionnaire qui n'a jamais daigné payer un centime ses subordonés, mais heureusement, il faisait plutôt bien son job.
- - Dylan Caron, Responsable conception de génie sans qui le code serait probablement bien moins artistique.
- - Guillaume Broise, Responsable developement, graçe a qui le développement est actuellement excellemment bien développé.
+ - **Cyril Esclassan**, Chef de projet Tortionnaire qui n'a jamais daigné payer un centime ses subordonés, mais heureusement, il faisait plutôt bien son job.
+ - **Dylan Caron**, Responsable conception de génie sans qui le code serait probablement bien moins artistique.
+ - **Guillaume Broise**, Responsable developement, graçe a qui le développement est actuellement excellemment bien développé.
  
 Auteur de ce README : Dylan CARON (vous l'aviez deviné)
