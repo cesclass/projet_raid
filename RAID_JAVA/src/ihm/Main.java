@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ihm;
 
 import java.awt.event.*;
@@ -17,8 +12,9 @@ import java.io.*;
 import raid.*;
 
 /**
- *
- * @author Dylan
+ * Classe principale contenant la fonction main à executer
+ * 
+ * @version 19.05.05
  */
 public class Main extends javax.swing.JFrame implements KeyListener {
 
@@ -29,7 +25,7 @@ public class Main extends javax.swing.JFrame implements KeyListener {
     private Error errFrame;
 
     /**
-     * Creates new form main
+     * Constructeur du main
      * 
      * @throws ClassNotFoundException
      * @throws IOException
@@ -44,6 +40,7 @@ public class Main extends javax.swing.JFrame implements KeyListener {
                 title.setVisible(false);
             }
         });
+        /*  Prise en compte de l'input ENTREE & ESCAPE sur la fenetre Title */
         title.getTxtTitle().addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {}
@@ -65,6 +62,7 @@ public class Main extends javax.swing.JFrame implements KeyListener {
         });
 
         errFrame = new Error();
+        /*  Prise en compte de l'input ENTREE & ESCAPE sur la fenetre Error */
         errFrame.getBtnOk().addKeyListener(new KeyListener(){
             @Override
             public void keyTyped(KeyEvent e) {}
@@ -86,6 +84,9 @@ public class Main extends javax.swing.JFrame implements KeyListener {
         lstFiles.addKeyListener(this);
     }
 
+    /**
+     * Initialise la liste des elements present sur le systeme RAID
+     */
     public void initList() {
         for (int i = 0; i < RaidDefine.INODE_TABLE_SIZE; i++) {
             Inode in = r5Disk.getInode(i);
@@ -95,7 +96,13 @@ public class Main extends javax.swing.JFrame implements KeyListener {
         }
     }
 
+    /**
+     * Cree un nouveau fichier sur le systeme RAID 5
+     * 
+     * @param filename      nom du nouveau fichier    
+     */
     public void createFile(String filename) {
+        /*  Gestion d'erreurs */
         if (filename.getBytes().length > 31) {
             triggerError("Create error",
                     "File name is too long (> 31 Bytes)");
@@ -130,6 +137,8 @@ public class Main extends javax.swing.JFrame implements KeyListener {
             triggerError("Create error",
                     "RAID 5 system is already full.");
             return;
+        
+        /*  Creation du fichier */
         } else {
             in.init(filename.getBytes(), 0, r5Disk.getSuperBlock().getFirstFreeByte());
             listModel.addElement(filename);
@@ -137,6 +146,13 @@ public class Main extends javax.swing.JFrame implements KeyListener {
         }
     }
 
+    /**
+     * Affiche le contenu du fichier dans la zone de texte a droite.
+     * 
+     * @param filename      nom du fichier
+     * 
+     * @throws IOException
+     */
     public void showFile(String filename) throws IOException {
         if (filename == null) {
             txtDatas.setText("");
@@ -149,16 +165,22 @@ public class Main extends javax.swing.JFrame implements KeyListener {
         lblSize.setText("Size : " + buff.length + " Byte(s)");
     }
 
+    /**
+     * Enregistre les modifications du fichier.
+     * 
+     * @param filename      nom du fichier
+     * 
+     * @throws IOException
+     */
     public void modifyFile(String filename) throws IOException {
         FS.writeFile(r5Disk, filename.getBytes(), txtDatas.getText().getBytes());
         showFile(filename);
     }
 
     /**
-     * Copie un fichier du systeme "hote" vers le systeme RAID
-     *  avec le meme nom.
+     * Supprime le fichier su systeme RAID
      * 
-     * @param filename
+     * @param filename      nom du fichier
      * 
      * @throws IOException
      */
@@ -221,6 +243,12 @@ public class Main extends javax.swing.JFrame implements KeyListener {
         }
     }
 
+    /**
+     * Copie un fichier du systeme "hote" vers le systeme RAID
+     *  avec le meme nom.
+     * 
+     * @throws IOException
+     */
     public void storeFile(){
         JFileChooser fc = new JFileChooser();
 
@@ -246,9 +274,10 @@ public class Main extends javax.swing.JFrame implements KeyListener {
     }
 
     /**
+     * Trigger une erreur et ouvre une fenetre d'erreur.
      * 
-     * @param errTitle
-     * @param errMsg
+     * @param errTitle      Titre de l'erreur
+     * @param errMsg        Message d'erreur
      */
     void triggerError(String errTitle, String errMsg) {
         errFrame.setErrTitle(errTitle);
@@ -256,6 +285,7 @@ public class Main extends javax.swing.JFrame implements KeyListener {
         errFrame.setVisible(true);
     }
 
+    /*  Prise en compte de l'input DELETE sur la fenetre Title */
     public void keyPressed(KeyEvent ke) {
         if (ke.getKeyCode() == KeyEvent.VK_DELETE) {
             try {
@@ -264,19 +294,11 @@ public class Main extends javax.swing.JFrame implements KeyListener {
                 e.printStackTrace();
             }
         }
-
-        if (errFrame.isVisible() && ke.getKeyCode() == KeyEvent.VK_ENTER) {
-            errFrame.setVisible(false);
-        }
     }
 
-    public void keyReleased(KeyEvent ke) {
-        // System.out.println("Key released");
-    }
+    public void keyReleased(KeyEvent ke) {}
 
-    public void keyTyped(KeyEvent ke) {
-        // System.out.println("Key typed");
-    }
+    public void keyTyped(KeyEvent ke) {}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -310,6 +332,9 @@ public class Main extends javax.swing.JFrame implements KeyListener {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         listModel = new DefaultListModel();
         lstFiles = new javax.swing.JList(listModel);
+        lstFiles.setPreferredSize(new java.awt.Dimension(35, 200));
+        jScrollPane1.setViewportView(lstFiles);
+        /*  Selection d'un element de la liste */
         lstFiles.addListSelectionListener(new ListSelectionListener(){
             public void valueChanged(ListSelectionEvent e) {
                 try {
@@ -319,22 +344,19 @@ public class Main extends javax.swing.JFrame implements KeyListener {
                 }
             }
         });
-        
-        
-        lstFiles.setPreferredSize(new java.awt.Dimension(35, 200));
-        jScrollPane1.setViewportView(lstFiles);
 
         btnCreate.setText("New");
         btnCreate.setMaximumSize(new java.awt.Dimension(90, 25));
         btnCreate.setMinimumSize(new java.awt.Dimension(90, 25));
         btnCreate.setPreferredSize(new java.awt.Dimension(90, 25));
+        /*  Click sur le boutton "New" */
         btnCreate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 title.setContent(""); 
                 title.setVisible(true);
             }
         });
-
+        /*  Click sur le boutton "Ok" de la fenêtre Title */
         title.getBtnOk().addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 createFile(title.getContent());
@@ -345,6 +367,7 @@ public class Main extends javax.swing.JFrame implements KeyListener {
         btnDelete.setMaximumSize(new java.awt.Dimension(90, 25));
         btnDelete.setMinimumSize(new java.awt.Dimension(90, 25));
         btnDelete.setPreferredSize(new java.awt.Dimension(90, 25));
+        /*  Click sur le boutton "Delete" */
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
@@ -359,6 +382,7 @@ public class Main extends javax.swing.JFrame implements KeyListener {
         btnLoad.setMaximumSize(new java.awt.Dimension(90, 25));
         btnLoad.setMinimumSize(new java.awt.Dimension(90, 25));
         btnLoad.setPreferredSize(new java.awt.Dimension(90, 25));
+        /*  Click sur le boutton "Load" */
         btnLoad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
@@ -373,6 +397,7 @@ public class Main extends javax.swing.JFrame implements KeyListener {
         btnStore.setMaximumSize(new java.awt.Dimension(90, 25));
         btnStore.setMinimumSize(new java.awt.Dimension(90, 25));
         btnStore.setPreferredSize(new java.awt.Dimension(90, 25));
+        /*  Click sur le boutton "Store" */
         btnStore.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt){
                 storeFile();
@@ -384,6 +409,7 @@ public class Main extends javax.swing.JFrame implements KeyListener {
         btnSave.setMaximumSize(new java.awt.Dimension(90, 25));
         btnSave.setMinimumSize(new java.awt.Dimension(90, 25));
         btnSave.setPreferredSize(new java.awt.Dimension(90, 25));
+        /*  Click sur le boutton "Save" */
         btnSave.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -416,6 +442,7 @@ public class Main extends javax.swing.JFrame implements KeyListener {
         btnCancel.setMaximumSize(new java.awt.Dimension(90, 25));
         btnCancel.setMinimumSize(new java.awt.Dimension(90, 25));
         btnCancel.setPreferredSize(new java.awt.Dimension(90, 25));
+        /*  Click sur le boutton "Cancel" */
         btnCancel.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 try {
