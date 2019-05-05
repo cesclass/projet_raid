@@ -20,24 +20,40 @@ public class Error extends javax.swing.JDialog{
         initComponents();
     }
 
+    /**
+     * Sette du titre de l'erreur
+     * 
+     * @param errTitle : titre de l'erreur a afficher 
+     */
     public void setErrTitle(String errTitle) {
         lblErrTitle.setText(errTitle);
     }
 
+    /**
+     * Setter du message d'erreur
+     * 
+     * @param errMsg : message d'erreur a afficher
+     */
     public void setErrMsg(String errMsg) {
         lblErrMsg.setText(errMsg);
     }
 
+    /**
+     * Getter du bouton "OK"
+     * 
+     * @return btnOK
+     */
     public JButton getBtnOk() {
         return btnOk;
     }
     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        this.setResizable(false);
-        this.setTitle("ERROR");
-        this.setModal(true);
+        this.setResizable(false); /* taille de la fenetre non redimensionnable */
+        this.setTitle("ERROR"); /* titre de la fenetre */
+        this.setModal(true); /* declaration de la fenetre en modal */
         
+        /* Creation des composants de la fenetre */
         lblErrTitle = new javax.swing.JLabel();
         lblErrMsg = new javax.swing.JLabel();
         btnOk = new javax.swing.JButton();
@@ -52,6 +68,7 @@ public class Error extends javax.swing.JDialog{
 
         btnOk.setText("OK");
         btnOk.addActionListener(new java.awt.event.ActionListener() {
+            /* Ferme la fenetre d'erreur lorsque l'utilisateur appuie sur le bout "OK" */
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 setVisible(false);
             }

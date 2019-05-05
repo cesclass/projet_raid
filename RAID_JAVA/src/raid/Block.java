@@ -5,6 +5,7 @@ import java.io.*;
  * La classe Block permet l'ecriture, la lecture et la reparation
  * des blocks sur le systeme RAID 5
  * 
+ * @version 19.05.05
  */
 
 public class Block{
@@ -16,7 +17,7 @@ public class Block{
      * 
      * @param indice : indice du block de donnee
      * 
-     * @return data[indice] : donnee a la position indice
+     * @return donnee a la position indice
      */
     public byte getDataI(int indice){
         return data[indice];
@@ -38,7 +39,7 @@ public class Block{
      * 
      * @param taille : taille a decouper en block
      * 
-     * @return int : nombre de block necessaire
+     * @return nombre de block necessaire
      */
     public static int computeNBlock(int taille){
         return taille / RaidDefine.BLOCK_SIZE + (taille % RaidDefine.BLOCK_SIZE);
