@@ -4,11 +4,10 @@
 package raid;
 
 /**
- * @author Dylan
- * Definition des constantes du systeme RAID 5
+ * Definition des constantes du systeme RAID 5.
+ * 
+ * @version 19.05.05
  */
-
-
 public class RaidDefine {
 	public final static int ERREUR = -1; /* Code de retour d'erreur */
 	public final static int BLOCK_SIZE = 4; /* Taille d'un block en octet */
