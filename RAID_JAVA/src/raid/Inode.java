@@ -180,7 +180,7 @@ public class Inode implements Serializable {
 	/**
 	 * Retourne un String représentant l'objet Inode.
 	 * 
-	 * @return String		String représentant l'objet Inode
+	 * @return				String représentant l'objet Inode
 	 */
 	public String toString() {
 		return ("Filename :  " + new String(this.getFileName()) + '\n' +
