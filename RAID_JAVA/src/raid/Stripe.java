@@ -3,7 +3,7 @@ package raid;
 import java.io.IOException;
 
 /**
- * La classe Stripe permet de contruire la parite de la donnee, de l'ecrire et
+ * La classe Stripe permet de construire la parite de la donnee, de l'ecrire et
  * 	de la lire sur le systeme RAID 5
  * 
  * @version 19.05.05
@@ -26,7 +26,7 @@ public class Stripe {
 	 * 
 	 * @param nBlocks 		Nombre de block
 	 * 
-	 * @return int 			Nombre de Stripe necessaire
+	 * @return 	 			Nombre de Stripe necessaire
 	 */
 	public int computeNStripe(int nBlocksToStore) {
 		return nBlocksToStore / (nBlocks - 1) + ((nBlocksToStore % (nBlocks - 1) != 0) ? 1 : 0);
@@ -47,7 +47,7 @@ public class Stripe {
 	 * 
 	 * @param numStripe 	Numero du stripe (/!\ demmare a 0 !)
 	 * 
-	 * @return int 			Numero du disque (/!\ demmare a 0 !)
+	 * @return 	 			Numero du disque (/!\ demmare a 0 !)
 	 */
 	public int parityIndex(int numStripe) {
 		return ((-((numStripe + 1) % nBlocks) + nBlocks) % nBlocks);
@@ -120,7 +120,7 @@ public class Stripe {
 	 * @param buffer 		Buffer a ecrire
 	 * @param pos    		Position de depart pour l'ecriture sur le RAID (en octet)
 	 * 
-	 * @return int 			Premier octet libre apres l'ecriture
+	 * @return 	 			Premier octet libre apres l'ecriture
 	 * 
 	 * @throws IOException
 	 */
@@ -162,7 +162,7 @@ public class Stripe {
 	 * @param buffer 		Buffer de stockage
 	 * @param pos    		Position de depart pour la lecture sur le RAID (en octet)
 	 * 
-	 * @return int 			Premier octet apres la donnee lue sur le Systeme RAID 5
+	 * @return 	 			Premier octet apres la donnee lue sur le Systeme RAID 5
 	 * 
 	 * @throws IOException
 	 */
@@ -189,7 +189,7 @@ public class Stripe {
 	/**
 	 * Retourne un String représentant l'objet Stripe.
 	 * 
-	 * @return String		String représentant l'objet Stripe
+	 * @return 				String représentant l'objet Stripe
 	 */
 	public String toString() {
 		return	"Block 0 : " + datas[0] + '\n' +
