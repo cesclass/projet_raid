@@ -1,5 +1,6 @@
 # projet_raid
 Projet RAID - L2 Informatique - TOULOUSE III Paul Sabatier 
+Cyril ESCLASSAN, Dylan CARON, Guillaume BROISE
 
 ## Comment exécuter le système RAID ?
 
@@ -25,7 +26,7 @@ Il sera nécessaire de réeffectuer une compilation pour le lancer sur un autre 
 
 Pour l'exécuter, il suffit de lancer la commande dans ce même dossier :
 ```shell
-./raid type_raid repertoire_disques
+./raidC type_raid repertoire_disques
 ```
  - `type_raid` est un entier permettant d'identifier le type de RAID que l'on souhaite utiliser. Il peut être choisi parmi les valeurs {0, 1, 5}
  - `repertoire_disques` est le dossier qui contient les disques virtuels.
