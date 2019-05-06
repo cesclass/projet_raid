@@ -11,5 +11,6 @@ var cmd_8c =
     [ "cmd_ls", "cmd_8c.html#a68991fc96c20fc05a925f1eacb69f572", null ],
     [ "cmd_rm", "cmd_8c.html#a4df8de3ed55fe9996339399e6b87be16", null ],
     [ "cmd_store", "cmd_8c.html#a83d699bdff0e7cbcb5bef9056c2e800c", null ],
-    [ "r5Disk", "cmd_8c.html#a95b5425e7df13b77b38e1b85a4c804e3", null ]
+    [ "rename_file", "cmd_8c.html#af6600d0559073a422bf8ef65d59d696a", null ],
+    [ "rDisk", "cmd_8c.html#aa10161f598c7174381ba94d08ea4b07a", null ]
 ];

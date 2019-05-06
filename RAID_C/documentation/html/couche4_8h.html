@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.15"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Projet RAID: headers/couche4.h File Reference</title>
+<title>Projet RAID: C:/Work/L2infoS4/projet_raid/RAID_C/headers/couche4.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -102,9 +102,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ab196f70afd24fd36f126de7feee27672"><td class="memItemLeft" align="right" valign="top">uint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="couche4_8h.html#ab196f70afd24fd36f126de7feee27672">delete_file</a> (char *filename)</td></tr>
 <tr class="memdesc:ab196f70afd24fd36f126de7feee27672"><td class="mdescLeft">&#160;</td><td class="mdescRight">Supprime le fichier nomme "filename" de la table d'inodes.  <a href="#ab196f70afd24fd36f126de7feee27672">More...</a><br /></td></tr>
 <tr class="separator:ab196f70afd24fd36f126de7feee27672"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a73bd5279bfd720f1fbe78117a0a2e50f"><td class="memItemLeft" align="right" valign="top">uint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="couche4_8h.html#a73bd5279bfd720f1fbe78117a0a2e50f">load_file_from_host</a> (char *filename)</td></tr>
-<tr class="memdesc:a73bd5279bfd720f1fbe78117a0a2e50f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lit un fichier sur la machine et ecrit son contenu sur les disques virtuels.  <a href="#a73bd5279bfd720f1fbe78117a0a2e50f">More...</a><br /></td></tr>
-<tr class="separator:a73bd5279bfd720f1fbe78117a0a2e50f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a92d7bf8c3fe988d7bb38d42b221ada"><td class="memItemLeft" align="right" valign="top">uint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="couche4_8h.html#a0a92d7bf8c3fe988d7bb38d42b221ada">load_file_from_host</a> (char *path, char *filename)</td></tr>
+<tr class="memdesc:a0a92d7bf8c3fe988d7bb38d42b221ada"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lit un fichier sur la machine et ecrit son contenu sur les disques virtuels.  <a href="#a0a92d7bf8c3fe988d7bb38d42b221ada">More...</a><br /></td></tr>
+<tr class="separator:a0a92d7bf8c3fe988d7bb38d42b221ada"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a31a415380c02def9c6def30d9d75ce3c"><td class="memItemLeft" align="right" valign="top">uint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="couche4_8h.html#a31a415380c02def9c6def30d9d75ce3c">store_file_to_host</a> (char *filename)</td></tr>
 <tr class="memdesc:a31a415380c02def9c6def30d9d75ce3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">lit un fichier sur les disques virtuels et ecrit son contenu sur la machine.  <a href="#a31a415380c02def9c6def30d9d75ce3c">More...</a><br /></td></tr>
 <tr class="separator:a31a415380c02def9c6def30d9d75ce3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -141,8 +141,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a73bd5279bfd720f1fbe78117a0a2e50f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a73bd5279bfd720f1fbe78117a0a2e50f">&#9670;&nbsp;</a></span>load_file_from_host()</h2>
+<a id="a0a92d7bf8c3fe988d7bb38d42b221ada"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a92d7bf8c3fe988d7bb38d42b221ada">&#9670;&nbsp;</a></span>load_file_from_host()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -151,8 +151,18 @@ Functions</h2></td></tr>
           <td class="memname">uint load_file_from_host </td>
           <td>(</td>
           <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td class="paramname"><em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>filename</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -160,7 +170,8 @@ Functions</h2></td></tr>
 <p>Lit un fichier sur la machine et ecrit son contenu sur les disques virtuels. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">filename</td><td>Nom (chemin) du fichier a lire </td></tr>
+    <tr><td class="paramname">path</td><td>Chemin du fichier a lire </td></tr>
+    <tr><td class="paramname">filename</td><td>Nom du fichier a lire</td></tr>
   </table>
   </dd>
 </dl>

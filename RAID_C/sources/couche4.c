@@ -12,11 +12,11 @@
 
 #include "../headers/couche4.h"
 
-extern virtual_disk_t r5Disk;
+extern virtual_disk_t rDisk;
 
 uint write_file(char * filename, file_t * file) {
-    super_block_t * block = &(r5Disk.super_block);
-    inode_t * inodes = r5Disk.inodes;
+    super_block_t * block = &(rDisk.super_block);
+    inode_t * inodes = rDisk.inodes;
     uint id = search_inode(filename);
     uint new_pos;
 
@@ -60,11 +60,11 @@ uint read_file(char * filename, file_t * file) {
     if(id == NO_INODE_MATCH) {
         return 0;
     } else {
-        file->size = r5Disk.inodes[id].size;
+        file->size = rDisk.inodes[id].size;
         read_chunk(
             file->size,
             file->data,
-            r5Disk.inodes[id].first_byte
+            rDisk.inodes[id].first_byte
         );
         return 1;
     }
@@ -80,8 +80,8 @@ uint delete_file(char * filename) {
     }
 }
 
-uint load_file_from_host(char * filename) {
-    FILE * file = fopen(filename, "r");
+uint load_file_from_host(char *path, char * filename) {
+    FILE * file = fopen(path, "r");
     if (file == NULL) return 0;
 
     file_t read;
@@ -113,7 +113,7 @@ uint store_file_to_host(char * filename) {
 
 uint search_inode(char * filename) {
     for(int i = 0; i < INODE_TABLE_SIZE; i++) {
-        if(!strcmp(filename, r5Disk.inodes[i].filename)) return i;
+        if(!strcmp(filename, rDisk.inodes[i].filename)) return i;
     }
     return NO_INODE_MATCH;
 }

@@ -13,7 +13,7 @@
 
 #define ERROR_INIT 1
 
-virtual_disk_t r5Disk;
+virtual_disk_t rDisk;
 
 /**
  * @brief 
@@ -29,13 +29,13 @@ void dump_stripe_hexa(int pos){
 
     /* initialisation de la stripe pour la lecture */
     stripe_t stripe;
-    stripe.nblocks = r5Disk.ndisk;
+    stripe.nblocks = rDisk.ndisk;
     stripe.stripe = malloc(stripe.nblocks * sizeof(block_t));
     /* lecture de la stripe correspond a pos */
     read_stripe(pos, &stripe);
 
     /*affichage des blocks de la stripe */
-    for(int i = 0; i < MAX_DISK; i++){
+    for(int i = 0; i < rDisk.ndisk; i++){
         dump_block_hexa(stripe.stripe[i]); 
     }
     printf("\tblock parite [%d]\n", pos_parite);
@@ -54,7 +54,7 @@ int main(int argc, char * argv[]){
     int size = atoi(argv[2]);
 
     /* ouverture du systeme raid5 */
-    init_disk_raid5(directory);
+    init_disk_raid(5, directory);
 
     /* calcule le nombre de block necessaire pour ecrire size octet */
     int nb_block = compute_nblock(size);

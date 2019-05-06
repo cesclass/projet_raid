@@ -14,7 +14,7 @@
 
 #define ERR_ARGS    101
 
-virtual_disk_t r5Disk;
+virtual_disk_t rDisk;
 
 int main(int argc, char *argv[]) {
     char usage[BUFSIZ];
@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
     }
 
     /*  Init du RAID 5 */
-    init_disk_raid5("../RAID/");
+    init_disk_raid(5, "../RAID/");
 
     /*  Creation du buffer */
     uchar buffer[256];

@@ -4,7 +4,7 @@
  * 
  * @brief   
  * Fichier de declaration des fonctions de la couche 1
- * pour le systeme RAID 5
+ *  pour le systeme RAID.
  * 
  * @copyright Licence MIT
  * 
@@ -27,25 +27,29 @@
 
 #define SUCCES_OFF 10
 
-#define MAX_DISK 4
+#define MAX_DISK_R5 4
+#define MAX_DISK_OTHER 2
 #define NAME_DISK "vDisk"   
 
 
 /**
  * @brief
  * 
- * Initialise les champs de la variables globales r5Disk
- * Elle ouvre tous les disk virtuels present dans le repertoire
+ * Initialise les champs de la variables globales rDisk.
+ * Elle ouvre tous les disk virtuels present dans le repertoire.
  * 
+ * @param raid_type : type de raid [0, 1, 5]
  * @param directory : nom du repertoire ou se trouve le systeme RAID
  * 
+ * @return uint     : 1 Si tout s'est bien passé 
+ *                 OU 0 si type_raid est inconnu
  */
-void init_disk_raid5(char *directory);
+uint init_disk_raid(int raid_type, char *directory);
 
 /**
  * @brief 
  * 
- * Ferme tous les disks ouverts du systeme RAID
+ * Ferme tous les disks ouverts du systeme RAID.
  * 
  */
 void switch_off_raid();
@@ -54,7 +58,7 @@ void switch_off_raid();
 /**
  * @brief
  * 
- * Calcule le nombre de block necessaire pour ecrire size
+ * Calcule le nombre de block necessaire pour ecrire size.
  * 
  * @param size : taille a decouper en block
  * 
@@ -65,7 +69,7 @@ int compute_nblock(int size);
 /**
  * @brief
  * 
- * Ecris sur le fichier dest block a la position pos;
+ * Ecris sur le fichier dest block a la position pos.
  * 
  * @param pos : position du block a ecrire
  * @param block : block a ecrire

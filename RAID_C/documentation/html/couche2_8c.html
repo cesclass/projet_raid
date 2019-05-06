@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.15"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Projet RAID: sources/couche2.c File Reference</title>
+<title>Projet RAID: C:/Work/L2infoS4/projet_raid/RAID_C/sources/couche2.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,26 +87,56 @@ Functions</h2></td></tr>
 <tr class="memdesc:aa4cd2b3b41487e3b7076cc57735e27b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcule le block de parité des block composant block_tab. Le block de parité est placé dans le 3ème paramètre.  <a href="#aa4cd2b3b41487e3b7076cc57735e27b0">More...</a><br /></td></tr>
 <tr class="separator:aa4cd2b3b41487e3b7076cc57735e27b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0fcb48cabc6caae518db348b2878f470"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="couche2_8c.html#a0fcb48cabc6caae518db348b2878f470">parity_index</a> (int num_stripe)</td></tr>
-<tr class="memdesc:a0fcb48cabc6caae518db348b2878f470"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcule le numéro du disque sur lequel doit être stoqué le bloc de parité  <a href="#a0fcb48cabc6caae518db348b2878f470">More...</a><br /></td></tr>
+<tr class="memdesc:a0fcb48cabc6caae518db348b2878f470"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcule le numéro du disque sur lequel doit être stoqué le bloc de parité.  <a href="#a0fcb48cabc6caae518db348b2878f470">More...</a><br /></td></tr>
 <tr class="separator:a0fcb48cabc6caae518db348b2878f470"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f052b889bd92c4359d414b822a7153e"><td class="memItemLeft" align="right" valign="top"><a id="a7f052b889bd92c4359d414b822a7153e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>write_stripe_other</b> (int pos, const <a class="el" href="structstripe__s.html">stripe_t</a> *src)</td></tr>
+<tr class="separator:a7f052b889bd92c4359d414b822a7153e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3832be32ed463624325464a0ee40587"><td class="memItemLeft" align="right" valign="top"><a id="ac3832be32ed463624325464a0ee40587"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>write_stripe_r5</b> (int pos, const <a class="el" href="structstripe__s.html">stripe_t</a> *src)</td></tr>
+<tr class="separator:ac3832be32ed463624325464a0ee40587"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1274d9f60e49e3a6b124ceb49a8d8de0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="couche2_8c.html#a1274d9f60e49e3a6b124ceb49a8d8de0">write_stripe</a> (int pos, const <a class="el" href="structstripe__s.html">stripe_t</a> *src)</td></tr>
-<tr class="memdesc:a1274d9f60e49e3a6b124ceb49a8d8de0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ecrit une bande à une position donnee sur le systeme RAID 5.  <a href="#a1274d9f60e49e3a6b124ceb49a8d8de0">More...</a><br /></td></tr>
+<tr class="memdesc:a1274d9f60e49e3a6b124ceb49a8d8de0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ecrit une bande à une position donnee sur le systeme RAID.  <a href="#a1274d9f60e49e3a6b124ceb49a8d8de0">More...</a><br /></td></tr>
 <tr class="separator:a1274d9f60e49e3a6b124ceb49a8d8de0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04c9f43cd919cd9d9b9b2624bddddb38"><td class="memItemLeft" align="right" valign="top"><a id="a04c9f43cd919cd9d9b9b2624bddddb38"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>read_stripe_other</b> (int pos, <a class="el" href="structstripe__s.html">stripe_t</a> *dest)</td></tr>
+<tr class="separator:a04c9f43cd919cd9d9b9b2624bddddb38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d7669ca6731d9e1b13e6ddbe2d1efa9"><td class="memItemLeft" align="right" valign="top"><a id="a1d7669ca6731d9e1b13e6ddbe2d1efa9"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>read_stripe_r5</b> (int pos, <a class="el" href="structstripe__s.html">stripe_t</a> *dest)</td></tr>
+<tr class="separator:a1d7669ca6731d9e1b13e6ddbe2d1efa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aacd470a16fd5f954ec1be9700c687588"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="couche2_8c.html#aacd470a16fd5f954ec1be9700c687588">read_stripe</a> (int pos, <a class="el" href="structstripe__s.html">stripe_t</a> *dest)</td></tr>
-<tr class="memdesc:aacd470a16fd5f954ec1be9700c687588"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lit une bande à une position donnee sur le systeme RAID 5.  <a href="#aacd470a16fd5f954ec1be9700c687588">More...</a><br /></td></tr>
+<tr class="memdesc:aacd470a16fd5f954ec1be9700c687588"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lit une bande à une position donnee sur le systeme RAID.  <a href="#aacd470a16fd5f954ec1be9700c687588">More...</a><br /></td></tr>
 <tr class="separator:aacd470a16fd5f954ec1be9700c687588"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa95f8014a18a71bb9768905890813665"><td class="memItemLeft" align="right" valign="top"><a id="aa95f8014a18a71bb9768905890813665"></a>
+uint&#160;</td><td class="memItemRight" valign="bottom"><b>write_chunk_r0</b> (int buf_len, const uchar *buffer, uint pos)</td></tr>
+<tr class="separator:aa95f8014a18a71bb9768905890813665"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a234b802d059f2fa4ea5d27929c749118"><td class="memItemLeft" align="right" valign="top"><a id="a234b802d059f2fa4ea5d27929c749118"></a>
+uint&#160;</td><td class="memItemRight" valign="bottom"><b>write_chunk_r1</b> (int buf_len, const uchar *buffer, uint pos)</td></tr>
+<tr class="separator:a234b802d059f2fa4ea5d27929c749118"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47c830d4ae2456034ffae12229307e93"><td class="memItemLeft" align="right" valign="top"><a id="a47c830d4ae2456034ffae12229307e93"></a>
+uint&#160;</td><td class="memItemRight" valign="bottom"><b>write_chunk_r5</b> (int buf_len, const uchar *buffer, uint pos)</td></tr>
+<tr class="separator:a47c830d4ae2456034ffae12229307e93"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac1b701ea7fae9a35b19dc712a8316b33"><td class="memItemLeft" align="right" valign="top">uint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="couche2_8c.html#ac1b701ea7fae9a35b19dc712a8316b33">write_chunk</a> (int buf_len, const uchar *buffer, uint pos)</td></tr>
-<tr class="memdesc:ac1b701ea7fae9a35b19dc712a8316b33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ecrit sur le système RAID 5 le contenu du buffer à partir de la position pos.  <a href="#ac1b701ea7fae9a35b19dc712a8316b33">More...</a><br /></td></tr>
+<tr class="memdesc:ac1b701ea7fae9a35b19dc712a8316b33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ecrit sur le système RAID le contenu du buffer à partir de la position pos.  <a href="#ac1b701ea7fae9a35b19dc712a8316b33">More...</a><br /></td></tr>
 <tr class="separator:ac1b701ea7fae9a35b19dc712a8316b33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ba77476029fca9e77f5705c60a66d67"><td class="memItemLeft" align="right" valign="top"><a id="a6ba77476029fca9e77f5705c60a66d67"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>read_chunk_r0</b> (int buf_len, uchar *buffer, uint pos)</td></tr>
+<tr class="separator:a6ba77476029fca9e77f5705c60a66d67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6491f59aefe3b9bdc5f949f8179d4258"><td class="memItemLeft" align="right" valign="top"><a id="a6491f59aefe3b9bdc5f949f8179d4258"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>read_chunk_r1</b> (int buf_len, uchar *buffer, uint pos)</td></tr>
+<tr class="separator:a6491f59aefe3b9bdc5f949f8179d4258"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe3b7238087807b555dff1c711fdd365"><td class="memItemLeft" align="right" valign="top"><a id="afe3b7238087807b555dff1c711fdd365"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>read_chunk_r5</b> (int buf_len, uchar *buffer, uint pos)</td></tr>
+<tr class="separator:afe3b7238087807b555dff1c711fdd365"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a02526b88ce74b0ac8a78aa675dfa449f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="couche2_8c.html#a02526b88ce74b0ac8a78aa675dfa449f">read_chunk</a> (int buf_len, uchar *buffer, uint pos)</td></tr>
-<tr class="memdesc:a02526b88ce74b0ac8a78aa675dfa449f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lit sur le système RAID 5 un nombre d'octets definis par buf_len et les stocke dans le buffer à partir de la position pos.  <a href="#a02526b88ce74b0ac8a78aa675dfa449f">More...</a><br /></td></tr>
+<tr class="memdesc:a02526b88ce74b0ac8a78aa675dfa449f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lit sur le système RAID un nombre d'octets definis par buf_len et les stocke dans le buffer à partir de la position pos.  <a href="#a02526b88ce74b0ac8a78aa675dfa449f">More...</a><br /></td></tr>
 <tr class="separator:a02526b88ce74b0ac8a78aa675dfa449f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a95b5425e7df13b77b38e1b85a4c804e3"><td class="memItemLeft" align="right" valign="top"><a id="a95b5425e7df13b77b38e1b85a4c804e3"></a>
-<a class="el" href="structvirtual__disk__s.html">virtual_disk_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>r5Disk</b></td></tr>
-<tr class="separator:a95b5425e7df13b77b38e1b85a4c804e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa10161f598c7174381ba94d08ea4b07a"><td class="memItemLeft" align="right" valign="top"><a id="aa10161f598c7174381ba94d08ea4b07a"></a>
+<a class="el" href="structvirtual__disk__s.html">virtual_disk_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>rDisk</b></td></tr>
+<tr class="separator:aa10161f598c7174381ba94d08ea4b07a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Definitions des fonctions relatives a la couche 2, soit a la gestion des stripes et du controle d'erreur. </p>
@@ -200,7 +230,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Calcule le numéro du disque sur lequel doit être stoqué le bloc de parité </p>
+<p>Calcule le numéro du disque sur lequel doit être stoqué le bloc de parité. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">num_stripe</td><td>Numéro du stripe (/!\ démmare à 0 !)</td></tr>
@@ -243,7 +273,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Lit sur le système RAID 5 un nombre d'octets definis par buf_len et les stocke dans le buffer à partir de la position pos. </p>
+<p>Lit sur le système RAID un nombre d'octets definis par buf_len et les stocke dans le buffer à partir de la position pos. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">buf_len</td><td>Taille du buffer en octet (et nombre d'octets a lire) </td></tr>
@@ -281,7 +311,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Lit une bande à une position donnee sur le systeme RAID 5. </p>
+<p>Lit une bande à une position donnee sur le systeme RAID. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">pos</td><td>N° de la ligne ou lire la Stripe </td></tr>
@@ -324,7 +354,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Ecrit sur le système RAID 5 le contenu du buffer à partir de la position pos. </p>
+<p>Ecrit sur le système RAID le contenu du buffer à partir de la position pos. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">buf_len</td><td>Taille du buffer en octet </td></tr>
@@ -363,7 +393,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Ecrit une bande à une position donnee sur le systeme RAID 5. </p>
+<p>Ecrit une bande à une position donnee sur le systeme RAID. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">pos</td><td>N° de la ligne ou ecrire la Stripe </td></tr>

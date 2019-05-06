@@ -20,25 +20,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define CMD_LEN     10
-#define ARG_LEN     256
-#define PNK_COL     "\x1B[35m"
-#define RST_COL     "\x1B[0m"
+#define CMD_LEN         10
+#define ARG_LEN         256
+#define PNK_COL         "\x1B[35m"
+#define RST_COL         "\x1B[0m"
 
-#define ERR_ARGS    101
+#define ERR_ARGS        101
+#define ERR_RAID_TYPE   102
 
-virtual_disk_t r5Disk;
+virtual_disk_t rDisk;
 
-void show_raid5(void) {
+void show_raid(void) {
     /*  Efface tout le terminal */
     printf("\033[H\033[J");
     fflush(stdout);
 
     printf("+------------------+\n");
-    printf("| RAID 5 - Storage |\n");
+    printf("|  RAID - Storage  |\n");
     printf("+------------------+\n");
 
-    printf("\nBienvenue sur le systeme de stockage RAID 5.\n");
+    printf("\nBienvenue sur le systeme de stockage RAID.\n");
     printf("Tapez \"help\" pour plus d'information.\n");
 }
 
@@ -60,19 +61,23 @@ int main(int argc, char *argv[]) {
     sprintf(usage, "Usage : %s repertoire_disques\n", argv[0]);
 
     /*  Gestion des erreurs d'arguments */
-    if (argc != 2) {
+    if (argc != 3) {
         fprintf(stderr, "%s", usage);
         exit(ERR_ARGS);
     }
 
-    /*  Initialisation du systeme RAID 5 */
-    init_disk_raid5(argv[1]);
+    /*  Initialisation du systeme RAID */
+    if (!init_disk_raid(atoi(argv[1]), argv[2])) {
+        fprintf(stderr, "%s", "raid_type inconnu");
+        fprintf(stderr, "%s", usage);
+        exit(ERR_RAID_TYPE);
+    }
 
-    /*  Affichage du systeme RAID 5 */
-    show_raid5();
+    /*  Affichage du systeme RAID */
+    show_raid();
 
     do {
-        printf("%sRAID 5 >> %s", PNK_COL, RST_COL);
+        printf("%sRAID  >> %s", PNK_COL, RST_COL);
         cmd[0] = '\0'; arg[0] = '\0';
         read_cmd(cmd, arg);
 
@@ -86,7 +91,7 @@ int main(int argc, char *argv[]) {
         else if (!strcmp(cmd, "load"))      cmd_load(arg);
         else if (!strcmp(cmd, "store"))     cmd_store(arg);
         else if (!strcmp(cmd, "quit")) {
-            printf("Sortie du systeme RAID 5.\n");
+            printf("Sortie du systeme RAID.\n");
             switch_off_raid();
         } else {
             printf("Commande non reconnue.\n");
