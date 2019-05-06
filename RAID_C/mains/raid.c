@@ -58,7 +58,7 @@ void read_cmd(char *cmd, char *arg) {
 
 int main(int argc, char *argv[]) {
     char usage[BUFSIZ], cmd[CMD_LEN], arg[CMD_LEN];
-    sprintf(usage, "Usage : %s repertoire_disques\n", argv[0]);
+    sprintf(usage, "Usage : %s type_raid repertoire_disques\n", argv[0]);
 
     /*  Gestion des erreurs d'arguments */
     if (argc != 3) {
