@@ -17,7 +17,7 @@
 
 #define ERR_ARGS    101
 
-virtual_disk_t r5Disk;
+virtual_disk_t rDisk;
 
 /**
  * @brief 
@@ -51,7 +51,7 @@ int main(int argc, char *argv[]) {
     }
 
     /*  Init du RAID 5 */
-    init_disk_raid5("../RAID/");
+    init_disk_raid(5, "../RAID/");
 
     /*  Lecture des 255 octets */
     printf("Lecture de 255 octets sur le systeme RAID 5 : \n");

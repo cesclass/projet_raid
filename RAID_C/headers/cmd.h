@@ -16,7 +16,7 @@
 
 /**
  * @brief 
- * Affiche le manuel d'utilisation du systeme RAID 5 
+ * Affiche le manuel d'utilisation du systeme RAID 
  */
 void cmd_help();
 

@@ -69,10 +69,12 @@ uint delete_file(char * filename);
  * @brief 
  * Lit un fichier sur la machine et ecrit son contenu sur les disques virtuels.
  * 
- * @param filename      Nom (chemin) du fichier a lire
+ * @param path          Chemin du fichier a lire
+ * @param filename      Nom du fichier a lire
+ * 
  * @return uint         1 : OK / 0 : KO
  */
-uint load_file_from_host(char * filename);
+uint load_file_from_host(char * path, char * filename);
 
 /**
  * @brief 

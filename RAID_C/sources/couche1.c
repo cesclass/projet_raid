@@ -4,7 +4,7 @@
  * 
  * @brief   
  * Fichier de definition des fonctions de la couche 1
- * pour le systeme RAID 5
+ * pour le systeme RAID
  * 
  * @copyright Licence MIT
  * 
@@ -13,37 +13,51 @@
 #include "../headers/couche1.h"
 #include "../headers/couche3.h"
 
-extern virtual_disk_t r5Disk;
+extern virtual_disk_t rDisk;
 
 
-void init_disk_raid5(char *directory){
+uint init_disk_raid(int raid_type, char *directory){
   
-  /* initialisation des attributs de r5Disk */
-  r5Disk.raidmode = CINQ;
-  r5Disk.number_of_files = 0;
-  r5Disk.ndisk = MAX_DISK;
-  r5Disk.storage = malloc(MAX_DISK*sizeof(FILE *));
+  /* initialisation des attributs de rDisk */
+  switch (raid_type) {
+    case 0 :
+      rDisk.raidmode = ZERO;
+      break;
+    case 1 :
+      rDisk.raidmode = UN;
+      break;
+    case 5 :
+      rDisk.raidmode = CINQ;
+      break;
+    default :
+      /* Aucun systeme de RAID connu */
+      return 0;
+  }
+
+  rDisk.number_of_files = 0;
+  rDisk.ndisk = raid_type == 5 ? MAX_DISK_R5 : MAX_DISK_OTHER;
+  rDisk.storage = malloc(rDisk.ndisk*sizeof(FILE *));
 
   char acces[BUFSIZ];
   
   /* ouverture des disks du systeme RAID */
-  for(int i = 0; i < MAX_DISK; i++){
-      sprintf(acces, "%s%s%d", directory, NAME_DISK, i);
-      if(!(r5Disk.storage[i] = fopen(acces, "rb+"))){
-        perror("Error open disk");
+  for(int i = 0; i < rDisk.ndisk ; i++){
+      sprintf(acces, "%s%s%d%c%d", directory, NAME_DISK, i, 'r', raid_type);
+      if(!(rDisk.storage[i] = fopen(acces, "rb+"))){
+        perror(acces);
       }
   }
   
   /* Init Super_Block & Inode_Table RAID  */
-  if( fgetc(r5Disk.storage[0]) == EOF ){
+  if( fgetc(rDisk.storage[0]) == EOF ){
     /* Table d'inode & Inode */
-    for(int i = 0; i++ < INODE_TABLE_SIZE;init_inode("\0",0, 0));
+    for(int i = 0; i++ < INODE_TABLE_SIZE; init_inode("\0",0, 0));
     write_inode_table();
 
     /* Super Block */
-    r5Disk.super_block.raid_type = r5Disk.raidmode;
+    rDisk.super_block.raid_type = rDisk.raidmode;
     set_first_free_byte( write_inode_table());
-    r5Disk.super_block.nb_blocks_used = r5Disk.super_block.first_free_byte / BLOCK_SIZE;
+    rDisk.super_block.nb_blocks_used = rDisk.super_block.first_free_byte / BLOCK_SIZE;
     write_super_block();
 
   }
@@ -53,18 +67,20 @@ void init_disk_raid5(char *directory){
 
     /* Compte le nombre fichier */
     for(int i = 0; i < INODE_TABLE_SIZE; i++){
-      if( r5Disk.inodes[i].filename[0] != '\0'){
-        r5Disk.number_of_files ++;
+      if( rDisk.inodes[i].filename[0] != '\0'){
+        rDisk.number_of_files ++;
       }
     }
   }
+
+  return 1;
 }
 
 void switch_off_raid(){
 
   /* fermeture des disk du systeme RAID */
-  for(int i = 0; i < r5Disk.ndisk; ++i){
-    if(fclose(r5Disk.storage[i]) != 0){
+  for(int i = 0; i < rDisk.ndisk; ++i){
+    if(fclose(rDisk.storage[i]) != 0){
       fprintf(stderr, "Error close disk %d", i);
     }
   }
@@ -112,9 +128,9 @@ void block_repair(int pos, int num_disk, block_t *repair){
   /* set les valeurs du block a reparer a 0 */
   for(int i = 0; i < BLOCK_SIZE; repair->data[i++] = 0);
 
-  for(int i = 0 ; i < MAX_DISK; i++){
+  for(int i = 0 ; i < rDisk.ndisk; i++){
     if(i != num_disk){
-      read_block(pos,&read,r5Disk.storage[i]);
+      read_block(pos,&read,rDisk.storage[i]);
       for(int j = 0; j < BLOCK_SIZE; j++){
         /* XOR des block lu sur les disks intactes du systeme */
         repair->data[j] ^= read.data[j];

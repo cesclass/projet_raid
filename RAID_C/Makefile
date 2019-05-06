@@ -22,7 +22,7 @@ SRCS = $(wildcard $(SRCDIR)/*.c)
 OBJS = $(subst $(SRCDIR)/,$(OBJDIR)/, $(subst .c,.o, $(SRCS)))
 
 # Définir les executables principaux ici
-EXEC = raid5 cmd_repair cmd_test1 cmd_test2 cmd_dump_inode dump_raid5
+EXEC = raid cmd_repair cmd_test1 cmd_test2 cmd_dump_inode dump_raid5
 
 ifeq ($(DEBUG), yes)
 	CFLAGS += -g
@@ -56,7 +56,11 @@ clean:
 reset_raid:
 	mkdir -p $(BINDIR)
 	rm -rf $(DSKDIR)/*
-	touch $(DSKDIR)/vDisk0
-	touch $(DSKDIR)/vDisk1
-	touch $(DSKDIR)/vDisk2
-	touch $(DSKDIR)/vDisk3
+	touch $(DSKDIR)/vDisk0r0
+	touch $(DSKDIR)/vDisk1r0
+	touch $(DSKDIR)/vDisk0r1
+	touch $(DSKDIR)/vDisk1r1
+	touch $(DSKDIR)/vDisk0r5
+	touch $(DSKDIR)/vDisk1r5
+	touch $(DSKDIR)/vDisk2r5
+	touch $(DSKDIR)/vDisk3r5

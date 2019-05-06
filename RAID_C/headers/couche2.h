@@ -3,8 +3,8 @@
  * @author Dylan CARON (dcaron81.dc@gmail.com)
  * 
  * @brief
- * Interface de la couche 2 du système RAID5
- * Permet d'ecrire des tableaux de donnees au format uchar directement sur le systeme RAID5
+ * Interface de la couche 2 du système RAID.
+ * Permet d'ecrire des tableaux de donnees au format uchar directement sur le systeme RAID.
  * 
  * @copyright Licence MIT
  */
@@ -27,7 +27,7 @@ int compute_nstripe(int nb_block);
 /**
  * @brief 
  * Calcule le block de parité des block composant block_tab.
- * Le block de parité est placé dans le 3ème paramètre
+ * Le block de parité est placé dans le 3ème paramètre.
  * 
  * @param nb_block      Nombre de block dans block_tab
  * @param block_tab     Tableau de block
@@ -37,8 +37,8 @@ void compute_parity(int nb_block, block_t *block_tab, block_t *parity_block);
 
 /**
  * @brief 
- * Calcule le numéro du disque sur lequel doit être stoqué 
- * le bloc de parité
+ * Calcule le numéro du disque sur lequel doit être stoqué
+ *  le bloc de parité.
  * 
  * @param num_stripe    Numéro du stripe (/!\ démmare à 0 !)
  * 
@@ -48,7 +48,7 @@ int parity_index(int num_stripe);
 
 /**
  * @brief 
- * Ecrit une bande à une position donnee sur le systeme RAID 5
+ * Ecrit une bande à une position donnee sur le systeme RAID.
  * 
  * @param pos           N° de la ligne ou ecrire la Stripe
  * @param src           Stripe à écrire
@@ -57,7 +57,7 @@ void write_stripe(int pos, const stripe_t *src);
 
 /**
  * @brief
- * Lit une bande à une position donnee sur le systeme RAID 5
+ * Lit une bande à une position donnee sur le systeme RAID.
  * 
  * @param pos           N° de la ligne ou lire la Stripe
  * @param dest          Destination de la Stripe
@@ -66,8 +66,8 @@ void read_stripe(int pos, stripe_t *dest);
 
 /**
  * @brief 
- * Ecrit sur le système RAID 5 le contenu du buffer
- * à partir de la position pos
+ * Ecrit sur le système RAID le contenu du buffer
+ *  à partir de la position pos.
  * 
  * @param buf_len       Taille du buffer en octet
  * @param buffer        Buffer à écrire
@@ -79,8 +79,8 @@ uint write_chunk(int buf_len, const uchar *buffer, uint pos);
 
 /**
  * @brief
- * Lit sur le système RAID 5 un nombre d'octets definis par buf_len
- * et les stocke dans le buffer à partir de la position pos
+ * Lit sur le système RAID un nombre d'octets definis par buf_len
+ *  et les stocke dans le buffer à partir de la position pos.
  * 
  * @param buf_len       Taille du buffer en octet (et nombre d'octets a lire)
  * @param buffer        Buffer de srockage

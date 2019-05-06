@@ -11,7 +11,7 @@
 
 #include "../headers/couche3.h"
 
-extern virtual_disk_t r5Disk;
+extern virtual_disk_t rDisk;
 
 /* 
  * Gestion des inodes
@@ -24,17 +24,17 @@ void read_inode_table(void) {
     // cast et copie des inodes dans la table
     inode_t *table = (inode_t *) buff;
     for (int i = 0; i < INODE_TABLE_SIZE; i++) {
-        r5Disk.inodes[i] = table[i];
+        rDisk.inodes[i] = table[i];
     } 
 }
 
 uint write_inode_table(void) {
-    uchar * buff = (uchar*) r5Disk.inodes;
+    uchar * buff = (uchar*) rDisk.inodes;
     return write_chunk(INODE_TABLE_TOTAL_SIZE, buff, INODES_START);
 }
 
 void delete_inode(int indice) {
-    inode_t * inode = &r5Disk.inodes[indice];
+    inode_t * inode = &rDisk.inodes[indice];
     inode->filename[0] = '\0';
     inode->first_byte = 0;
     inode->nblock = 0;
@@ -44,7 +44,7 @@ void delete_inode(int indice) {
 uint get_unused_inode(void) {
     for(uint i = 0; i < INODE_TABLE_SIZE; i++) {
         // si size vaut 0, l'inode est vide
-        if (r5Disk.inodes[i].filename[0] == '\0') return i;
+        if (rDisk.inodes[i].filename[0] == '\0') return i;
     }
     return ERR_UNUSED_INODE;
 }
@@ -53,7 +53,7 @@ uint init_inode(char * filename, uint size, uint first_byte) {
     uint indice = get_unused_inode();
     if(indice == ERR_UNUSED_INODE) return indice;
 
-    inode_t * inode = &(r5Disk.inodes[indice]);
+    inode_t * inode = &(rDisk.inodes[indice]);
     sprintf(inode->filename, "%s", filename);
     inode->size = size;
     inode->first_byte = first_byte;
@@ -71,14 +71,14 @@ void read_super_block(void) {
 
     // cast et copie du super block
     super_block_t * block = (super_block_t*) buff;
-    r5Disk.super_block = (*block);
+    rDisk.super_block = (*block);
 }
 
 uint write_super_block(void) {
-    uchar * buff = (uchar*) &(r5Disk.super_block);
+    uchar * buff = (uchar*) &(rDisk.super_block);
     return write_chunk(REAL_SUPER_BLOCK_SIZE, buff, 0);
 }
 
 void set_first_free_byte(uint first_free_byte) {
-    r5Disk.super_block.first_free_byte = first_free_byte;
+    rDisk.super_block.first_free_byte = first_free_byte;
 }
