@@ -22,7 +22,7 @@ SRCS = $(wildcard $(SRCDIR)/*.c)
 OBJS = $(subst $(SRCDIR)/,$(OBJDIR)/, $(subst .c,.o, $(SRCS)))
 
 # Définir les executables principaux ici
-EXEC = raid cmd_repair cmd_test1 cmd_test2 cmd_dump_inode dump_raid5
+EXEC = raidC cmd_repair cmd_test1 cmd_test2 cmd_dump_inode dump_raid5
 
 ifeq ($(DEBUG), yes)
 	CFLAGS += -g
