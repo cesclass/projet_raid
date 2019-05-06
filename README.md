@@ -48,4 +48,4 @@ J'ai nommé :
  - **Dylan Caron**, Responsable conception de génie sans qui le code serait probablement bien moins artistique.
  - **Guillaume Broise**, Responsable dévelopement, grâce a qui le développement est actuellement excellemment bien développé.
  
-Auteur de ce README : Dylan CARON (vous l'aviez deviné ?) 
+Auteur de ce README : Dylan CARON (vous l'aviez deviné ?)
