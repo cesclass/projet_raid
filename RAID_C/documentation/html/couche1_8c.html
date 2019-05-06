@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.15"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Projet RAID: sources/couche1.c File Reference</title>
+<title>Projet RAID: C:/Work/L2infoS4/projet_raid/RAID_C/sources/couche1.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -71,16 +71,16 @@ $(document).ready(function(){initNavTree('couche1_8c.html','');});
 </div><!--header-->
 <div class="contents">
 
-<p>Fichier de definition des fonctions de la couche 1 pour le systeme RAID 5.  
+<p>Fichier de definition des fonctions de la couche 1 pour le systeme RAID.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="couche1_8h_source.html">../headers/couche1.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="couche3_8h_source.html">../headers/couche3.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a93cd57f39416e24d4420efd4e77a2452"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="couche1_8c.html#a93cd57f39416e24d4420efd4e77a2452">init_disk_raid5</a> (char *directory)</td></tr>
-<tr class="memdesc:a93cd57f39416e24d4420efd4e77a2452"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialise les champs de la variables globales r5Disk Elle ouvre tous les disk virtuels present dans le repertoire.  <a href="#a93cd57f39416e24d4420efd4e77a2452">More...</a><br /></td></tr>
-<tr class="separator:a93cd57f39416e24d4420efd4e77a2452"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac611c6266fcadf074ff7bb7e332d6a1c"><td class="memItemLeft" align="right" valign="top">uint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="couche1_8c.html#ac611c6266fcadf074ff7bb7e332d6a1c">init_disk_raid</a> (int raid_type, char *directory)</td></tr>
+<tr class="memdesc:ac611c6266fcadf074ff7bb7e332d6a1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialise les champs de la variables globales rDisk. Elle ouvre tous les disk virtuels present dans le repertoire.  <a href="#ac611c6266fcadf074ff7bb7e332d6a1c">More...</a><br /></td></tr>
+<tr class="separator:ac611c6266fcadf074ff7bb7e332d6a1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5fa5ea7757e977b18ecada45835a3f3a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="couche1_8c.html#a5fa5ea7757e977b18ecada45835a3f3a">switch_off_raid</a> ()</td></tr>
 <tr class="memdesc:a5fa5ea7757e977b18ecada45835a3f3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ferme tous les disks ouverts du systeme RAID.  <a href="#a5fa5ea7757e977b18ecada45835a3f3a">More...</a><br /></td></tr>
 <tr class="separator:a5fa5ea7757e977b18ecada45835a3f3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -88,7 +88,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:a4378035ef94f49c108931709aea9862d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcule le nombre de block necessaire pour ecrire size.  <a href="#a4378035ef94f49c108931709aea9862d">More...</a><br /></td></tr>
 <tr class="separator:a4378035ef94f49c108931709aea9862d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a486f992c109a0a2e61a3f421d8156c74"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="couche1_8c.html#a486f992c109a0a2e61a3f421d8156c74">write_block</a> (int pos, <a class="el" href="structblock__s.html">block_t</a> block, FILE *dest)</td></tr>
-<tr class="memdesc:a486f992c109a0a2e61a3f421d8156c74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ecris sur le fichier dest block a la position pos;.  <a href="#a486f992c109a0a2e61a3f421d8156c74">More...</a><br /></td></tr>
+<tr class="memdesc:a486f992c109a0a2e61a3f421d8156c74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ecris sur le fichier dest block a la position pos.  <a href="#a486f992c109a0a2e61a3f421d8156c74">More...</a><br /></td></tr>
 <tr class="separator:a486f992c109a0a2e61a3f421d8156c74"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6a1e8c6772525f53f5fd5e0a161ed20d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="couche1_8c.html#a6a1e8c6772525f53f5fd5e0a161ed20d">read_block</a> (int pos, <a class="el" href="structblock__s.html">block_t</a> *block, FILE *src)</td></tr>
 <tr class="memdesc:a6a1e8c6772525f53f5fd5e0a161ed20d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lis sur le fichier src le block a la position pos.  <a href="#a6a1e8c6772525f53f5fd5e0a161ed20d">More...</a><br /></td></tr>
@@ -102,12 +102,12 @@ Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a95b5425e7df13b77b38e1b85a4c804e3"><td class="memItemLeft" align="right" valign="top"><a id="a95b5425e7df13b77b38e1b85a4c804e3"></a>
-<a class="el" href="structvirtual__disk__s.html">virtual_disk_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>r5Disk</b></td></tr>
-<tr class="separator:a95b5425e7df13b77b38e1b85a4c804e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa10161f598c7174381ba94d08ea4b07a"><td class="memItemLeft" align="right" valign="top"><a id="aa10161f598c7174381ba94d08ea4b07a"></a>
+<a class="el" href="structvirtual__disk__s.html">virtual_disk_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>rDisk</b></td></tr>
+<tr class="separator:aa10161f598c7174381ba94d08ea4b07a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Fichier de definition des fonctions de la couche 1 pour le systeme RAID 5. </p>
+<div class="textblock"><p>Fichier de definition des fonctions de la couche 1 pour le systeme RAID. </p>
 <dl class="section author"><dt>Author</dt><dd>Guillaume B (<a href="#" onclick="location.href='mai'+'lto:'+'gui'+'ll'+'aum'+'e.'+'bro'+'is'+'e@u'+'ni'+'v-t'+'ls'+'e3.'+'fr'; return false;">guill<span style="display: none;">.nosp@m.</span>aume<span style="display: none;">.nosp@m.</span>.broi<span style="display: none;">.nosp@m.</span>se@u<span style="display: none;">.nosp@m.</span>niv-t<span style="display: none;">.nosp@m.</span>lse3<span style="display: none;">.nosp@m.</span>.fr</a>)</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Licence MIT </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
@@ -207,29 +207,41 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a93cd57f39416e24d4420efd4e77a2452"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a93cd57f39416e24d4420efd4e77a2452">&#9670;&nbsp;</a></span>init_disk_raid5()</h2>
+<a id="ac611c6266fcadf074ff7bb7e332d6a1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac611c6266fcadf074ff7bb7e332d6a1c">&#9670;&nbsp;</a></span>init_disk_raid()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void init_disk_raid5 </td>
+          <td class="memname">uint init_disk_raid </td>
           <td>(</td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>directory</em></td><td>)</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>raid_type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>directory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Initialise les champs de la variables globales r5Disk Elle ouvre tous les disk virtuels present dans le repertoire. </p>
+<p>Initialise les champs de la variables globales rDisk. Elle ouvre tous les disk virtuels present dans le repertoire. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">directory</td><td>: nom du repertoire ou se trouve le systeme RAID </td></tr>
+    <tr><td class="paramname">raid_type</td><td>: type de raid [0, 1, 5] </td></tr>
+    <tr><td class="paramname">directory</td><td>: nom du repertoire ou se trouve le systeme RAID</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>uint : 1 Si tout s'est bien passé OU 0 si type_raid est inconnu </dd></dl>
 
 </div>
 </div>
@@ -329,7 +341,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Ecris sur le fichier dest block a la position pos;. </p>
+<p>Ecris sur le fichier dest block a la position pos. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">pos</td><td>: position du block a ecrire </td></tr>

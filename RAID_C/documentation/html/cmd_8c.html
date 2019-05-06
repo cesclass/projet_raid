@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.15"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Projet RAID: sources/cmd.c File Reference</title>
+<title>Projet RAID: C:/Work/L2infoS4/projet_raid/RAID_C/sources/cmd.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -72,7 +72,7 @@ $(document).ready(function(){initNavTree('cmd_8c.html','');});
 </div><!--header-->
 <div class="contents">
 
-<p>Définitions des fonctions relatives aux commandes utilisables avec le systeme RAID 5.  
+<p>Définitions des fonctions relatives aux commandes utilisables avec le systeme RAID.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="couche3_8h_source.html">../headers/couche3.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="couche4_8h_source.html">../headers/couche4.h</a>&quot;</code><br />
@@ -95,7 +95,7 @@ Macros</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:a9bbe327022f54e9ed67c5de0d91b5511"><td class="memItemLeft" align="right" valign="top"><a id="a9bbe327022f54e9ed67c5de0d91b5511"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmd_8c.html#a9bbe327022f54e9ed67c5de0d91b5511">cmd_help</a> ()</td></tr>
-<tr class="memdesc:a9bbe327022f54e9ed67c5de0d91b5511"><td class="mdescLeft">&#160;</td><td class="mdescRight">Affiche le manuel d'utilisation du systeme RAID 5. <br /></td></tr>
+<tr class="memdesc:a9bbe327022f54e9ed67c5de0d91b5511"><td class="mdescLeft">&#160;</td><td class="mdescRight">Affiche le manuel d'utilisation du systeme RAID. <br /></td></tr>
 <tr class="separator:a9bbe327022f54e9ed67c5de0d91b5511"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a68991fc96c20fc05a925f1eacb69f572"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmd_8c.html#a68991fc96c20fc05a925f1eacb69f572">cmd_ls</a> (char *arg)</td></tr>
 <tr class="memdesc:a68991fc96c20fc05a925f1eacb69f572"><td class="mdescLeft">&#160;</td><td class="mdescRight">Affiche sur la sortie standard le nom des fichiers presents sur les disques du systeme RAID. l'argument "-l" permet un affichage sous forme de liste detaillee en affichant en plus les poids correspondant.  <a href="#a68991fc96c20fc05a925f1eacb69f572">More...</a><br /></td></tr>
@@ -112,6 +112,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmd_
 <tr class="memitem:ab3fc4be36f92361c627308dcd290b5d4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmd_8c.html#ab3fc4be36f92361c627308dcd290b5d4">cmd_edit</a> (char *arg)</td></tr>
 <tr class="memdesc:ab3fc4be36f92361c627308dcd290b5d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Edite un fichier du systeme RAID, dont le nom est passe en parametre, pour modifier son contenu.  <a href="#ab3fc4be36f92361c627308dcd290b5d4">More...</a><br /></td></tr>
 <tr class="separator:ab3fc4be36f92361c627308dcd290b5d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6600d0559073a422bf8ef65d59d696a"><td class="memItemLeft" align="right" valign="top"><a id="af6600d0559073a422bf8ef65d59d696a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>rename_file</b> (char *src, char *dest)</td></tr>
+<tr class="separator:af6600d0559073a422bf8ef65d59d696a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1297cde0f44b63ef7f3ddd3a49242a24"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmd_8c.html#a1297cde0f44b63ef7f3ddd3a49242a24">cmd_load</a> (char *arg)</td></tr>
 <tr class="memdesc:a1297cde0f44b63ef7f3ddd3a49242a24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copie un fichier du systeme "hote" vers le systeme RAID avec le meme nom.  <a href="#a1297cde0f44b63ef7f3ddd3a49242a24">More...</a><br /></td></tr>
 <tr class="separator:a1297cde0f44b63ef7f3ddd3a49242a24"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -121,12 +124,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmd_
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a95b5425e7df13b77b38e1b85a4c804e3"><td class="memItemLeft" align="right" valign="top"><a id="a95b5425e7df13b77b38e1b85a4c804e3"></a>
-<a class="el" href="structvirtual__disk__s.html">virtual_disk_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>r5Disk</b></td></tr>
-<tr class="separator:a95b5425e7df13b77b38e1b85a4c804e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa10161f598c7174381ba94d08ea4b07a"><td class="memItemLeft" align="right" valign="top"><a id="aa10161f598c7174381ba94d08ea4b07a"></a>
+<a class="el" href="structvirtual__disk__s.html">virtual_disk_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>rDisk</b></td></tr>
+<tr class="separator:aa10161f598c7174381ba94d08ea4b07a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Définitions des fonctions relatives aux commandes utilisables avec le systeme RAID 5. </p>
+<div class="textblock"><p>Définitions des fonctions relatives aux commandes utilisables avec le systeme RAID. </p>
 <dl class="section author"><dt>Author</dt><dd>Dylan CARON (<a href="#" onclick="location.href='mai'+'lto:'+'dca'+'ro'+'n81'+'.d'+'c@g'+'ma'+'il.'+'co'+'m'; return false;">dcaro<span style="display: none;">.nosp@m.</span>n81.<span style="display: none;">.nosp@m.</span>dc@gm<span style="display: none;">.nosp@m.</span>ail.<span style="display: none;">.nosp@m.</span>com</a>)</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Licence MIT </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
