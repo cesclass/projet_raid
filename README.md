@@ -4,30 +4,40 @@ Projet RAID - L2 Informatique - TOULOUSE III Paul Sabatier
 ## Comment exécuter le systeme RAID ?
 
 ### Initialisation de l'environement :
+
 En C ou en Java, le système RAID 5 utilise un repertoire dans lequels il stoque les disques virtuels qu'il utilise pour le stockage.
- - `vDisk0`, `vDisk1`, `vDisk2`, `vDisk3` correspondent aux disques virtuels utilisés par le RAID 5 en C
+ - `vDisk0r0`, `vDisk1r0` correspondent aux disques virtuels utilisés par le système RAID 0 en C
+ - `vDisk0r1`, `vDisk1r1` aux disques virtuels utilisés par le RAID 1 en C
+ - `vDisk0r5`, `vDisk1r5`, `vDisk2r5`, `vDisk3r5` aux disques virtuels utilisés par le RAID 5 en C
  - `jVDsik0`, `jVDisk1`, `jVDisk2`, `jVDisk3` correspondent aux disques du système en Java.
-Par defaut, le dossier `RAID` à la racine du projet contient ces disques.
-Pour réinitialiser ces disques, et partir d'un système RAID vierge, il faut supprimer ces disques virtuels.
+Par defaut, c'est le dossier `RAID` à la racine du projet qui va contenir ces disques.
 
-### Raid 5 C (sous unix) :
+Le script shell `init_raid.sh` initialise ce dossier.
+ - Si les disques virtuels n'existent pas, il les crée
+ - Si les disques existes, il les supprime, puis en crée de nouveaux, vierges.
 
-L'executable du RAID 5 C est à la racine du dossier du projet (dans le dossier `projet_raid`).
-Il a été compilé sous Unix et est donc destiné à être lancé sous Unix !
+### Raid 0/1/5 C (sous unix) :
+
+L'executable du RAID C est à la racine du projet.
+**Il a été compilé sous Unix et est donc destiné à être lancé sous Unix !**
 Il sera nécessaire de réeffectuer une compilation pour le lancer sur un autre système.
+
 Pour l'exécuter, il suffit de lancer la commande dans ce même dossier :
 ```shell
-./raid5 repertoire_disque
+./raid type_raid repertoire_disques
 ```
-Le `repertoire_disque` est le dossier qui contient ou contiendra les disques virtuels.
+ - `type_raid` est un entier permettant d'identifier le type de RAID que l'on souhaite utiliser. Il peut être choisi parmis les valeurs {0, 1, 5}
+ - `repertoire_disques` est le dossier qui contient les disques virtuels.
+ 
 Par défaut, le dossier `RAID` à la racine du projet contient ces disques et peut donc être utilisé en paramètre de cette commande.
-Si les disques n'existent pas, ils seront générés. On peut donc passer un dossier vide au programme.
 
 ### Raid 5 Java :
+
 L'executable du RAID 5 Java est aussi à la racine du dossier projet.
 Il s'agit du fichier `raid5_java.jar`.
 Pour qu'il s'execute correctement, il faut qu'il soit lancé dans le même répertoire que le dossier `RAID` (qui contient les disques virtuels).
-C'est le cas par défaut à la racine du projet. Il suffit donc de lancer le programme `raid5_java.jar`.
+C'est aussi le cas par défaut à la racine du projet. 
+Il suffit donc de lancer le programme `raid5_java.jar`.
 
 ## Crédits
 
