@@ -10,6 +10,7 @@ En C ou en Java, le système RAID 5 utilise un repertoire dans lequels il stoque
  - `vDisk0r1`, `vDisk1r1` aux disques virtuels utilisés par le RAID 1 en C
  - `vDisk0r5`, `vDisk1r5`, `vDisk2r5`, `vDisk3r5` aux disques virtuels utilisés par le RAID 5 en C
  - `jVDsik0`, `jVDisk1`, `jVDisk2`, `jVDisk3` correspondent aux disques du système en Java.
+
 Par defaut, c'est le dossier `RAID` à la racine du projet qui va contenir ces disques.
 
 Le script shell `init_raid.sh` initialise ce dossier.
